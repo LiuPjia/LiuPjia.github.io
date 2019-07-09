@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://LiuPjia.github.io">
   <title>二分法介绍 | 佳的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="二分法的一些介绍二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件来逼近我们想要的结果。 ##下面是代码：1234567891011121314151617181920212223242526272829303132333435363738394041424344">
+  <meta name="description" content="二分法的一些介绍二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围。这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件,来逼近我们想要的结果。下面是代码：">
 <meta name="keywords" content="二分">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二分法介绍">
 <meta property="og:url" content="https://LiuPjia.github.io/2019/07/08/二分法介绍/index.html">
 <meta property="og:site_name" content="佳的个人博客">
-<meta property="og:description" content="二分法的一些介绍二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件来逼近我们想要的结果。 ##下面是代码：1234567891011121314151617181920212223242526272829303132333435363738394041424344">
+<meta property="og:description" content="二分法的一些介绍二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围。这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件,来逼近我们想要的结果。下面是代码：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-08T15:25:04.705Z">
+<meta property="og:updated_time" content="2019-07-09T06:04:59.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二分法介绍">
-<meta name="twitter:description" content="二分法的一些介绍二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件来逼近我们想要的结果。 ##下面是代码：1234567891011121314151617181920212223242526272829303132333435363738394041424344">
+<meta name="twitter:description" content="二分法的一些介绍二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围。这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件,来逼近我们想要的结果。下面是代码：">
   
     <link rel="alternative" href="/atom.xml" title="佳的个人博客" type="application/atom+xml">
   
@@ -60,7 +60,9 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
+				<li><a href="/tags/随笔">随笔</a></li>
+	        
+				<li><a href="/categories/算法">算法</a></li>
 	        
 			</ul>
 		</nav>
@@ -112,6 +114,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -123,12 +127,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/tags/随笔">随笔</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/categories/算法">算法</a></li>
 		        
 				</ul>
 			</nav>
@@ -163,8 +169,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="二分法的一些介绍"><a href="#二分法的一些介绍" class="headerlink" title="二分法的一些介绍"></a>二分法的一些介绍</h1><h2 id="二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围"><a href="#二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围" class="headerlink" title="二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围"></a>二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围<br></h2><h2 id="这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件"><a href="#这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件" class="headerlink" title="这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件"></a>这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件</h2><h2 id="来逼近我们想要的结果。"><a href="#来逼近我们想要的结果。" class="headerlink" title="来逼近我们想要的结果。"></a>来逼近我们想要的结果。</h2><hr>
-<h2 id="下面是代码："><a href="#下面是代码：" class="headerlink" title="##下面是代码："></a>##下面是代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 条件：在一个递增序列中查询一个数</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right) &#123;<span class="comment">//当等于的时候也要判断一下，a[mid] == x</span></span><br><span class="line">        mid = left + (right + left) / <span class="number">2</span>;<span class="comment">//避免yi'ch4u</span></span><br><span class="line">        <span class="keyword">if</span>(a[mid] == x) &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(a[mid] &gt; x) &#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 求出序列中第一个大于等于X的位置，以及第一个大于x的位置，这个位置是假设存在的应该的值</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//求出序列中第一个大于等于X的位置</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lower_bound</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//用left与right不断的逼近，最小的大于x的点</span></span><br><span class="line">    <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">while</span>(left &lt; right) &#123;<span class="comment">//等于的时候说明找到了唯一的点</span></span><br><span class="line">        mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(a[mid] &gt;= x) &#123;</span><br><span class="line">            right = mid;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//求出序列第一个大于x元素的位置</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">upper_bound</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">while</span>(left &lt; right) &#123;</span><br><span class="line">        mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(a[mid] &gt; x) &#123;</span><br><span class="line">            right = mid;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 总结：以上的代码说明了同一个问题，在有序的序列中寻找第一个满足条件的位置，基本思想是找到满足条件的位置，</span></span><br><span class="line"><span class="comment"> * 然后不断缩小位置，直到找到了唯一解：left = right， 而如果只查询是否存在用第一种解法。</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+        <h1 id="二分法的一些介绍"><a href="#二分法的一些介绍" class="headerlink" title="二分法的一些介绍"></a>二分法的一些介绍</h1><h2 id="二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围。这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件-来逼近我们想要的结果。"><a href="#二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围。这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件-来逼近我们想要的结果。" class="headerlink" title="二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围。这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件,来逼近我们想要的结果。"></a>二分法最简单的用法是在一个有序序列中查找一个数x，每次选择中间数进行猜测，不断的缩小其范围。这是最基本的办法，但是二分法的用处不止如此，比如我们直到一个序列的规律之后，我们可以利用某些条件,来逼近我们想要的结果。<br></h2><h2 id="下面是代码："><a href="#下面是代码：" class="headerlink" title="下面是代码："></a>下面是代码：</h2><a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 条件：在一个递增序列中查询一个数</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right) &#123;<span class="comment">//当等于的时候也要判断一下，a[mid] == x</span></span><br><span class="line">        mid = left + (right + left) / <span class="number">2</span>;<span class="comment">//避免yi'ch4u</span></span><br><span class="line">        <span class="keyword">if</span>(a[mid] == x) &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(a[mid] &gt; x) &#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 求出序列中第一个大于等于X的位置，以及第一个大于x的位置，这个位置是假设存在的应该的值</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//求出序列中第一个大于等于X的位置</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lower_bound</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//用left与right不断的逼近，最小的大于x的点</span></span><br><span class="line">    <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">while</span>(left &lt; right) &#123;<span class="comment">//等于的时候说明找到了唯一的点</span></span><br><span class="line">        mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(a[mid] &gt;= x) &#123;</span><br><span class="line">            right = mid;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//求出序列第一个大于x元素的位置</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">upper_bound</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">while</span>(left &lt; right) &#123;</span><br><span class="line">        mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(a[mid] &gt; x) &#123;</span><br><span class="line">            right = mid;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 总结：以上的代码说明了同一个问题，在有序的序列中寻找第一个满足条件的位置，基本思想是找到满足条件的位置，</span></span><br><span class="line"><span class="comment"> * 然后不断缩小位置，直到找到了唯一解：left = right， 而如果只查询是否存在用第一种解法。</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
 
       
@@ -279,6 +286,20 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2019/07/09/hello/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          hello
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -400,6 +421,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">hello</a>
               </li>
             
             <div class="clearfix"></div>
