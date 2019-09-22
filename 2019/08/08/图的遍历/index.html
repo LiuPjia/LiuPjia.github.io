@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://LiuPjia.github.io">
-  <title>Archives: 2019/7 | 佳的个人博客</title>
+  <title>图的遍历 | 佳的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="佳的个人博客">
-<meta property="og:url" content="https://LiuPjia.github.io/archives/2019/07/index.html">
+  <meta name="description" content="图的遍历图的遍历是对图的所有顶点按一定顺序进行访问，遍历方法一共有两种：DFS与BFS，基本思想都是，枚举所有顶点，然后遍历u所有的连通块。DFS和BFS的核心代码都是遍历一个连通块。 用DFS遍历图对一个连通块进行遍历 伪代码描述模板123456789101112131415dfs(u) &amp;#123; //访问u    vis[u] = true;  //设置已访问    for(u能到达的所有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图的遍历">
+<meta property="og:url" content="https://LiuPjia.github.io/2019/08/08/图的遍历/index.html">
 <meta property="og:site_name" content="佳的个人博客">
+<meta property="og:description" content="图的遍历图的遍历是对图的所有顶点按一定顺序进行访问，遍历方法一共有两种：DFS与BFS，基本思想都是，枚举所有顶点，然后遍历u所有的连通块。DFS和BFS的核心代码都是遍历一个连通块。 用DFS遍历图对一个连通块进行遍历 伪代码描述模板123456789101112131415dfs(u) &amp;#123; //访问u    vis[u] = true;  //设置已访问    for(u能到达的所有">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-08T09:10:10.598Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="佳的个人博客">
+<meta name="twitter:title" content="图的遍历">
+<meta name="twitter:description" content="图的遍历图的遍历是对图的所有顶点按一定顺序进行访问，遍历方法一共有两种：DFS与BFS，基本思想都是，枚举所有顶点，然后遍历u所有的连通块。DFS和BFS的核心代码都是遍历一个连通块。 用DFS遍历图对一个连通块进行遍历 伪代码描述模板123456789101112131415dfs(u) &amp;#123; //访问u    vis[u] = true;  //设置已访问    for(u能到达的所有">
   
     <link rel="alternative" href="/atom.xml" title="佳的个人博客" type="application/atom+xml">
   
@@ -144,196 +148,235 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-图的遍历" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      图的遍历
+    </h1>
+  
+
+        
+        <a href="/2019/08/08/图的遍历/" class="archive-article-date">
+  	<time datetime="2019-08-08T08:47:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
+</a>
+        
+      </header>
     
+
+<!-- 目录内容 -->
+
+    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+          <span class="btn-bg"></span>
+          <span class="btn-text">文章导航</span>
+          </p>
+    <div id="toc-article" class="toc-article">
+        <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+        <strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#图的遍历"><span class="toc-number">1.</span> <span class="toc-text">图的遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用DFS遍历图"><span class="toc-number">1.1.</span> <span class="toc-text">用DFS遍历图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#伪代码描述模板"><span class="toc-number">1.1.1.</span> <span class="toc-text">伪代码描述模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接矩阵模板"><span class="toc-number">1.1.2.</span> <span class="toc-text">邻接矩阵模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接表模板"><span class="toc-number">1.1.3.</span> <span class="toc-text">邻接表模板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用BFS进行遍历"><span class="toc-number">1.2.</span> <span class="toc-text">使用BFS进行遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#伪代码描述"><span class="toc-number">1.2.1.</span> <span class="toc-text">伪代码描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接矩阵版"><span class="toc-number">1.2.2.</span> <span class="toc-text">邻接矩阵版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接表版"><span class="toc-number">1.2.3.</span> <span class="toc-text">邻接表版</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结："><span class="toc-number">1.3.</span> <span class="toc-text">总结：</span></a></li></ol></li></ol>
+         </div>
+   <script type="text/javascript">
+    function showToc(){
+        var toc_article = document.getElementById("toc-article");
+        var show_toc_btn = document.getElementById("show-toc-btn");
+        toc_article.setAttribute("style","display:block");
+        show_toc_btn.setAttribute("style","display:none");
+        };
+    function showBtn(){
+        var toc_article = document.getElementById("toc-article");
+        var show_toc_btn = document.getElementById("show-toc-btn");
+        toc_article.setAttribute("style","display:none");
+        show_toc_btn.setAttribute("style","display:block");
+        };
+   </script>
+      
+<!-- 目录内容结束 -->
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h1><p>图的遍历是对图的所有顶点按一定顺序进行访问，遍历方法一共有两种：DFS与BFS，基本思想都是，枚举所有顶点，然后遍历u所有的连通块。DFS和BFS的核心代码都是遍历一个连通块。</p>
+<h2 id="用DFS遍历图"><a href="#用DFS遍历图" class="headerlink" title="用DFS遍历图"></a>用DFS遍历图</h2><p>对一个连通块进行遍历</p>
+<h3 id="伪代码描述模板"><a href="#伪代码描述模板" class="headerlink" title="伪代码描述模板"></a>伪代码描述模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dfs(u) &#123; <span class="comment">//访问u</span></span><br><span class="line">    vis[u] = <span class="literal">true</span>;  <span class="comment">//设置已访问</span></span><br><span class="line">    <span class="keyword">for</span>(u能到达的所有顶点i) &#123;  <span class="comment">//遍历u能到达的所有结点i</span></span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span>) <span class="comment">//没被访问</span></span><br><span class="line">            dfs(i);       <span class="comment">//访问它</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dfsTrave(G) &#123;</span><br><span class="line">    <span class="keyword">for</span>(G的所有顶点u) &#123;  <span class="comment">//对G的所有顶点u</span></span><br><span class="line">        <span class="keyword">if</span>(vis[u] == <span class="literal">false</span>) &#123; <span class="comment">//没被访问</span></span><br><span class="line">            dfs(u);   <span class="comment">//访问u</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="邻接矩阵模板"><a href="#邻接矩阵模板" class="headerlink" title="邻接矩阵模板"></a>邻接矩阵模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxv = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> inf = <span class="number">1e9</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//邻接矩阵版</span></span><br><span class="line"><span class="keyword">int</span> n, G[maxv][maxv];</span><br><span class="line"><span class="keyword">bool</span> vis[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> deepth)</span> </span>&#123;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//如果要对u进行一些操作，在这里进行。</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span> &amp;&amp; G[u][i] != inf) &#123;</span><br><span class="line">            dfs(i, deepth + <span class="number">1</span>);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(u, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="邻接表模板"><a href="#邻接表模板" class="headerlink" title="邻接表模板"></a>邻接表模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">bool</span> vis[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> deepth)</span> </span>&#123;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[u].size(); i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> v = adj[u][i];</span><br><span class="line">        <span class="keyword">if</span>(vis[v] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(v, deepth + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(i, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用BFS进行遍历"><a href="#使用BFS进行遍历" class="headerlink" title="使用BFS进行遍历"></a>使用BFS进行遍历</h2><h3 id="伪代码描述"><a href="#伪代码描述" class="headerlink" title="伪代码描述"></a>伪代码描述</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">bfs(u) &#123; <span class="comment">//遍历u所在的连通块</span></span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    inq[u] = <span class="literal">true</span>; <span class="comment">//以访问</span></span><br><span class="line">    q.push(u);</span><br><span class="line">    <span class="keyword">while</span>(q非空) &#123;</span><br><span class="line">        取出q的队首元素进行访问</span><br><span class="line">        <span class="keyword">for</span>(从u出发能够访问的结点v) &#123;</span><br><span class="line">            <span class="keyword">if</span>(v没有被访问) &#123;</span><br><span class="line">                inq[v] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bfsTrave(G) &#123;<span class="comment">//图G</span></span><br><span class="line">    <span class="keyword">for</span>(G的所有顶点u) &#123;</span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            bfs(u);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="邻接矩阵版"><a href="#邻接矩阵版" class="headerlink" title="邻接矩阵版"></a>邻接矩阵版</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n, G[maxv][maxv];</span><br><span class="line"><span class="keyword">bool</span> inq[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    q.push(u);</span><br><span class="line">    inq[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        <span class="keyword">int</span> u = q.front();<span class="comment">//取出队首元素</span></span><br><span class="line">        <span class="comment">//在这里进行访问</span></span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> v = <span class="number">0</span>; v &lt; n; v++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[v] == <span class="literal">false</span> &amp;&amp; G[u][v] != INF) &#123;</span><br><span class="line">                q.push(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfsTrave</span><span class="params">()</span> </span>&#123; <span class="comment">//遍历图G</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;<span class="comment">//遍历每个结点</span></span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            q.push(u);</span><br><span class="line">            inq[u] = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="邻接表版"><a href="#邻接表版" class="headerlink" title="邻接表版"></a>邻接表版</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">bool</span> inq[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    inq[u] = <span class="literal">true</span>;</span><br><span class="line">    q.push(u);</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        <span class="keyword">int</span> top = q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[top].size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[i] == <span class="literal">false</span>) &#123;</span><br><span class="line">                q.push(i);</span><br><span class="line">                inq[i] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            bfs(u);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是一般题目中有可能需要层号，这个时候就可以新建一个结构体，采用邻接表的方式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//加入层号之后</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> v;</span><br><span class="line">    <span class="keyword">int</span> layer;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node&gt; q;</span><br><span class="line">    node s;</span><br><span class="line">    s.layer = <span class="number">0</span>;</span><br><span class="line">    s.v = v;</span><br><span class="line">    q.push(s);</span><br><span class="line">    inq[v] = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        node top = q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[top.v].size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[adj[top.v]] == <span class="literal">false</span>) &#123;</span><br><span class="line">            node next;</span><br><span class="line">            next.layer = top.layer + <span class="number">1</span>;</span><br><span class="line">            next.v = adj[top.v][i];</span><br><span class="line">            q.push(next);</span><br><span class="line">            inq[next.v] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>遍历图的思想是是对所有的连通块进行遍历。基本思路就是将经过的顶点设置为已访问，然后采用DFS或者BFS遍历其所在的连通块。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/10/静态链表解题模板/" class="archive-article-date">
-  	<time datetime="2019-07-10T08:47:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/10/静态链表解题模板/">静态链表解题模板</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/10/静态链表的介绍-A1032-Sharing/" class="archive-article-date">
-  	<time datetime="2019-07-10T08:25:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/10/静态链表的介绍-A1032-Sharing/">静态链表的介绍_A1032_Sharing</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/10/动态链表的介绍/" class="archive-article-date">
-  	<time datetime="2019-07-10T07:56:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/10/动态链表的介绍/">动态链表的基本操作</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        			<a href="/categories/图算法//" class="article-tag-list-link color4">图算法</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://LiuPjia.github.io/2019/08/08/图的遍历/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/08/二分法介绍/" class="archive-article-date">
-  	<time datetime="2019-07-08T14:49:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-08</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/09/22/A1143/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT 甲级 1143  Lowest Common Ancestor
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/10/静态链表解题模板/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">静态链表解题模板</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/08/二分法介绍/">二分法介绍</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">二分</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#图的遍历"><span class="toc-number">1.</span> <span class="toc-text">图的遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用DFS遍历图"><span class="toc-number">1.1.</span> <span class="toc-text">用DFS遍历图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#伪代码描述模板"><span class="toc-number">1.1.1.</span> <span class="toc-text">伪代码描述模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接矩阵模板"><span class="toc-number">1.1.2.</span> <span class="toc-text">邻接矩阵模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接表模板"><span class="toc-number">1.1.3.</span> <span class="toc-text">邻接表模板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用BFS进行遍历"><span class="toc-number">1.2.</span> <span class="toc-text">使用BFS进行遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#伪代码描述"><span class="toc-number">1.2.1.</span> <span class="toc-text">伪代码描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接矩阵版"><span class="toc-number">1.2.2.</span> <span class="toc-text">邻接矩阵版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#邻接表版"><span class="toc-number">1.2.3.</span> <span class="toc-text">邻接表版</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结："><span class="toc-number">1.3.</span> <span class="toc-text">总结：</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -356,8 +399,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
