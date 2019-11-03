@@ -312,6 +312,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/13/PAT-A1152/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/13/PAT-A1152/" class="post-title-link" itemprop="url">PAT 甲级 1152 Google Recruitment</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-13 18:35:22 / 修改时间：18:41:58" itemprop="dateCreated datePublished" datetime="2019-10-13T18:35:22+08:00">2019-10-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>In July 2004, Google posted on a giant billboard along Highway 101 in Silicon Valley (shown in the picture below) for recruitment. The content is super-simple, a URL consisting of the first 10-digit prime found in consecutive digits of the natural constant e. The person who could find this prime number could go to the next step in Google’s hiring process by visiting this website.<br><img src="https://images.ptausercontent.com/57148679-d574-4f49-b048-775c6c07791c.jpg" alt><br>The natural constant e is a well known transcendental number（超越数）. The first several digits are: e = 2.718281828459045235360287471352662497757247093699959574966967627724076630353547594571382178525166427427466391932003059921… where the 10 digits in bold are the answer to Google’s question.</p>
+<p>Now you are asked to solve a more general problem: find the first K-digit prime in consecutive digits of any given L-digit number.</p>
+<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. Each case first gives in a line two positive integers: L (≤ 1,000) and K (&lt; 10), which are the numbers of digits of the given number and the prime to be found, respectively. Then the L-digit number N is given in the next line.</p>
+<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, print in a line the first K-digit prime in consecutive digits of N. If such a number does not exist, output <font color="red">404</font> instead. Note: the leading zeroes must also be counted as part of the K digits. For example, to find the 4-digit prime in 200236, 0023 is a solution. However the first digit 2 must not be treated as a solution 0002 since the leading zeroes are not in the original number.</p>
+<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a><strong>Sample Input 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">20 5</span><br><span class="line">23654987725541023819</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a><strong>Sample Output 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">49877</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a><strong>Sample Input 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10 3</span><br><span class="line">2468024680</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a><strong>Sample Output 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">404</span><br></pre></td></tr></table></figure>
+
+<h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a><strong>题目大意</strong></h2><p>给出一个很大的字符串，找出第一个位数为n的数，不存在输出404</p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>用string的substr函数与stoi函数就可以了。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isPrime</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i * i &lt;= x; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(x % i == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d\n"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="built_in">string</span> s, ans=<span class="string">"404"</span>, temp;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; s;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n - m; i++) &#123; <span class="comment">//从[n-m+1, n - 1]的长度是m - 1已经不会构成解</span></span><br><span class="line">       temp = s.substr(i, m);</span><br><span class="line">       <span class="keyword">if</span>(isPrime(stoi(temp)) == <span class="literal">true</span>) &#123;</span><br><span class="line">           ans = temp;</span><br><span class="line">           <span class="keyword">break</span>;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/13/PAT-A1119/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1764,165 +1923,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/28/PAT-A1078/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/09/28/PAT-A1078/" class="post-title-link" itemprop="url">PAT 甲级 A1078 Hashing</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-28 09:23:46 / 修改时间：09:48:23" itemprop="dateCreated datePublished" datetime="2019-09-28T09:23:46+08:00">2019-09-28</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>The task of this problem is simple: insert a sequence of distinct positive integers into a hash table, and output the positions of the input numbers. The hash function is defined to be H(key)=key%TSize where TSize is the maximum size of the hash table. <strong>Quadratic probing</strong> (with positive increments only) is used to solve the collisions.</p>
-<p>Note that the table size is better to be prime. If the maximum size given by the user is not prime, you must re-define the table size to be the smallest prime number which is larger than the size given by the user.</p>
-<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line contains two positive numbers: MSize (≤10<br>​4<br>​​ ) and N (≤MSize) which are the user-defined table size and the number of input numbers, respectively. Then N distinct positive integers are given in the next line. All the numbers in a line are separated by a space.</p>
-<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, print the corresponding positions (index starts from 0) of the input numbers in one line. All the numbers in a line are separated by a space, and there must be no extra space at the end of the line. In case it is impossible to insert the number, print “-“ instead.</p>
-<h2 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a><strong>Sample Input:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4 4</span><br><span class="line">10 6 4 15</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a><strong>Sample Output:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 1 4 -</span><br></pre></td></tr></table></figure>
-
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>这题没有读懂题意，因为单词不认识：<strong>Quadratic probing</strong>二次方探查法，明明背了单词probe探查的意思，哎。下面给出<strong>Quadratic probing</strong>的定义（柳神博客）：</p>
-<h3 id="知识点：二分探查法"><a href="#知识点：二分探查法" class="headerlink" title="知识点：二分探查法"></a><strong>知识点：二分探查法</strong></h3><p>如果hashTable⾥⾯key % size的下标对应的hashTable为false,说明这个下标没有被使⽤过，直接输<br>出。否则step步⻓从1加到size-1，⼀次次尝试是否能使index = (key + step * step) % size;所对应的位置<br>没有元素，如果都没有找到就输出“-”，否则就输出这个找到的元素的位置～ – 注意 是(key + step *<br>step) % size ⽽不是(key % size + step * step)。</p>
-<p>知道了这个问题描述，这题就简单了，首先求大于等于表长的第一个素数，有两种办法，第一种办法是从表长开始，如果Size不是素数，Size++，这里为了锻炼自己，使用了埃氏筛法+二分查找。</p>
-<h3 id="知识点：埃氏筛法"><a href="#知识点：埃氏筛法" class="headerlink" title="知识点：埃氏筛法"></a><strong>知识点：埃氏筛法</strong></h3><p>设置两个数组bool p[maxn], int prime[maxn], num; p[i]表示i是不是素数,prime存放maxn范围的素数表，遍历从2开始进行迭代，每次迭代，都将素数的倍数筛去，及prime[i<em>?] = true,然后存放在prime中。*</em>注意点：**在这题使用二分查找时，上限可以取到num-1，因为可以确定素数表中一定有自己需要的数据。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">// #include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// bool isPrime(int x) &#123;</span></span><br><span class="line"><span class="comment">//     if(x &lt;= 1) return false;</span></span><br><span class="line"><span class="comment">//     int sq = (int)sqrt(1.0*x);</span></span><br><span class="line"><span class="comment">//     for(int i = 2; i &lt;= sq; i++) &#123;</span></span><br><span class="line"><span class="comment">//         if(x % i == 0) return false;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//     return true;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// const int maxn = 10010;</span></span><br><span class="line"><span class="comment">// int main() &#123;</span></span><br><span class="line"><span class="comment">//     bool vis[maxn] = &#123;false&#125;;</span></span><br><span class="line"><span class="comment">//     int temp, m, n;</span></span><br><span class="line"><span class="comment">//     scanf("%d %d", &amp;m, &amp;n);</span></span><br><span class="line"><span class="comment">//     while(isPrime(m) == false) m++;</span></span><br><span class="line"><span class="comment">//     for(int i = 0; i &lt; n; i++) &#123;</span></span><br><span class="line"><span class="comment">//         scanf("%d", &amp;temp);</span></span><br><span class="line"><span class="comment">//         bool flag = true;</span></span><br><span class="line"><span class="comment">//         for(int step = 0; step &lt;= m - 1; step++) &#123;</span></span><br><span class="line"><span class="comment">//             long long r = (long long)(temp + step * step) % m;</span></span><br><span class="line"><span class="comment">//             if(vis[r] == false) &#123;</span></span><br><span class="line"><span class="comment">//                 printf("%d%c", r, i == n - 1 ? '\n' : ' ');</span></span><br><span class="line"><span class="comment">//                 flag = false;</span></span><br><span class="line"><span class="comment">//                 vis[r] = true;</span></span><br><span class="line"><span class="comment">//                 break;</span></span><br><span class="line"><span class="comment">//             &#125;</span></span><br><span class="line"><span class="comment">//         &#125;</span></span><br><span class="line"><span class="comment">//         if(flag == true) printf("-%c",  i == n - 1 ? '\n' : ' ');</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//     return 0;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10010</span>;</span><br><span class="line"><span class="keyword">bool</span> p[maxn] = &#123;<span class="literal">false</span>&#125;,  vis[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> prime[maxn], num = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">findPrime</span><span class="params">()</span> </span>&#123; <span class="comment">//埃氏筛法</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; maxn; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(p[i] == <span class="literal">false</span>) &#123;</span><br><span class="line">            prime[num++] = i;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i + i; j &lt; maxn; j += i) &#123;</span><br><span class="line">                p[j] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BinarySearch</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(left &lt; right) &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(prime[mid] &gt;= x) right = mid;</span><br><span class="line">        <span class="keyword">else</span> left = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp, m, n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;m, &amp;n);</span><br><span class="line">    findPrime();</span><br><span class="line">    m = prime[BinarySearch(m, <span class="number">0</span>, num - <span class="number">1</span>)]; <span class="comment">//可以减一，因为可以确定元素一定存在</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;temp);</span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> step = <span class="number">0</span>; step &lt;= m - <span class="number">1</span>; step++) &#123;</span><br><span class="line">            <span class="keyword">long</span> <span class="keyword">long</span> r = (<span class="keyword">long</span> <span class="keyword">long</span>)(temp + step * step) % m;</span><br><span class="line">            <span class="keyword">if</span>(vis[r] == <span class="literal">false</span>) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, r, i == n - <span class="number">1</span> ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">                flag = <span class="literal">false</span>;</span><br><span class="line">                vis[r] = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag == <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"-%c"</span>,  i == n - <span class="number">1</span> ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1969,7 +1969,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1998,7 +1998,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

@@ -312,6 +312,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/08/08/图的遍历/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/08/图的遍历/" class="post-title-link" itemprop="url">图的遍历</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-08 16:47:08 / 修改时间：17:10:10" itemprop="dateCreated datePublished" datetime="2019-08-08T16:47:08+08:00">2019-08-08</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/图算法/" itemprop="url" rel="index"><span itemprop="name">图算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h1><p>图的遍历是对图的所有顶点按一定顺序进行访问，遍历方法一共有两种：DFS与BFS，基本思想都是，枚举所有顶点，然后遍历u所有的连通块。DFS和BFS的核心代码都是遍历一个连通块。</p>
+<h2 id="用DFS遍历图"><a href="#用DFS遍历图" class="headerlink" title="用DFS遍历图"></a>用DFS遍历图</h2><p>对一个连通块进行遍历</p>
+<h3 id="伪代码描述模板"><a href="#伪代码描述模板" class="headerlink" title="伪代码描述模板"></a>伪代码描述模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dfs(u) &#123; <span class="comment">//访问u</span></span><br><span class="line">    vis[u] = <span class="literal">true</span>;  <span class="comment">//设置已访问</span></span><br><span class="line">    <span class="keyword">for</span>(u能到达的所有顶点i) &#123;  <span class="comment">//遍历u能到达的所有结点i</span></span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span>) <span class="comment">//没被访问</span></span><br><span class="line">            dfs(i);       <span class="comment">//访问它</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dfsTrave(G) &#123;</span><br><span class="line">    <span class="keyword">for</span>(G的所有顶点u) &#123;  <span class="comment">//对G的所有顶点u</span></span><br><span class="line">        <span class="keyword">if</span>(vis[u] == <span class="literal">false</span>) &#123; <span class="comment">//没被访问</span></span><br><span class="line">            dfs(u);   <span class="comment">//访问u</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="邻接矩阵模板"><a href="#邻接矩阵模板" class="headerlink" title="邻接矩阵模板"></a>邻接矩阵模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxv = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> inf = <span class="number">1e9</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//邻接矩阵版</span></span><br><span class="line"><span class="keyword">int</span> n, G[maxv][maxv];</span><br><span class="line"><span class="keyword">bool</span> vis[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> deepth)</span> </span>&#123;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//如果要对u进行一些操作，在这里进行。</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span> &amp;&amp; G[u][i] != inf) &#123;</span><br><span class="line">            dfs(i, deepth + <span class="number">1</span>);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(u, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="邻接表模板"><a href="#邻接表模板" class="headerlink" title="邻接表模板"></a>邻接表模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">bool</span> vis[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> deepth)</span> </span>&#123;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[u].size(); i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> v = adj[u][i];</span><br><span class="line">        <span class="keyword">if</span>(vis[v] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(v, deepth + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(i, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用BFS进行遍历"><a href="#使用BFS进行遍历" class="headerlink" title="使用BFS进行遍历"></a>使用BFS进行遍历</h2><h3 id="伪代码描述"><a href="#伪代码描述" class="headerlink" title="伪代码描述"></a>伪代码描述</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">bfs(u) &#123; <span class="comment">//遍历u所在的连通块</span></span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    inq[u] = <span class="literal">true</span>; <span class="comment">//以访问</span></span><br><span class="line">    q.push(u);</span><br><span class="line">    <span class="keyword">while</span>(q非空) &#123;</span><br><span class="line">        取出q的队首元素进行访问</span><br><span class="line">        <span class="keyword">for</span>(从u出发能够访问的结点v) &#123;</span><br><span class="line">            <span class="keyword">if</span>(v没有被访问) &#123;</span><br><span class="line">                inq[v] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bfsTrave(G) &#123;<span class="comment">//图G</span></span><br><span class="line">    <span class="keyword">for</span>(G的所有顶点u) &#123;</span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            bfs(u);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="邻接矩阵版"><a href="#邻接矩阵版" class="headerlink" title="邻接矩阵版"></a>邻接矩阵版</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n, G[maxv][maxv];</span><br><span class="line"><span class="keyword">bool</span> inq[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    q.push(u);</span><br><span class="line">    inq[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        <span class="keyword">int</span> u = q.front();<span class="comment">//取出队首元素</span></span><br><span class="line">        <span class="comment">//在这里进行访问</span></span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> v = <span class="number">0</span>; v &lt; n; v++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[v] == <span class="literal">false</span> &amp;&amp; G[u][v] != INF) &#123;</span><br><span class="line">                q.push(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfsTrave</span><span class="params">()</span> </span>&#123; <span class="comment">//遍历图G</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;<span class="comment">//遍历每个结点</span></span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            q.push(u);</span><br><span class="line">            inq[u] = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="邻接表版"><a href="#邻接表版" class="headerlink" title="邻接表版"></a>邻接表版</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">bool</span> inq[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    inq[u] = <span class="literal">true</span>;</span><br><span class="line">    q.push(u);</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        <span class="keyword">int</span> top = q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[top].size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[i] == <span class="literal">false</span>) &#123;</span><br><span class="line">                q.push(i);</span><br><span class="line">                inq[i] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            bfs(u);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是一般题目中有可能需要层号，这个时候就可以新建一个结构体，采用邻接表的方式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//加入层号之后</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> v;</span><br><span class="line">    <span class="keyword">int</span> layer;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node&gt; q;</span><br><span class="line">    node s;</span><br><span class="line">    s.layer = <span class="number">0</span>;</span><br><span class="line">    s.v = v;</span><br><span class="line">    q.push(s);</span><br><span class="line">    inq[v] = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        node top = q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[top.v].size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[adj[top.v]] == <span class="literal">false</span>) &#123;</span><br><span class="line">            node next;</span><br><span class="line">            next.layer = top.layer + <span class="number">1</span>;</span><br><span class="line">            next.v = adj[top.v][i];</span><br><span class="line">            q.push(next);</span><br><span class="line">            inq[next.v] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>遍历图的思想是是对所有的连通块进行遍历。基本思路就是将经过的顶点设置为已访问，然后采用DFS或者BFS遍历其所在的连通块。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/07/10/静态链表解题模板/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1005,7 +1183,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1034,7 +1212,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

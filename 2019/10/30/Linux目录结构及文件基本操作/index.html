@@ -465,10 +465,10 @@
 <p><strong>绝对路径：</strong> 以<font color="red"> / </font>表示根目录</p>
 <p><strong>提示：在进行目录切换的过程中请多使用 <font color="red">Tab</font> 键自动补全，可避免输入错误，连续按两次<font color="red"> Tab </font>可以显示全部候选结果。</strong></p>
 <h1 id="Linux文件的基本操作"><a href="#Linux文件的基本操作" class="headerlink" title="Linux文件的基本操作"></a><strong>Linux文件的基本操作</strong></h1><h2 id="新建"><a href="#新建" class="headerlink" title="新建"></a><strong>新建</strong></h2><h3 id="新建空白文件"><a href="#新建空白文件" class="headerlink" title="新建空白文件"></a><strong>新建空白文件</strong></h3><p>我们一般使用<font color="red">touch</font>命令创建空白文件，关于 touch 命令，其主要作用是来更改已有文件的时间戳的（比如，最近访问时间，最近修改时间，但是同时可以在当前目录创建文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd /home/shiyanlou</span><br><span class="line"><span class="meta">$</span> touch test</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/shiyanlou</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> touch <span class="built_in">test</span></span></span><br></pre></td></tr></table></figure>
 
 <h3 id="新建目录"><a href="#新建目录" class="headerlink" title="新建目录"></a><strong>新建目录</strong></h3><p>使用 <font color="red">mkdir</font>（make directories）命令可以创建一个空目录，也可同时指定创建目录的权限属性。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mkdir mydir</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir mydir</span></span><br></pre></td></tr></table></figure>
 
 <p>使用  <font color="red">-p</font> 参数，同时创建父目录（如果不存在该父目录），如下我们同时创建一个多级目录（这在安装软件、配置安装路径时非常有用）：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p father/son/grandson <span class="comment">#也可以指定绝对路径</span></span><br></pre></td></tr></table></figure>
@@ -628,7 +628,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -657,7 +657,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
