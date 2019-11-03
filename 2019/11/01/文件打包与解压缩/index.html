@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="zip命令zip压缩打包程序 使用zip打包文件夹1234$ cd /home/shiyanlou$ zip -r -q -o shiyanlou.zip /home/shiyanlou/Desktop #将文件打包$ du -h shiyanlou.zip  #查看文件大小$ file shiyanlou.zip  #查看文件属性    上面命令将目录 /home/shiyanlou/Deskt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件打包与解压缩">
+<meta property="og:url" content="https://LiuPjia.github.io/2019/11/01/文件打包与解压缩/index.html">
+<meta property="og:site_name" content="佳的个人博客">
+<meta property="og:description" content="zip命令zip压缩打包程序 使用zip打包文件夹1234$ cd /home/shiyanlou$ zip -r -q -o shiyanlou.zip /home/shiyanlou/Desktop #将文件打包$ du -h shiyanlou.zip  #查看文件大小$ file shiyanlou.zip  #查看文件属性    上面命令将目录 /home/shiyanlou/Deskt">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-01T06:35:36.213Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文件打包与解压缩">
+<meta name="twitter:description" content="zip命令zip压缩打包程序 使用zip打包文件夹1234$ cd /home/shiyanlou$ zip -r -q -o shiyanlou.zip /home/shiyanlou/Desktop #将文件打包$ du -h shiyanlou.zip  #查看文件大小$ file shiyanlou.zip  #查看文件属性    上面命令将目录 /home/shiyanlou/Deskt">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://LiuPjia.github.io/2019/11/01/文件打包与解压缩/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>文件打包与解压缩 | 佳的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佳的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/01/文件打包与解压缩/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文件打包与解压缩
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-01 11:12:57 / 修改时间：14:35:36" itemprop="dateCreated datePublished" datetime="2019-11-01T11:12:57+08:00">2019-11-01</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux基础入门/" itemprop="url" rel="index"><span itemprop="name">Linux基础入门</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="zip命令"><a href="#zip命令" class="headerlink" title="zip命令"></a><strong>zip命令</strong></h1><h2 id="zip压缩打包程序"><a href="#zip压缩打包程序" class="headerlink" title="zip压缩打包程序"></a><strong>zip压缩打包程序</strong></h2><ul>
+<li><strong>使用zip打包文件夹</strong><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/shiyanlou</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> zip -r -q -o shiyanlou.zip /home/shiyanlou/Desktop <span class="comment">#将文件打包</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> du -h shiyanlou.zip  <span class="comment">#查看文件大小</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> file shiyanlou.zip  <span class="comment">#查看文件属性</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>上面命令将目录 /home/shiyanlou/Desktop 打包成一个文件，并查看了打包后文件的大小和类型。第一行命令中，<font color="red">-r</font> 参数表示递归打包包含子目录的全部内容，<font color="red">-q</font> 参数表示为安静模式，即不向屏幕输出信息，<font color="red">-o</font>，表示输出文件，需在其后紧跟打包输出文件名。后面使用 du 命令查看打包后文件的大小</p>
+<ul>
+<li><strong>创建加密</strong><br>使用 <font color="red">-e</font> 参数可以创建加密压缩包：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> zip -r -e -o shiyanlou_encryption.zip /home/shiyanlou/Desktop</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>注意：</strong> 由于windowns和linux存在一些兼容问题，想让你在 Linux 创建的 zip 压缩文件在 Windows 上解压后没有任何问题，那么你还需要对命令做一些修改：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> zip -r -l -o shiyanlou.zip /home/shiyanlou/Desktop</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-unzip-命令解压缩-zip-文件"><a href="#使用-unzip-命令解压缩-zip-文件" class="headerlink" title="使用 unzip 命令解压缩 zip 文件"></a><strong>使用 unzip 命令解压缩 zip 文件</strong></h2><p>将 shiyanlou.zip 解压到当前目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> unzip shiyanlou.zip</span></span><br></pre></td></tr></table></figure>
+
+<p>使用安静模式，将文件解压到指定目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> unzip -q shiyanlou.zip -d ziptest</span></span><br></pre></td></tr></table></figure>
+
+<p>上述指定目录不存在，将会自动创建。如果你不想解压只想查看压缩包的内容你可以使用 -l 参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> unzip -l shiyanlou.zip</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong> 使用 unzip 解压文件时我们同样应该注意兼容问题，不过这里我们关心的不再是上面的问题，而是中文编码的问题，通常 Windows 系统上面创建的压缩文件，如果有有包含中文的文档或以中文作为文件名的文件时默认会采用 GBK 或其它编码，而 Linux 上面默认使用的是 UTF-8 编码， 为了解决这个问题，我们可以在解压时指定编码类型。</p>
+<p>使用 -O（英文字母，大写 o）参数指定编码类型：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip -O GBK 中文压缩文件.zip</span><br></pre></td></tr></table></figure>
+
+<h1 id="tar打包工具"><a href="#tar打包工具" class="headerlink" title="tar打包工具"></a><strong>tar打包工具</strong></h1><p>tar 原本只是一个打包工具，只是同时还是实现了对 7z、gzip、xz、bzip2 等工具的支持，这些压缩工具本身只能实现对文件或目录（单独压缩目录中的文件）的压缩，tar的解压和压缩都是同一个命令。</p>
+<h2 id="面先掌握-tar-命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。"><a href="#面先掌握-tar-命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。" class="headerlink" title="面先掌握 tar 命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。"></a><strong>面先掌握 <font color="red">tar</font> 命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。</strong></h2><ul>
+<li>创建一个tar包：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/shiyanlou</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -cf shiyanlou.tar /home/shiyanlou/Desktop</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>上面命令中，<font color="red">-c</font> 表示创建一个 tar 包文件，<font color="red">-f</font> 用于指定创建的文件名，注意文件名必须紧跟在 <font color="red">-f</font> 参数之后，比如不能写成 <font color="red">tar -fc shiyanlou.tar</font>，上面会自动去掉表示绝对路径的 <font color="red">/</font>，你也可以使用 <font color="red">-P</font> 保留绝对路径符。</p>
+<ul>
+<li><p>解包一个文件（-x 参数）到指定路径的已存在目录（-C 参数）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir tardir</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -xf shiyanlou.tar -C tardir</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只查看不解包文件 -t 参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar -tf shiyanlou.tar</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="对于创建不同的压缩格式的文件，对于-tar-来说是相当简单的，需要的只是换一个参数-以使用-gzip-工具创建-tar-gz-文件为例"><a href="#对于创建不同的压缩格式的文件，对于-tar-来说是相当简单的，需要的只是换一个参数-以使用-gzip-工具创建-tar-gz-文件为例" class="headerlink" title="对于创建不同的压缩格式的文件，对于 tar 来说是相当简单的，需要的只是换一个参数,以使用 gzip 工具创建 *.tar.gz 文件为例"></a><strong>对于创建不同的压缩格式的文件，对于 tar 来说是相当简单的，需要的只是换一个参数,以使用 gzip 工具创建 *.tar.gz 文件为例</strong></h2><ul>
+<li><p>我们只需要在创建 <font color="red">tar</font> 文件的基础上添加 <font color="red">-z</font> 参数，使用 <font color="red">gzip</font> 来压缩文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar -czf shiyanlou.tar.gz /home/shiyanlou/Desktop</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压 <font color="red">*.tar.gz</font> 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar -xzf shiyanlou.tar.gz</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>现在我们要使用其它的压缩工具创建或解压相应文件只需要更改一个参数即可：</p>
+<table>
+<thead>
+<tr>
+<th><strong>压缩文件格式</strong></th>
+<th><strong>参数</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><font color="red">*.tar.gz</font></td>
+<td><font color="red">-z</font></td>
+</tr>
+<tr>
+<td><font color="red">*.tar.xz</font></td>
+<td><font color="red">-J</font></td>
+</tr>
+<tr>
+<td><font color="red">*tar.bz2</font></td>
+<td><font color="red">-j</font></td>
+</tr>
+</tbody></table>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h1><p>只需要记住常用的组合就可以了。 常用命令：</p>
+<ul>
+<li>zip：</li>
+</ul>
+<ol>
+<li>打包 ：zip something.zip something （目录请加 -r 参数）</li>
+<li>解包：unzip something.zip</li>
+<li><strong>指定路径：-d 参数</strong></li>
+</ol>
+<ul>
+<li>tar：</li>
+</ul>
+<ol>
+<li>打包：tar -cf something.tar something</li>
+<li>解包：tar -xf something.tar</li>
+<li><strong>指定路径：-C 参数</strong></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/31/环境变量与查找/" rel="next" title="环境变量与文件查找">
+                <i class="fa fa-chevron-left"></i> 环境变量与文件查找
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">佳</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zip命令"><span class="nav-number">1.</span> <span class="nav-text">zip命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zip压缩打包程序"><span class="nav-number">1.1.</span> <span class="nav-text">zip压缩打包程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-unzip-命令解压缩-zip-文件"><span class="nav-number">1.2.</span> <span class="nav-text">使用 unzip 命令解压缩 zip 文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar打包工具"><span class="nav-number">2.</span> <span class="nav-text">tar打包工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#面先掌握-tar-命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。"><span class="nav-number">2.1.</span> <span class="nav-text">面先掌握 tar 命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于创建不同的压缩格式的文件，对于-tar-来说是相当简单的，需要的只是换一个参数-以使用-gzip-工具创建-tar-gz-文件为例"><span class="nav-number">2.2.</span> <span class="nav-text">对于创建不同的压缩格式的文件，对于 tar 来说是相当简单的，需要的只是换一个参数,以使用 gzip 工具创建 *.tar.gz 文件为例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">佳</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
