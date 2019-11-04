@@ -92,18 +92,18 @@
 
 
 
-  <meta name="description" content="实验介绍我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具crontab。 **crontab的使用crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。">
+  <meta name="description" content="实验介绍我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具crontab。 *crontab的使用crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。 c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux任务计划crontab">
 <meta property="og:url" content="https://LiuPjia.github.io/2019/11/03/Linux任务计划crontab/index.html">
 <meta property="og:site_name" content="佳的个人博客">
-<meta property="og:description" content="实验介绍我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具crontab。 **crontab的使用crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。">
+<meta property="og:description" content="实验介绍我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具crontab。 *crontab的使用crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。 c">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://dn-simplecloud.shiyanlou.com/1135081468204230683-wm">
-<meta property="og:updated_time" content="2019-11-03T01:32:27.028Z">
+<meta property="og:updated_time" content="2019-11-04T12:29:50.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux任务计划crontab">
-<meta name="twitter:description" content="实验介绍我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具crontab。 **crontab的使用crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。">
+<meta name="twitter:description" content="实验介绍我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具crontab。 *crontab的使用crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。 c">
 <meta name="twitter:image" content="https://dn-simplecloud.shiyanlou.com/1135081468204230683-wm">
 
 
@@ -360,13 +360,23 @@
                 
               
 
-              <time title="创建时间：2019-11-03 08:53:08 / 修改时间：09:32:27" itemprop="dateCreated datePublished" datetime="2019-11-03T08:53:08+08:00">2019-11-03</time>
+              <time title="创建时间：2019-11-03 08:53:08" itemprop="dateCreated datePublished" datetime="2019-11-03T08:53:08+08:00">2019-11-03</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-04 20:29:50" itemprop="dateModified" datetime="2019-11-04T20:29:50+08:00">2019-11-04</time>
+              </span>
             
           
 
@@ -379,7 +389,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux入门基础/" itemprop="url" rel="index"><span itemprop="name">Linux入门基础</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux基础入门/" itemprop="url" rel="index"><span itemprop="name">Linux基础入门</span></a></span>
 
                 
                 
@@ -418,7 +428,7 @@
 
       
         <h1 id="实验介绍"><a href="#实验介绍" class="headerlink" title="实验介绍"></a><strong>实验介绍</strong></h1><p>我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具<strong>crontab</strong>。</p>
-<h1 id="crontab的使用"><a href="#crontab的使用" class="headerlink" title="**crontab的使用"></a><em>**crontab的使用</em></h1><p>crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。</p>
+<h1 id="crontab的使用"><a href="#crontab的使用" class="headerlink" title="*crontab的使用"></a><em>*crontab的使用</em></h1><p>crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。</p>
 <h2 id="crontab简介"><a href="#crontab简介" class="headerlink" title="crontab简介"></a><strong>crontab简介</strong></h2><p>crontab 命令从输入设备读取指令，并将其存放于 crontab 文件中，以供之后读取和执行。通常，crontab 储存的指令被守护进程激活，crond 为其守护进程，crond 常常在后台运行，每一分钟会检查一次是否有预定的作业需要执行。</p>
 <p>通过 crontab 命令，我们可以在固定的间隔时间执行指定的系统指令或 shell　script 脚本。时间间隔的单位可以是分钟、小时、日、月、周的任意组合。</p>
 <p>这里我们看一看crontab 的格式</p>
@@ -497,6 +507,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/11/04/git的基本用法-上/" rel="prev" title="git的基本用法(上)">
+                git的基本用法(上) <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -564,7 +578,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -654,7 +668,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#实验介绍"><span class="nav-number">1.</span> <span class="nav-text">实验介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#crontab的使用"><span class="nav-number">2.</span> <span class="nav-text">**crontab的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab简介"><span class="nav-number">2.1.</span> <span class="nav-text">crontab简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab准备"><span class="nav-number">2.2.</span> <span class="nav-text">crontab准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab的使用-1"><span class="nav-number">2.3.</span> <span class="nav-text">crontab的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加一个计划任务"><span class="nav-number">2.3.1.</span> <span class="nav-text">添加一个计划任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用vim在最后一行添加计划"><span class="nav-number">2.4.</span> <span class="nav-text">使用vim在最后一行添加计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用crontab-l查看添加了哪些任务"><span class="nav-number">2.5.</span> <span class="nav-text">使用crontab -l查看添加了哪些任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动cron的守护进程"><span class="nav-number">2.6.</span> <span class="nav-text">启动cron的守护进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看执行任务的信息反馈"><span class="nav-number">2.7.</span> <span class="nav-text">查看执行任务的信息反馈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除任务：crontab-r"><span class="nav-number">2.8.</span> <span class="nav-text">删除任务：crontab -r</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例子：备份日志"><span class="nav-number">3.</span> <span class="nav-text">例子：备份日志</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考答案"><span class="nav-number">3.2.</span> <span class="nav-text">参考答案</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#实验介绍"><span class="nav-number">1.</span> <span class="nav-text">实验介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#crontab的使用"><span class="nav-number">2.</span> <span class="nav-text">*crontab的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab简介"><span class="nav-number">2.1.</span> <span class="nav-text">crontab简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab准备"><span class="nav-number">2.2.</span> <span class="nav-text">crontab准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab的使用-1"><span class="nav-number">2.3.</span> <span class="nav-text">crontab的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加一个计划任务"><span class="nav-number">2.3.1.</span> <span class="nav-text">添加一个计划任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用vim在最后一行添加计划"><span class="nav-number">2.4.</span> <span class="nav-text">使用vim在最后一行添加计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用crontab-l查看添加了哪些任务"><span class="nav-number">2.5.</span> <span class="nav-text">使用crontab -l查看添加了哪些任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动cron的守护进程"><span class="nav-number">2.6.</span> <span class="nav-text">启动cron的守护进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看执行任务的信息反馈"><span class="nav-number">2.7.</span> <span class="nav-text">查看执行任务的信息反馈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除任务：crontab-r"><span class="nav-number">2.8.</span> <span class="nav-text">删除任务：crontab -r</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例子：备份日志"><span class="nav-number">3.</span> <span class="nav-text">例子：备份日志</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考答案"><span class="nav-number">3.2.</span> <span class="nav-text">参考答案</span></a></li></ol></li></ol></div>
             
 
           </div>
