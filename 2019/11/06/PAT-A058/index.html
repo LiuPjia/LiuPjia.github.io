@@ -92,19 +92,19 @@
 
 
 
-  <meta name="description" content="一些标志寄存器奇偶标志位PF当运算结果出来后，最低8位中如果有偶数个1的比特, PF = 1, 否则为0。 进位标志CF如果最高位有向前进位或者借位的情况发生CF = 1，否则为0。 注意点 inc 和 dec指令除外 进位标志CF对于无符号数来说通常意味着得到了错误的结果，因为溢出了，但是如果从有符号数的角度来看就不一定了，比如:12mov ah, 0xffadd ah, 2    溢出标志OF">
+  <meta name="description" content="1058 A+B in Hogwarts 题目分析这是一道进制转换的题目，理论上来讲这样的进制转换题目都有两种方法： （1）将输入数据统一转换到最小单位，进行指定运算后，再将得到的结果转换到所要输出的格式； （2）从最小单位开始进行指定运算，向上级单位产生进位或借位，得出最终结果。 本题选择了第二种，从右至左，分别是29进位，17进位，1e7进位，参考了日沉云起的博客，给出第一种方法。 第一种方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="汇编一些标志寄存器">
-<meta property="og:url" content="https://LiuPjia.github.io/2019/10/14/汇编一些标志寄存器和指令/index.html">
+<meta property="og:title" content="PAT 甲级 1058 A+B in Hogwarts">
+<meta property="og:url" content="https://LiuPjia.github.io/2019/11/06/PAT-A058/index.html">
 <meta property="og:site_name" content="佳的个人博客">
-<meta property="og:description" content="一些标志寄存器奇偶标志位PF当运算结果出来后，最低8位中如果有偶数个1的比特, PF = 1, 否则为0。 进位标志CF如果最高位有向前进位或者借位的情况发生CF = 1，否则为0。 注意点 inc 和 dec指令除外 进位标志CF对于无符号数来说通常意味着得到了错误的结果，因为溢出了，但是如果从有符号数的角度来看就不一定了，比如:12mov ah, 0xffadd ah, 2    溢出标志OF">
+<meta property="og:description" content="1058 A+B in Hogwarts 题目分析这是一道进制转换的题目，理论上来讲这样的进制转换题目都有两种方法： （1）将输入数据统一转换到最小单位，进行指定运算后，再将得到的结果转换到所要输出的格式； （2）从最小单位开始进行指定运算，向上级单位产生进位或借位，得出最终结果。 本题选择了第二种，从右至左，分别是29进位，17进位，1e7进位，参考了日沉云起的博客，给出第一种方法。 第一种方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://tva1.sinaimg.cn/large/007X8olVly1g7xr350d00j30nh0bytff.jpg">
-<meta property="og:updated_time" content="2019-10-14T07:26:31.321Z">
+<meta property="og:image" content="http://tva1.sinaimg.cn/large/007X8olVly1g8okgnnu8uj310r0fkmye.jpg">
+<meta property="og:updated_time" content="2019-11-06T12:11:24.576Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="汇编一些标志寄存器">
-<meta name="twitter:description" content="一些标志寄存器奇偶标志位PF当运算结果出来后，最低8位中如果有偶数个1的比特, PF = 1, 否则为0。 进位标志CF如果最高位有向前进位或者借位的情况发生CF = 1，否则为0。 注意点 inc 和 dec指令除外 进位标志CF对于无符号数来说通常意味着得到了错误的结果，因为溢出了，但是如果从有符号数的角度来看就不一定了，比如:12mov ah, 0xffadd ah, 2    溢出标志OF">
-<meta name="twitter:image" content="http://tva1.sinaimg.cn/large/007X8olVly1g7xr350d00j30nh0bytff.jpg">
+<meta name="twitter:title" content="PAT 甲级 1058 A+B in Hogwarts">
+<meta name="twitter:description" content="1058 A+B in Hogwarts 题目分析这是一道进制转换的题目，理论上来讲这样的进制转换题目都有两种方法： （1）将输入数据统一转换到最小单位，进行指定运算后，再将得到的结果转换到所要输出的格式； （2）从最小单位开始进行指定运算，向上级单位产生进位或借位，得出最终结果。 本题选择了第二种，从右至左，分别是29进位，17进位，1e7进位，参考了日沉云起的博客，给出第一种方法。 第一种方法">
+<meta name="twitter:image" content="http://tva1.sinaimg.cn/large/007X8olVly1g8okgnnu8uj310r0fkmye.jpg">
 
 
 
@@ -112,7 +112,7 @@
 
   
   
-  <link rel="canonical" href="https://LiuPjia.github.io/2019/10/14/汇编一些标志寄存器和指令/">
+  <link rel="canonical" href="https://LiuPjia.github.io/2019/11/06/PAT-A058/">
 
 
 
@@ -122,7 +122,7 @@
   };
 </script>
 
-  <title>汇编一些标志寄存器 | 佳的个人博客</title>
+  <title>PAT 甲级 1058 A+B in Hogwarts | 佳的个人博客</title>
   
 
 
@@ -317,7 +317,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/14/汇编一些标志寄存器和指令/">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/06/PAT-A058/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="佳">
@@ -334,7 +334,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">汇编一些标志寄存器
+          <h1 class="post-title" itemprop="name headline">PAT 甲级 1058 A+B in Hogwarts
 
               
             
@@ -360,7 +360,7 @@
                 
               
 
-              <time title="创建时间：2019-10-14 14:53:27 / 修改时间：15:26:31" itemprop="dateCreated datePublished" datetime="2019-10-14T14:53:27+08:00">2019-10-14</time>
+              <time title="创建时间：2019-11-06 19:54:18 / 修改时间：20:11:24" itemprop="dateCreated datePublished" datetime="2019-11-06T19:54:18+08:00">2019-11-06</time>
             </span>
           
 
@@ -370,21 +370,6 @@
             
           
 
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/x86汇编/" itemprop="url" rel="index"><span itemprop="name">x86汇编</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -417,22 +402,15 @@
       
 
       
-        <h1 id="一些标志寄存器"><a href="#一些标志寄存器" class="headerlink" title="一些标志寄存器"></a><strong>一些标志寄存器</strong></h1><h2 id="奇偶标志位PF"><a href="#奇偶标志位PF" class="headerlink" title="奇偶标志位PF"></a><strong>奇偶标志位PF</strong></h2><p>当运算结果出来后，最低8位中如果有偶数个1的比特, <strong>PF</strong> = 1, 否则为0。</p>
-<h2 id="进位标志CF"><a href="#进位标志CF" class="headerlink" title="进位标志CF"></a><strong>进位标志CF</strong></h2><p>如果最高位有向前进位或者借位的情况发生<strong>CF</strong> = 1，否则为0。</p>
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a><strong>注意点</strong></h3><ul>
-<li>inc 和 dec指令除外</li>
-<li>进位标志CF对于无符号数来说通常意味着得到了错误的结果，因为溢出了，但是如果从有符号数的角度来看就不一定了，比如:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ah, 0xff</span><br><span class="line">add ah, 2</span><br></pre></td></tr></table></figure>
+        <h2 id="1058-A-B-in-Hogwarts"><a href="#1058-A-B-in-Hogwarts" class="headerlink" title="1058 A+B in Hogwarts"></a><strong><center>1058 A+B in Hogwarts</center></strong></h2><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8okgnnu8uj310r0fkmye.jpg" alt="题目"></p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>这是一道进制转换的题目，理论上来讲这样的进制转换题目都有两种方法：</p>
+<p>（1）将输入数据统一转换到最小单位，进行指定运算后，再将得到的结果转换到所要输出的格式；</p>
+<p>（2）从最小单位开始进行指定运算，向上级单位产生进位或借位，得出最终结果。</p>
+<p>本题选择了第二种，从右至左，分别是29进位，17进位，1e7进位，参考了<a href="https://blog.csdn.net/richenyunqi/article/details/79589889" target="_blank" rel="noopener">日沉云起的博客</a>，给出第一种方法。</p>
+<h2 id="第一种方法代码"><a href="#第一种方法代码" class="headerlink" title="第一种方法代码"></a><strong>第一种方法代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">3</span>]=&#123;<span class="number">0</span>&#125;,b[<span class="number">3</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d.%d.%d %d.%d.%d"</span>,&amp;a[<span class="number">0</span>],&amp;a[<span class="number">1</span>],&amp;a[<span class="number">2</span>],&amp;b[<span class="number">0</span>],&amp;b[<span class="number">1</span>],&amp;b[<span class="number">2</span>]);</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> sum=((<span class="keyword">long</span> <span class="keyword">long</span>)a[<span class="number">0</span>]*<span class="number">17</span>+a[<span class="number">1</span>])*<span class="number">29</span>+a[<span class="number">2</span>];<span class="comment">//有可能超出int存储范围，最好用long long存储</span></span><br><span class="line">    sum+=((<span class="keyword">long</span> <span class="keyword">long</span>)b[<span class="number">0</span>]*<span class="number">17</span>+b[<span class="number">1</span>])*<span class="number">29</span>+b[<span class="number">2</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%lld.%lld.%lld"</span>,sum/(<span class="number">29</span>*<span class="number">17</span>),sum/<span class="number">29</span>%<span class="number">17</span>,sum%<span class="number">29</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
-<h2 id="溢出标志OF"><a href="#溢出标志OF" class="headerlink" title="溢出标志OF"></a><strong>溢出标志OF</strong></h2><p>在上面那个例子中，从无符号的角度看，结果溢出时错误的（257），从有符号的角度看，却是正确的（-1+2），因此OF的意思是，<strong>假定进行的是有符号数运算，如果运算结果正确，OF=0，否则OF=1。</strong></p>
-<h2 id="零标志位ZF"><a href="#零标志位ZF" class="headerlink" title="零标志位ZF"></a><strong>零标志位ZF</strong></h2><p>如果计算结果是0，<strong>ZF</strong> = 1， 否则为0。</p>
-<h2 id="方向标志DF"><a href="#方向标志DF" class="headerlink" title="方向标志DF"></a><strong>方向标志DF</strong></h2><p>通过将这一位清零或置为一，可以改变<strong>movsb和movsw</strong>的传送方向。</p>
-<h3 id="相关指令"><a href="#相关指令" class="headerlink" title="相关指令"></a><strong>相关指令</strong></h3><ol>
-<li>cld指令，将DF清零，标志传送方向是正的。</li>
-<li>std指令，将DF置为一，传送方向变为负。</li>
-<li>ds:si -&gt; es:di。<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2>现有指令对标志位的影响。<br><img src="http://tva1.sinaimg.cn/large/007X8olVly1g7xr350d00j30nh0bytff.jpg" alt></li>
-</ol>
+<h2 id="第二种方法代码"><a href="#第二种方法代码" class="headerlink" title="第二种方法代码"></a><strong>第二种方法代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a, b, c, a1, b1, c1, carry1 = <span class="number">0</span>, carry2 = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d.%d.%d %d.%d.%d"</span>, &amp;a, &amp;b, &amp;c, &amp;a1, &amp;b1, &amp;c1);</span><br><span class="line">    <span class="comment">//由低到高进行计算，与进位相加</span></span><br><span class="line">    c += c1;</span><br><span class="line">    carry1 = c / <span class="number">29</span>;</span><br><span class="line">    c = c % <span class="number">29</span>;</span><br><span class="line">    b += carry1 + b1;</span><br><span class="line">    carry2 = b / <span class="number">17</span>;</span><br><span class="line">    b = b % <span class="number">17</span>;</span><br><span class="line">    a += a1 + carry2;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d.%d.%d"</span>, a, b, c);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -463,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/13/PAT-A1153/" rel="next" title="PAT 甲级 1153 Decode Registration Card of PAT">
-                <i class="fa fa-chevron-left"></i> PAT 甲级 1153 Decode Registration Card of PAT
+              <a href="/2019/11/04/git的基本用法-上/" rel="next" title="git的基本用法(上)">
+                <i class="fa fa-chevron-left"></i> git的基本用法(上)
               </a>
             
           </div>
@@ -473,8 +451,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/10/14/8086处理器的寻址方式/" rel="prev" title="8086处理器的寻址方式">
-                8086处理器的寻址方式 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/11/06/PAT-A1060/" rel="prev" title="PAT 甲级 A1060">
+                PAT 甲级 A1060 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -634,7 +612,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一些标志寄存器"><span class="nav-number">1.</span> <span class="nav-text">一些标志寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#奇偶标志位PF"><span class="nav-number">1.1.</span> <span class="nav-text">奇偶标志位PF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进位标志CF"><span class="nav-number">1.2.</span> <span class="nav-text">进位标志CF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-number">1.2.1.</span> <span class="nav-text">注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#溢出标志OF"><span class="nav-number">1.3.</span> <span class="nav-text">溢出标志OF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#零标志位ZF"><span class="nav-number">1.4.</span> <span class="nav-text">零标志位ZF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方向标志DF"><span class="nav-number">1.5.</span> <span class="nav-text">方向标志DF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关指令"><span class="nav-number">1.5.1.</span> <span class="nav-text">相关指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1058-A-B-in-Hogwarts"><span class="nav-number">1.</span> <span class="nav-text">1058 A+B in Hogwarts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析"><span class="nav-number">2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一种方法代码"><span class="nav-number">3.</span> <span class="nav-text">第一种方法代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二种方法代码"><span class="nav-number">4.</span> <span class="nav-text">第二种方法代码</span></a></li></ol></div>
             
 
           </div>

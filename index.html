@@ -312,6 +312,476 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/06/PAT-A1061/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/06/PAT-A1061/" class="post-title-link" itemprop="url">PAT 甲级 A1061</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-06 20:39:31 / 修改时间：20:49:32" itemprop="dateCreated datePublished" datetime="2019-11-06T20:39:31+08:00">2019-11-06</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1061-Dating"><a href="#1061-Dating" class="headerlink" title="1061 Dating"></a><strong><center>1061 Dating</center></strong></h2><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8olq2vikfj310n0immz3.jpg" alt="题目"></p>
+<h2 id="题目分析与设计"><a href="#题目分析与设计" class="headerlink" title="题目分析与设计"></a><strong>题目分析与设计</strong></h2><p>本题的要求是：</p>
+<ol>
+<li>由前两个字符串中第一组相同的大写字母字符确定星期，注意这组相同的大写字母必须是A~G七个字符中的一个</li>
+<li>符合第1个要求的字符找到之后，继续遍历前两个字符串，由前两个字符串中相同的字符确定小时，注意这组相同的字符必须是0<del>9、A</del>N这24个字符中的一个（关于这一点题目中描述的不够清晰）</li>
+<li>由后两个字符串中第一组相同的英文字母的位置确定分钟。</li>
+</ol>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h3><ul>
+<li>用第一组相同的大写字母来确定星期，隐含着这些字母只能是 A-G这7个</li>
+<li>表示小时，一天有24小时，0-9数字占10个，所以符合条件的大写字母其实也只有A-N这14个</li>
+<li>输出结果时，要保证有2位数字，不够在高位补0。</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">judge</span><span class="params">(<span class="keyword">char</span> a)</span> </span>&#123; <span class="comment">//根据字符返回不同的状态</span></span><br><span class="line">    <span class="keyword">if</span>(a &gt;= <span class="string">'A'</span> &amp;&amp; a &lt;= <span class="string">'Z'</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(a &gt;= <span class="string">'a'</span> &amp;&amp; a &lt;= <span class="string">'z'</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(a &gt;= <span class="string">'0'</span> &amp;&amp; a &lt;= <span class="string">'9'</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s1, s2, s3, s4;</span><br><span class="line">    <span class="keyword">char</span> days[<span class="number">7</span>][<span class="number">10</span>] = &#123;<span class="string">"MON"</span>, <span class="string">"TUE"</span>, <span class="string">"WED"</span>, <span class="string">"THU"</span>, <span class="string">"FRI"</span>, <span class="string">"SAT"</span>, <span class="string">"SUN"</span>&#125;; <span class="comment">//day</span></span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; s1 &gt;&gt; s2 &gt;&gt; s3 &gt;&gt; s4;</span><br><span class="line">    <span class="keyword">int</span> d, h, m;</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="literal">true</span>; <span class="comment">//表示前两个字符串的第一组大写字母没有出现</span></span><br><span class="line">    <span class="keyword">int</span> l1 = min(s1.length(), s2.length()), l2 = min(s3.length(), s4.length());</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; l1; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(judge(s1[i]) == <span class="number">1</span> &amp;&amp; judge(s2[i]) == <span class="number">1</span> &amp;&amp; s1[i] == s2[i] &amp;&amp; flag) &#123; <span class="comment">//两个都是大写字母，并且相等，并且，是关于星期的</span></span><br><span class="line">            d = s1[i] - <span class="string">'A'</span>;</span><br><span class="line">            <span class="keyword">if</span>(d &lt;= <span class="number">6</span>) &#123; <span class="comment">//d属于0~6，说明找到了</span></span><br><span class="line">                flag = <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(judge(s1[i]) &gt;= <span class="number">0</span> &amp;&amp; judge(s2[i]) &gt;= <span class="number">0</span> &amp;&amp; s1[i] == s2[i] &amp;&amp; flag == <span class="literal">false</span>) &#123; <span class="comment">//两个都是大写字母或者为数字，并且相等，并且关于小时</span></span><br><span class="line">            h = (s1[i] &lt;= <span class="string">'9'</span> ? s1[i] - <span class="string">'0'</span> : (s1[i] - <span class="string">'A'</span> + <span class="number">10</span>));</span><br><span class="line">            <span class="keyword">if</span>(h &lt;= <span class="number">23</span>) <span class="keyword">break</span>; <span class="comment">//h属于0~24，符合条件</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; l2; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">isalpha</span>(s3[i]) &amp;&amp; <span class="built_in">isalpha</span>(s4[i]) &amp;&amp; s3[i] == s4[i]) &#123;</span><br><span class="line">            m = i;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s %02d:%02d\n"</span>, days[d], h, m);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/06/PAT-A1060/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/06/PAT-A1060/" class="post-title-link" itemprop="url">PAT 甲级 A1060</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-06 20:14:19 / 修改时间：20:42:03" itemprop="dateCreated datePublished" datetime="2019-11-06T20:14:19+08:00">2019-11-06</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1060-Are-They-Equal"><a href="#1060-Are-They-Equal" class="headerlink" title="1060 Are They Equal"></a><strong><center>1060 Are They Equal</center></strong></h2><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8ol9csyxbj310q0m7gnl.jpg" alt="题目"></p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>给出两个数，转为科学计数法，但是机器可以存放的小数点后的有效位数是n，即超过n的数字将会丢弃，没有超过n就用0填充，用这种方法判断两个数的科学计数法是否相同。我的思路是，首先将前面的0给去掉，然后设置一个结构体，存放的是有效小数和指数，如果都相同才判断这两个数相同，在判断时，将数据分为了小数部分和整数部分进行处理，因为要通过小数点 ‘.’ 的位置得出指数的大小，所以好的做法是初始为字符串长度。</p>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a><strong>注意点</strong></h2><ul>
+<li><p>给的数据前面又可能有多个0，比如00000.1119, 000099999。</p>
+</li>
+<li><p>如果给的数据是0的话，要输出0.0000*10^0这种形式。</p>
+</li>
+<li><p>综合的0000.00000</p>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">10010</span>]; <span class="comment">//存放的有效数</span></span><br><span class="line">    <span class="keyword">int</span> len; <span class="comment">//指数</span></span><br><span class="line">    node() &#123;len = <span class="number">0</span>;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">judge</span><span class="params">(node&amp; a, <span class="keyword">int</span> b)</span> </span>&#123; <span class="comment">//填充0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = b; i &lt; n; i++) a.str[i] = <span class="string">'0'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">node <span class="title">change</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    node a;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">0</span>, e = <span class="number">0</span>, st = <span class="number">1</span>, temp; <span class="comment">//当前a存放数的长度，指数，开始位置</span></span><br><span class="line">    <span class="keyword">if</span>(s != <span class="string">""</span> &amp;&amp; s[<span class="number">0</span>] == <span class="string">'.'</span>) &#123;<span class="comment">//是小数</span></span><br><span class="line">        <span class="keyword">while</span>(st &lt; s.length() &amp;&amp; s[st] == <span class="string">'0'</span>) &#123;st++; e--;&#125;  <span class="comment">//找到小数后面第一个不为0的数，并记录指数</span></span><br><span class="line">        temp = st;<span class="comment">//得到第一个非0数的位置</span></span><br><span class="line">        <span class="keyword">while</span>(st &lt; s.length() &amp;&amp; b &lt; n) &#123;a.str[st - temp] = s[st]; b++; st++;&#125; <span class="comment">//有效的数进行填充</span></span><br><span class="line">        <span class="keyword">if</span>(b == <span class="number">0</span>) e = <span class="number">0</span>; <span class="comment">//.00000这种情况</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(s != <span class="string">""</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> indexE = s.find(<span class="string">"."</span>); <span class="comment">//找到小数点位置</span></span><br><span class="line">        <span class="keyword">if</span>(indexE &lt; <span class="number">0</span>) indexE = s.length(); <span class="comment">//没有小数点，将位置设为s.length()</span></span><br><span class="line">        st = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123; <span class="comment">//从0遍历字符串</span></span><br><span class="line">            <span class="keyword">if</span>(i &lt; indexE) e++;   <span class="comment">//指数++</span></span><br><span class="line">            <span class="keyword">if</span>(b == n || i == indexE) <span class="keyword">continue</span>;</span><br><span class="line">            a.str[st++] = s[i];  <span class="comment">//填充</span></span><br><span class="line">            b++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    a.len = e;</span><br><span class="line">    judge(a, b);</span><br><span class="line">    a.str[n] = <span class="string">'\0'</span>; <span class="comment">//要在这里添加结束符，否则输出乱码</span></span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">convert</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123; <span class="comment">//去掉字符串s的前0</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; s.length() &amp;&amp; s[i] == <span class="string">'0'</span>) i++;</span><br><span class="line">    <span class="keyword">return</span> s.substr(i, s.length())<span class="string">''</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s1,s2;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; s1 &gt;&gt; s2;</span><br><span class="line">    s1 = convert(s1), s2 = convert(s2);</span><br><span class="line">    node a = change(s1), b = change(s2);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">strcmp</span>(a.str, b.str) == <span class="number">0</span> &amp;&amp; a.len == b.len) <span class="built_in">printf</span>(<span class="string">"YES 0.%s*10^%d\n"</span>, a.str, a.len);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"NO 0.%s*10^%d 0.%s*10^%d\n"</span>,a.str, a.len, b.str, b.len);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/06/PAT-A058/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/06/PAT-A058/" class="post-title-link" itemprop="url">PAT 甲级 1058 A+B in Hogwarts</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-06 19:54:18 / 修改时间：20:11:24" itemprop="dateCreated datePublished" datetime="2019-11-06T19:54:18+08:00">2019-11-06</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1058-A-B-in-Hogwarts"><a href="#1058-A-B-in-Hogwarts" class="headerlink" title="1058 A+B in Hogwarts"></a><strong><center>1058 A+B in Hogwarts</center></strong></h2><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8okgnnu8uj310r0fkmye.jpg" alt="题目"></p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>这是一道进制转换的题目，理论上来讲这样的进制转换题目都有两种方法：</p>
+<p>（1）将输入数据统一转换到最小单位，进行指定运算后，再将得到的结果转换到所要输出的格式；</p>
+<p>（2）从最小单位开始进行指定运算，向上级单位产生进位或借位，得出最终结果。</p>
+<p>本题选择了第二种，从右至左，分别是29进位，17进位，1e7进位，参考了<a href="https://blog.csdn.net/richenyunqi/article/details/79589889" target="_blank" rel="noopener">日沉云起的博客</a>，给出第一种方法。</p>
+<h2 id="第一种方法代码"><a href="#第一种方法代码" class="headerlink" title="第一种方法代码"></a><strong>第一种方法代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">3</span>]=&#123;<span class="number">0</span>&#125;,b[<span class="number">3</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d.%d.%d %d.%d.%d"</span>,&amp;a[<span class="number">0</span>],&amp;a[<span class="number">1</span>],&amp;a[<span class="number">2</span>],&amp;b[<span class="number">0</span>],&amp;b[<span class="number">1</span>],&amp;b[<span class="number">2</span>]);</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> sum=((<span class="keyword">long</span> <span class="keyword">long</span>)a[<span class="number">0</span>]*<span class="number">17</span>+a[<span class="number">1</span>])*<span class="number">29</span>+a[<span class="number">2</span>];<span class="comment">//有可能超出int存储范围，最好用long long存储</span></span><br><span class="line">    sum+=((<span class="keyword">long</span> <span class="keyword">long</span>)b[<span class="number">0</span>]*<span class="number">17</span>+b[<span class="number">1</span>])*<span class="number">29</span>+b[<span class="number">2</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%lld.%lld.%lld"</span>,sum/(<span class="number">29</span>*<span class="number">17</span>),sum/<span class="number">29</span>%<span class="number">17</span>,sum%<span class="number">29</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="第二种方法代码"><a href="#第二种方法代码" class="headerlink" title="第二种方法代码"></a><strong>第二种方法代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a, b, c, a1, b1, c1, carry1 = <span class="number">0</span>, carry2 = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d.%d.%d %d.%d.%d"</span>, &amp;a, &amp;b, &amp;c, &amp;a1, &amp;b1, &amp;c1);</span><br><span class="line">    <span class="comment">//由低到高进行计算，与进位相加</span></span><br><span class="line">    c += c1;</span><br><span class="line">    carry1 = c / <span class="number">29</span>;</span><br><span class="line">    c = c % <span class="number">29</span>;</span><br><span class="line">    b += carry1 + b1;</span><br><span class="line">    carry2 = b / <span class="number">17</span>;</span><br><span class="line">    b = b % <span class="number">17</span>;</span><br><span class="line">    a += a1 + carry2;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d.%d.%d"</span>, a, b, c);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/04/git的基本用法-上/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -357,13 +827,23 @@
                 
               
 
-              <time title="创建时间：2019-11-04 20:32:56 / 修改时间：21:43:41" itemprop="dateCreated datePublished" datetime="2019-11-04T20:32:56+08:00">2019-11-04</time>
+              <time title="创建时间：2019-11-04 20:32:56" itemprop="dateCreated datePublished" datetime="2019-11-04T20:32:56+08:00">2019-11-04</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-05 11:35:27" itemprop="dateModified" datetime="2019-11-05T11:35:27+08:00">2019-11-05</time>
+              </span>
             
           
 
@@ -2138,505 +2618,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/14/8086处理器的寻址方式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/14/8086处理器的寻址方式/" class="post-title-link" itemprop="url">8086处理器的寻址方式</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-14 15:26:15" itemprop="dateCreated datePublished" datetime="2019-10-14T15:26:15+08:00">2019-10-14</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-10-16 08:32:27" itemprop="dateModified" datetime="2019-10-16T08:32:27+08:00">2019-10-16</time>
-              </span>
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/x86汇编/" itemprop="url" rel="index"><span itemprop="name">x86汇编</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="寄存器寻址"><a href="#寄存器寻址" class="headerlink" title="寄存器寻址"></a><strong>寄存器寻址</strong></h1><h1 id="立即寻址"><a href="#立即寻址" class="headerlink" title="立即寻址"></a><strong>立即寻址</strong></h1><h1 id="内存寻址"><a href="#内存寻址" class="headerlink" title="内存寻址"></a><strong>内存寻址</strong></h1>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/14/汇编一些标志寄存器和指令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/14/汇编一些标志寄存器和指令/" class="post-title-link" itemprop="url">汇编一些标志寄存器</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-14 14:53:27 / 修改时间：15:26:31" itemprop="dateCreated datePublished" datetime="2019-10-14T14:53:27+08:00">2019-10-14</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/x86汇编/" itemprop="url" rel="index"><span itemprop="name">x86汇编</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一些标志寄存器"><a href="#一些标志寄存器" class="headerlink" title="一些标志寄存器"></a><strong>一些标志寄存器</strong></h1><h2 id="奇偶标志位PF"><a href="#奇偶标志位PF" class="headerlink" title="奇偶标志位PF"></a><strong>奇偶标志位PF</strong></h2><p>当运算结果出来后，最低8位中如果有偶数个1的比特, <strong>PF</strong> = 1, 否则为0。</p>
-<h2 id="进位标志CF"><a href="#进位标志CF" class="headerlink" title="进位标志CF"></a><strong>进位标志CF</strong></h2><p>如果最高位有向前进位或者借位的情况发生<strong>CF</strong> = 1，否则为0。</p>
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a><strong>注意点</strong></h3><ul>
-<li>inc 和 dec指令除外</li>
-<li>进位标志CF对于无符号数来说通常意味着得到了错误的结果，因为溢出了，但是如果从有符号数的角度来看就不一定了，比如:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ah, 0xff</span><br><span class="line">add ah, 2</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="溢出标志OF"><a href="#溢出标志OF" class="headerlink" title="溢出标志OF"></a><strong>溢出标志OF</strong></h2><p>在上面那个例子中，从无符号的角度看，结果溢出时错误的（257），从有符号的角度看，却是正确的（-1+2），因此OF的意思是，<strong>假定进行的是有符号数运算，如果运算结果正确，OF=0，否则OF=1。</strong></p>
-<h2 id="零标志位ZF"><a href="#零标志位ZF" class="headerlink" title="零标志位ZF"></a><strong>零标志位ZF</strong></h2><p>如果计算结果是0，<strong>ZF</strong> = 1， 否则为0。</p>
-<h2 id="方向标志DF"><a href="#方向标志DF" class="headerlink" title="方向标志DF"></a><strong>方向标志DF</strong></h2><p>通过将这一位清零或置为一，可以改变<strong>movsb和movsw</strong>的传送方向。</p>
-<h3 id="相关指令"><a href="#相关指令" class="headerlink" title="相关指令"></a><strong>相关指令</strong></h3><ol>
-<li>cld指令，将DF清零，标志传送方向是正的。</li>
-<li>std指令，将DF置为一，传送方向变为负。</li>
-<li>ds:si -&gt; es:di。<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2>现有指令对标志位的影响。<br><img src="http://tva1.sinaimg.cn/large/007X8olVly1g7xr350d00j30nh0bytff.jpg" alt></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/13/PAT-A1153/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/13/PAT-A1153/" class="post-title-link" itemprop="url">PAT 甲级 1153 Decode Registration Card of PAT</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-13 18:57:46 / 修改时间：19:17:16" itemprop="dateCreated datePublished" datetime="2019-10-13T18:57:46+08:00">2019-10-13</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181212221717167.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>题目的要求是针对三种情况进行排序，输出信息。<br><img src="http://tva1.sinaimg.cn/large/007X8olVly1g7ws7tfykoj30id02awgr.jpg" alt><br>这题刚开始的时候想复杂了，想用三个不同的vector存储三种情况进行输出，其实没必要，因为分析一下发现，问题一、二：遍历student可以得到结果，复杂度是O(n)，所以其实并不需要做初始化，主要是问题三，题目要求输出给定时间的考场号，和考场人数，所以定义一个map，存放考场号，遍历一遍Student将时间相等的考场号放在map里面，就可以了。</p>
-<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a><strong>注意点</strong></h2><ul>
-<li>因为在本题中使用string，所以输入时使用了cin,输出的时候一定要使用printf(“%s”,str.c_str());的形式。</li>
-<li>map使用unordered_map</li>
-<li>问题一、三可以合并成一个程序输出，介绍代码量</li>
-<li>排序的时候使用cmp(const int&amp; a, const int&amp; b)可以减少时间。<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10010</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="built_in">string</span> id;</span><br><span class="line">    <span class="keyword">int</span> score;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">const</span> node&amp; a, <span class="keyword">const</span> node&amp; b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a.score != b.score) <span class="keyword">return</span> a.score &gt; b.score;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> a.id &lt; b.id;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d\n"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="built_in">vector</span>&lt;node&gt; Node(n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; Node[i].id &gt;&gt; Node[i].score;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> type, ans1 = <span class="number">0</span>, num = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">string</span> q, id;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; mp;</span><br><span class="line">        <span class="built_in">vector</span>&lt;node&gt; ans;</span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; type &gt;&gt; q;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Case %d: %d %s\n"</span>, i, type, q.c_str());</span><br><span class="line">        <span class="comment">// sort(Node, Node + n, cmp);</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (type)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span>(Node[j].id[<span class="number">0</span>] == q[<span class="number">0</span>]) &#123;</span><br><span class="line">                    flag = <span class="literal">false</span>;</span><br><span class="line">                    ans.push_back(Node[j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag) <span class="built_in">printf</span>(<span class="string">"NA\n"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                id = Node[j].id.substr(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">                <span class="keyword">if</span>(id == q) &#123;</span><br><span class="line">                    flag = <span class="literal">false</span>;</span><br><span class="line">                    ans1 += Node[j].score;</span><br><span class="line">                    num++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag) <span class="built_in">printf</span>(<span class="string">"NA\n"</span>);</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, num, ans1);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                id = Node[j].id.substr(<span class="number">4</span>, <span class="number">6</span>);</span><br><span class="line">                <span class="keyword">if</span>(id == q) &#123;</span><br><span class="line">                    mp[Node[j].id.substr(<span class="number">1</span>, <span class="number">3</span>)]++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> it : mp) ans.push_back(&#123;it.first, it.second&#125;);</span><br><span class="line">            <span class="keyword">if</span>(ans.size() == <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"NA\n"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(type != <span class="number">2</span> &amp;&amp; ans.size() != <span class="number">0</span>) &#123;</span><br><span class="line">            sort(ans.begin(), ans.end(), cmp);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; ans.size(); j++) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%s %d\n"</span>, ans[j].id.c_str(), ans[j].score);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2683,7 +2664,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-count">49</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
