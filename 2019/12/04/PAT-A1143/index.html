@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题目描述 算法设计最近公共祖先问题，我们使用倍增法，参考博客，首先介绍一下倍增法，主要代码如下： 12345678910111213141516171819202122232425struct Node&amp;#123;//结点类    int data,father,level;//权值、父节点在pre中的下标、深度    Node(int d=0,int f=-1,int l=0):data(d),">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PAT 甲级 1143 Lowest Common Ancestor">
+<meta property="og:url" content="https://LiuPjia.github.io/2019/12/04/PAT-A1143/index.html">
+<meta property="og:site_name" content="佳的个人博客">
+<meta property="og:description" content="题目描述 算法设计最近公共祖先问题，我们使用倍增法，参考博客，首先介绍一下倍增法，主要代码如下： 12345678910111213141516171819202122232425struct Node&amp;#123;//结点类    int data,father,level;//权值、父节点在pre中的下标、深度    Node(int d=0,int f=-1,int l=0):data(d),">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190103105322706.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-12-04T11:39:55.347Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PAT 甲级 1143 Lowest Common Ancestor">
+<meta name="twitter:description" content="题目描述 算法设计最近公共祖先问题，我们使用倍增法，参考博客，首先介绍一下倍增法，主要代码如下： 12345678910111213141516171819202122232425struct Node&amp;#123;//结点类    int data,father,level;//权值、父节点在pre中的下标、深度    Node(int d=0,int f=-1,int l=0):data(d),">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190103105322706.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://LiuPjia.github.io/2019/12/04/PAT-A1143/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PAT 甲级 1143 Lowest Common Ancestor | 佳的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佳的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/04/PAT-A1143/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PAT 甲级 1143 Lowest Common Ancestor
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-04 19:13:05 / 修改时间：19:39:55" itemprop="dateCreated datePublished" datetime="2019-12-04T19:13:05+08:00">2019-12-04</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20190103105322706.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt="题目描述"></p>
+<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h1><p>最近公共祖先问题，我们使用倍增法，<a href="https://blog.csdn.net/richenyunqi/article/details/79548801" target="_blank" rel="noopener">参考博客</a>，首先介绍一下倍增法，主要代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span><span class="comment">//结点类</span></span><br><span class="line">    <span class="keyword">int</span> data,father,level;<span class="comment">//权值、父节点在pre中的下标、深度</span></span><br><span class="line">    Node(<span class="keyword">int</span> d=<span class="number">0</span>,<span class="keyword">int</span> f=<span class="number">-1</span>,<span class="keyword">int</span> l=<span class="number">0</span>):data(d),father(f),level(l)&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Node tree[MAX];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LCA</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;<span class="comment">//倍增法解LCA问题，返回最近公共祖先在tree中的下标</span></span><br><span class="line">    <span class="keyword">int</span> ia=<span class="number">-1</span>,ib=<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;<span class="comment">//找到两个结点在pre数组中的下标</span></span><br><span class="line">        <span class="keyword">if</span>(tree[i].data==a)</span><br><span class="line">            ia=i;</span><br><span class="line">        <span class="keyword">if</span>(tree[i].data==b)</span><br><span class="line">            ib=i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(ia==<span class="number">-1</span>||ib==<span class="number">-1</span>)<span class="comment">//结点不在树中，返回-1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(pre[ia].level&lt;pre[ib].level)<span class="comment">//让ia指向深度更大的结点</span></span><br><span class="line">        swap(ia,ib);</span><br><span class="line">    <span class="keyword">while</span>(pre[ia].level&gt;pre[ib].level)<span class="comment">//将二者调整到同一深度</span></span><br><span class="line">        ia=pre[ia].father;</span><br><span class="line">    <span class="keyword">while</span>(ia!=ib)&#123;<span class="comment">//ia,ib同时向上调整，直至二者指向同一结点</span></span><br><span class="line">        ia=pre[ia].father;</span><br><span class="line">        ib=pre[ib].father;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ia;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以得到，使用倍增法解决两个结点的最近公共祖先有三个步骤：</p>
+<ol>
+<li>寻找两个结点在树中的下标（数组表示）。</li>
+<li>将两个结点调整到同一深度。</li>
+<li>两个结点同时向上调整，直至二者指向同一结点。</li>
+</ol>
+<p>而这题还要解决一个问题，如何确定父节点，我们之前做的都是，通过遍历dfs确定子结点的下标，现在是要确定父亲结点的下标。主要代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> father, <span class="keyword">int</span> level)</span> </span>&#123; <span class="comment">//先序序列中根结点的坐标，中序遍历的左结点，右结点，父亲结点，层次</span></span><br><span class="line">    <span class="keyword">if</span>(left &gt; right) </span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> i = left;</span><br><span class="line">    <span class="keyword">while</span>(i &lt;= right &amp;&amp; in[i] != Node[root].data) <span class="comment">//从中序序列中得到根结点的下标</span></span><br><span class="line">        i++;</span><br><span class="line">    <span class="keyword">int</span> numleft = i - left; <span class="comment">//确定左子树的结点个数</span></span><br><span class="line">    Node[root] = node(Node[root].data, level, father); <span class="comment">//确定当前子树根结点的父节点和深度</span></span><br><span class="line">    create(root + <span class="number">1</span>, left, i - <span class="number">1</span>, root, level + <span class="number">1</span>);  <span class="comment">//递归遍历左子树，root + 1</span></span><br><span class="line">    create(root + numleft + <span class="number">1</span>, i + <span class="number">1</span>, right, root, level + <span class="number">1</span>); <span class="comment">//右子树，root + numleft + 1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两个问题解决了，我们就可以解决这个问题了。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10010</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data, level, father;</span><br><span class="line">    node(<span class="keyword">int</span> data, <span class="keyword">int</span> level, <span class="keyword">int</span> father) : data(data), level(level), father(father) &#123;&#125;</span><br><span class="line">    node() &#123;&#125;</span><br><span class="line">&#125;Node[maxn];</span><br><span class="line"><span class="keyword">int</span> in[maxn], pre[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> father, <span class="keyword">int</span> level)</span> </span>&#123; <span class="comment">//先序序列中根结点的坐标，中序遍历的左结点，右结点，父亲结点，层次</span></span><br><span class="line">    <span class="keyword">if</span>(left &gt; right) </span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> i = left;</span><br><span class="line">    <span class="keyword">while</span>(i &lt;= right &amp;&amp; in[i] != Node[root].data) <span class="comment">//从中序序列中得到根结点的下标</span></span><br><span class="line">        i++;</span><br><span class="line">    <span class="keyword">int</span> numleft = i - left; <span class="comment">//确定左子树的结点个数</span></span><br><span class="line">    Node[root] = node(Node[root].data, level, father); <span class="comment">//确定当前子树根结点的父节点和深度</span></span><br><span class="line">    create(root + <span class="number">1</span>, left, i - <span class="number">1</span>, root, level + <span class="number">1</span>);  <span class="comment">//递归遍历左子树，root + 1</span></span><br><span class="line">    create(root + numleft + <span class="number">1</span>, i + <span class="number">1</span>, right, root, level + <span class="number">1</span>); <span class="comment">//右子树，root + numleft + 1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m, k, a, b;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt; mp;<span class="comment">//判断结点是否出现</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;Node[i].data);</span><br><span class="line">        in[i] = pre[i] = Node[i].data;</span><br><span class="line">        mp[Node[i].data] = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(in, in + m);<span class="comment">//得到中序序列</span></span><br><span class="line">    create(<span class="number">0</span>, <span class="number">0</span>, m - <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">while</span>(n--) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">if</span>(mp[a] != <span class="literal">true</span> &amp;&amp; mp[b] != <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"ERROR: %d and %d are not found.\n"</span>, a, b);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(mp[a] != <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"ERROR: %d is not found.\n"</span>, a);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(mp[b] != <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"ERROR: %d is not found.\n"</span>, b);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> ia = <span class="number">-1</span>, ib = <span class="number">-1</span>, tempa = a, tempb = b;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;<span class="comment">//遍历得到a, b的下标</span></span><br><span class="line">                <span class="keyword">if</span>(Node[i].data == a) ia = i;</span><br><span class="line">                <span class="keyword">if</span>(Node[i].data == b) ib = i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(Node[ia].level &gt; Node[ib].level) &#123;<span class="comment">//让ib指向深度更大的结点</span></span><br><span class="line">                swap(ia, ib);</span><br><span class="line">                swap(a, b);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span>(Node[ib].level != Node[ia].level) ib = Node[ib].father; <span class="comment">//调整ia, ib到同一层次</span></span><br><span class="line">            <span class="keyword">if</span>(ia == ib) <span class="built_in">printf</span>(<span class="string">"%d is an ancestor of %d.\n"</span>, a, b);</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span>(ib != ia) &#123;<span class="comment">//ia,ib同时向上调整，直至二者指向同一结点</span></span><br><span class="line">                    ia = Node[ia].father;</span><br><span class="line">                    ib = Node[ib].father;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"LCA of %d and %d is %d.\n"</span>, tempa, tempb, Node[ia].data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/24/操作系统的引导/" rel="next" title="操作系统的引导">
+                <i class="fa fa-chevron-left"></i> 操作系统的引导
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">佳</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">53</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法设计"><span class="nav-number">2.</span> <span class="nav-text">算法设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">佳</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
