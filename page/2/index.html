@@ -312,6 +312,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/06/PAT-A1060/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/06/PAT-A1060/" class="post-title-link" itemprop="url">PAT 甲级 A1060</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-06 20:14:19 / 修改时间：20:42:03" itemprop="dateCreated datePublished" datetime="2019-11-06T20:14:19+08:00">2019-11-06</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1060-Are-They-Equal"><a href="#1060-Are-They-Equal" class="headerlink" title="1060 Are They Equal"></a><strong><center>1060 Are They Equal</center></strong></h2><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8ol9csyxbj310q0m7gnl.jpg" alt="题目"></p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>给出两个数，转为科学计数法，但是机器可以存放的小数点后的有效位数是n，即超过n的数字将会丢弃，没有超过n就用0填充，用这种方法判断两个数的科学计数法是否相同。我的思路是，首先将前面的0给去掉，然后设置一个结构体，存放的是有效小数和指数，如果都相同才判断这两个数相同，在判断时，将数据分为了小数部分和整数部分进行处理，因为要通过小数点 ‘.’ 的位置得出指数的大小，所以好的做法是初始为字符串长度。</p>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a><strong>注意点</strong></h2><ul>
+<li><p>给的数据前面又可能有多个0，比如00000.1119, 000099999。</p>
+</li>
+<li><p>如果给的数据是0的话，要输出0.0000*10^0这种形式。</p>
+</li>
+<li><p>综合的0000.00000</p>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">10010</span>]; <span class="comment">//存放的有效数</span></span><br><span class="line">    <span class="keyword">int</span> len; <span class="comment">//指数</span></span><br><span class="line">    node() &#123;len = <span class="number">0</span>;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">judge</span><span class="params">(node&amp; a, <span class="keyword">int</span> b)</span> </span>&#123; <span class="comment">//填充0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = b; i &lt; n; i++) a.str[i] = <span class="string">'0'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">node <span class="title">change</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    node a;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">0</span>, e = <span class="number">0</span>, st = <span class="number">1</span>, temp; <span class="comment">//当前a存放数的长度，指数，开始位置</span></span><br><span class="line">    <span class="keyword">if</span>(s != <span class="string">""</span> &amp;&amp; s[<span class="number">0</span>] == <span class="string">'.'</span>) &#123;<span class="comment">//是小数</span></span><br><span class="line">        <span class="keyword">while</span>(st &lt; s.length() &amp;&amp; s[st] == <span class="string">'0'</span>) &#123;st++; e--;&#125;  <span class="comment">//找到小数后面第一个不为0的数，并记录指数</span></span><br><span class="line">        temp = st;<span class="comment">//得到第一个非0数的位置</span></span><br><span class="line">        <span class="keyword">while</span>(st &lt; s.length() &amp;&amp; b &lt; n) &#123;a.str[st - temp] = s[st]; b++; st++;&#125; <span class="comment">//有效的数进行填充</span></span><br><span class="line">        <span class="keyword">if</span>(b == <span class="number">0</span>) e = <span class="number">0</span>; <span class="comment">//.00000这种情况</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(s != <span class="string">""</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> indexE = s.find(<span class="string">"."</span>); <span class="comment">//找到小数点位置</span></span><br><span class="line">        <span class="keyword">if</span>(indexE &lt; <span class="number">0</span>) indexE = s.length(); <span class="comment">//没有小数点，将位置设为s.length()</span></span><br><span class="line">        st = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123; <span class="comment">//从0遍历字符串</span></span><br><span class="line">            <span class="keyword">if</span>(i &lt; indexE) e++;   <span class="comment">//指数++</span></span><br><span class="line">            <span class="keyword">if</span>(b == n || i == indexE) <span class="keyword">continue</span>;</span><br><span class="line">            a.str[st++] = s[i];  <span class="comment">//填充</span></span><br><span class="line">            b++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    a.len = e;</span><br><span class="line">    judge(a, b);</span><br><span class="line">    a.str[n] = <span class="string">'\0'</span>; <span class="comment">//要在这里添加结束符，否则输出乱码</span></span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">convert</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123; <span class="comment">//去掉字符串s的前0</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; s.length() &amp;&amp; s[i] == <span class="string">'0'</span>) i++;</span><br><span class="line">    <span class="keyword">return</span> s.substr(i, s.length())<span class="string">''</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s1,s2;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; s1 &gt;&gt; s2;</span><br><span class="line">    s1 = convert(s1), s2 = convert(s2);</span><br><span class="line">    node a = change(s1), b = change(s2);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">strcmp</span>(a.str, b.str) == <span class="number">0</span> &amp;&amp; a.len == b.len) <span class="built_in">printf</span>(<span class="string">"YES 0.%s*10^%d\n"</span>, a.str, a.len);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"NO 0.%s*10^%d 0.%s*10^%d\n"</span>,a.str, a.len, b.str, b.len);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/06/PAT-A058/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2481,182 +2638,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/14/汇编一些标志寄存器和指令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/14/汇编一些标志寄存器和指令/" class="post-title-link" itemprop="url">汇编一些标志寄存器</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-14 14:53:27 / 修改时间：15:26:31" itemprop="dateCreated datePublished" datetime="2019-10-14T14:53:27+08:00">2019-10-14</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/x86汇编/" itemprop="url" rel="index"><span itemprop="name">x86汇编</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一些标志寄存器"><a href="#一些标志寄存器" class="headerlink" title="一些标志寄存器"></a><strong>一些标志寄存器</strong></h1><h2 id="奇偶标志位PF"><a href="#奇偶标志位PF" class="headerlink" title="奇偶标志位PF"></a><strong>奇偶标志位PF</strong></h2><p>当运算结果出来后，最低8位中如果有偶数个1的比特, <strong>PF</strong> = 1, 否则为0。</p>
-<h2 id="进位标志CF"><a href="#进位标志CF" class="headerlink" title="进位标志CF"></a><strong>进位标志CF</strong></h2><p>如果最高位有向前进位或者借位的情况发生<strong>CF</strong> = 1，否则为0。</p>
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a><strong>注意点</strong></h3><ul>
-<li>inc 和 dec指令除外</li>
-<li>进位标志CF对于无符号数来说通常意味着得到了错误的结果，因为溢出了，但是如果从有符号数的角度来看就不一定了，比如:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ah, 0xff</span><br><span class="line">add ah, 2</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="溢出标志OF"><a href="#溢出标志OF" class="headerlink" title="溢出标志OF"></a><strong>溢出标志OF</strong></h2><p>在上面那个例子中，从无符号的角度看，结果溢出时错误的（257），从有符号的角度看，却是正确的（-1+2），因此OF的意思是，<strong>假定进行的是有符号数运算，如果运算结果正确，OF=0，否则OF=1。</strong></p>
-<h2 id="零标志位ZF"><a href="#零标志位ZF" class="headerlink" title="零标志位ZF"></a><strong>零标志位ZF</strong></h2><p>如果计算结果是0，<strong>ZF</strong> = 1， 否则为0。</p>
-<h2 id="方向标志DF"><a href="#方向标志DF" class="headerlink" title="方向标志DF"></a><strong>方向标志DF</strong></h2><p>通过将这一位清零或置为一，可以改变<strong>movsb和movsw</strong>的传送方向。</p>
-<h3 id="相关指令"><a href="#相关指令" class="headerlink" title="相关指令"></a><strong>相关指令</strong></h3><ol>
-<li>cld指令，将DF清零，标志传送方向是正的。</li>
-<li>std指令，将DF置为一，传送方向变为负。</li>
-<li>ds:si -&gt; es:di。<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2>现有指令对标志位的影响。<br><img src="http://tva1.sinaimg.cn/large/007X8olVly1g7xr350d00j30nh0bytff.jpg" alt></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2703,7 +2684,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">57</span>
+                    <span class="site-state-item-count">58</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
