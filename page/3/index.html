@@ -312,6 +312,696 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/03/Linux任务计划crontab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/03/Linux任务计划crontab/" class="post-title-link" itemprop="url">Linux任务计划crontab</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-03 08:53:08" itemprop="dateCreated datePublished" datetime="2019-11-03T08:53:08+08:00">2019-11-03</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-04 20:29:50" itemprop="dateModified" datetime="2019-11-04T20:29:50+08:00">2019-11-04</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux基础入门/" itemprop="url" rel="index"><span itemprop="name">Linux基础入门</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="实验介绍"><a href="#实验介绍" class="headerlink" title="实验介绍"></a><strong>实验介绍</strong></h1><p>我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具<strong>crontab</strong>。</p>
+<h1 id="crontab的使用"><a href="#crontab的使用" class="headerlink" title="*crontab的使用"></a><em>*crontab的使用</em></h1><p>crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。</p>
+<h2 id="crontab简介"><a href="#crontab简介" class="headerlink" title="crontab简介"></a><strong>crontab简介</strong></h2><p>crontab 命令从输入设备读取指令，并将其存放于 crontab 文件中，以供之后读取和执行。通常，crontab 储存的指令被守护进程激活，crond 为其守护进程，crond 常常在后台运行，每一分钟会检查一次是否有预定的作业需要执行。</p>
+<p>通过 crontab 命令，我们可以在固定的间隔时间执行指定的系统指令或 shell　script 脚本。时间间隔的单位可以是分钟、小时、日、月、周的任意组合。</p>
+<p>这里我们看一看crontab 的格式</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example of job definition:</span></span><br><span class="line"><span class="comment"># .---------------- minute (0 - 59)</span></span><br><span class="line"><span class="comment"># |  .------------- hour (0 - 23)</span></span><br><span class="line"><span class="comment"># |  |  .---------- day of month (1 - 31)</span></span><br><span class="line"><span class="comment"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span></span><br><span class="line"><span class="comment"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span></span><br><span class="line"><span class="comment"># |  |  |  |  |</span></span><br><span class="line"><span class="comment"># *  *  *  *  * user-name command to be executed    表示每分钟执行这个指令一次</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="crontab准备"><a href="#crontab准备" class="headerlink" title="crontab准备"></a><strong>crontab准备</strong></h2><ul>
+<li><p>首先我们会启动 <strong>rsyslog</strong>，以便我们可以通过日志中的信息来了解我们的任务是否真正的被执行了（ubuntu会默认执行）</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动rsyslog，便于查看日志信息</span></span><br><span class="line">sudo apt-get install -y rsyslog</span><br><span class="line">sudo service rsyslog start</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动<strong>crontab</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cron －f &amp;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="crontab的使用-1"><a href="#crontab的使用-1" class="headerlink" title="crontab的使用"></a><strong>crontab的使用</strong></h2><h3 id="添加一个计划任务"><a href="#添加一个计划任务" class="headerlink" title="添加一个计划任务"></a><strong>添加一个计划任务</strong></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用vim在最后一行添加计划"><a href="#使用vim在最后一行添加计划" class="headerlink" title="使用vim在最后一行添加计划"></a><strong>使用vim在最后一行添加计划</strong></h2><p>文档的最后一排加上这样一排命令,该任务是每分钟我们会在/home/shiyanlou目录下创建一个以当前的年月日时分秒为名字的空白文件。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/1 * * * * touch /home/shiyanlou/$(date +\%Y\%m\%d\%H\%M\%S) <span class="comment"># "\"表示将"%"转义</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用crontab-l查看添加了哪些任务"><a href="#使用crontab-l查看添加了哪些任务" class="headerlink" title="使用crontab -l查看添加了哪些任务"></a><strong>使用crontab -l查看添加了哪些任务</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://dn-simplecloud.shiyanlou.com/1135081468204230683-wm" alt></p>
+<h2 id="启动cron的守护进程"><a href="#启动cron的守护进程" class="headerlink" title="启动cron的守护进程"></a><strong>启动cron的守护进程</strong></h2><p>虽然我们添加了任务，但是如果 cron 的守护进程并没有启动，它根本都不会监测到有任务，当然也就不会帮我们执行，我们可以通过以下2种方式来确定我们的 cron 是否成功的在后台启动，默默的帮我们做事。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep cron</span><br><span class="line"></span><br><span class="line">or</span><br><span class="line"></span><br><span class="line">pgrep cron</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看执行任务的信息反馈"><a href="#查看执行任务的信息反馈" class="headerlink" title="查看执行任务的信息反馈"></a><strong>查看执行任务的信息反馈</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tail -f /var/<span class="built_in">log</span>/syslog</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除任务：crontab-r"><a href="#删除任务：crontab-r" class="headerlink" title="删除任务：crontab -r"></a><strong>删除任务：crontab -r</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -r</span><br></pre></td></tr></table></figure>
+
+<h1 id="例子：备份日志"><a href="#例子：备份日志" class="headerlink" title="例子：备份日志"></a><strong>例子：备份日志</strong></h1><p>小明是一个服务器管理员，他需要每天备份论坛数据（这里我们用 alternatives.log 日志替代），备份当天的日志并删除之前的日志。而且备份之后文件名是 年-月-日 的格式。alternatives.log 在 /var/log/ 下面。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a><strong>目标</strong></h2><hr>
+<ol>
+<li>为 shiyanlou 用户添加计划任务</li>
+<li>每天凌晨 3 点的时候定时备份 alternatives.log 到 /home/shiyanlou/tmp/ 目录</li>
+<li>命名格式为 年-月-日，比如今天是2017年4月1日，那么文件名为 2017-04-01<h2 id="参考答案"><a href="#参考答案" class="headerlink" title="参考答案"></a><strong>参考答案</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo cron -f &amp; <span class="comment">#启动crontab</span></span><br><span class="line">crontab -e <span class="comment">#添加</span></span><br><span class="line">0 3 * * * sudo rm /home/shiyanlou/tmp/*</span><br><span class="line">0 3 * * * sudo cp /var/<span class="built_in">log</span>/alternatives.log /home/shiyanlou/tmp/$(date +\%Y-\%m-\%d)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/01/文件打包与解压缩/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/01/文件打包与解压缩/" class="post-title-link" itemprop="url">文件打包与解压缩</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-01 11:12:57 / 修改时间：14:35:36" itemprop="dateCreated datePublished" datetime="2019-11-01T11:12:57+08:00">2019-11-01</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux基础入门/" itemprop="url" rel="index"><span itemprop="name">Linux基础入门</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="zip命令"><a href="#zip命令" class="headerlink" title="zip命令"></a><strong>zip命令</strong></h1><h2 id="zip压缩打包程序"><a href="#zip压缩打包程序" class="headerlink" title="zip压缩打包程序"></a><strong>zip压缩打包程序</strong></h2><ul>
+<li><strong>使用zip打包文件夹</strong><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/shiyanlou</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> zip -r -q -o shiyanlou.zip /home/shiyanlou/Desktop <span class="comment">#将文件打包</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> du -h shiyanlou.zip  <span class="comment">#查看文件大小</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> file shiyanlou.zip  <span class="comment">#查看文件属性</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>上面命令将目录 /home/shiyanlou/Desktop 打包成一个文件，并查看了打包后文件的大小和类型。第一行命令中，<font color="red">-r</font> 参数表示递归打包包含子目录的全部内容，<font color="red">-q</font> 参数表示为安静模式，即不向屏幕输出信息，<font color="red">-o</font>，表示输出文件，需在其后紧跟打包输出文件名。后面使用 du 命令查看打包后文件的大小</p>
+<ul>
+<li><strong>创建加密</strong><br>使用 <font color="red">-e</font> 参数可以创建加密压缩包：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> zip -r -e -o shiyanlou_encryption.zip /home/shiyanlou/Desktop</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>注意：</strong> 由于windowns和linux存在一些兼容问题，想让你在 Linux 创建的 zip 压缩文件在 Windows 上解压后没有任何问题，那么你还需要对命令做一些修改：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> zip -r -l -o shiyanlou.zip /home/shiyanlou/Desktop</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-unzip-命令解压缩-zip-文件"><a href="#使用-unzip-命令解压缩-zip-文件" class="headerlink" title="使用 unzip 命令解压缩 zip 文件"></a><strong>使用 unzip 命令解压缩 zip 文件</strong></h2><p>将 shiyanlou.zip 解压到当前目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> unzip shiyanlou.zip</span></span><br></pre></td></tr></table></figure>
+
+<p>使用安静模式，将文件解压到指定目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> unzip -q shiyanlou.zip -d ziptest</span></span><br></pre></td></tr></table></figure>
+
+<p>上述指定目录不存在，将会自动创建。如果你不想解压只想查看压缩包的内容你可以使用 -l 参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> unzip -l shiyanlou.zip</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong> 使用 unzip 解压文件时我们同样应该注意兼容问题，不过这里我们关心的不再是上面的问题，而是中文编码的问题，通常 Windows 系统上面创建的压缩文件，如果有有包含中文的文档或以中文作为文件名的文件时默认会采用 GBK 或其它编码，而 Linux 上面默认使用的是 UTF-8 编码， 为了解决这个问题，我们可以在解压时指定编码类型。</p>
+<p>使用 -O（英文字母，大写 o）参数指定编码类型：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip -O GBK 中文压缩文件.zip</span><br></pre></td></tr></table></figure>
+
+<h1 id="tar打包工具"><a href="#tar打包工具" class="headerlink" title="tar打包工具"></a><strong>tar打包工具</strong></h1><p>tar 原本只是一个打包工具，只是同时还是实现了对 7z、gzip、xz、bzip2 等工具的支持，这些压缩工具本身只能实现对文件或目录（单独压缩目录中的文件）的压缩，tar的解压和压缩都是同一个命令。</p>
+<h2 id="面先掌握-tar-命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。"><a href="#面先掌握-tar-命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。" class="headerlink" title="面先掌握 tar 命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。"></a><strong>面先掌握 <font color="red">tar</font> 命令一些基本的使用方式，即不进行压缩只是进行打包（创建归档文件）和解包的操作。</strong></h2><ul>
+<li>创建一个tar包：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/shiyanlou</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -cf shiyanlou.tar /home/shiyanlou/Desktop</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>上面命令中，<font color="red">-c</font> 表示创建一个 tar 包文件，<font color="red">-f</font> 用于指定创建的文件名，注意文件名必须紧跟在 <font color="red">-f</font> 参数之后，比如不能写成 <font color="red">tar -fc shiyanlou.tar</font>，上面会自动去掉表示绝对路径的 <font color="red">/</font>，你也可以使用 <font color="red">-P</font> 保留绝对路径符。</p>
+<ul>
+<li><p>解包一个文件（-x 参数）到指定路径的已存在目录（-C 参数）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir tardir</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -xf shiyanlou.tar -C tardir</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只查看不解包文件 -t 参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar -tf shiyanlou.tar</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="对于创建不同的压缩格式的文件，对于-tar-来说是相当简单的，需要的只是换一个参数-以使用-gzip-工具创建-tar-gz-文件为例"><a href="#对于创建不同的压缩格式的文件，对于-tar-来说是相当简单的，需要的只是换一个参数-以使用-gzip-工具创建-tar-gz-文件为例" class="headerlink" title="对于创建不同的压缩格式的文件，对于 tar 来说是相当简单的，需要的只是换一个参数,以使用 gzip 工具创建 *.tar.gz 文件为例"></a><strong>对于创建不同的压缩格式的文件，对于 tar 来说是相当简单的，需要的只是换一个参数,以使用 gzip 工具创建 *.tar.gz 文件为例</strong></h2><ul>
+<li><p>我们只需要在创建 <font color="red">tar</font> 文件的基础上添加 <font color="red">-z</font> 参数，使用 <font color="red">gzip</font> 来压缩文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar -czf shiyanlou.tar.gz /home/shiyanlou/Desktop</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压 <font color="red">*.tar.gz</font> 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar -xzf shiyanlou.tar.gz</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>现在我们要使用其它的压缩工具创建或解压相应文件只需要更改一个参数即可：</p>
+<table>
+<thead>
+<tr>
+<th><strong>压缩文件格式</strong></th>
+<th><strong>参数</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><font color="red">*.tar.gz</font></td>
+<td><font color="red">-z</font></td>
+</tr>
+<tr>
+<td><font color="red">*.tar.xz</font></td>
+<td><font color="red">-J</font></td>
+</tr>
+<tr>
+<td><font color="red">*tar.bz2</font></td>
+<td><font color="red">-j</font></td>
+</tr>
+</tbody></table>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h1><p>只需要记住常用的组合就可以了。 常用命令：</p>
+<ul>
+<li>zip：</li>
+</ul>
+<ol>
+<li>打包 ：zip something.zip something （目录请加 -r 参数）</li>
+<li>解包：unzip something.zip</li>
+<li><strong>指定路径：-d 参数</strong></li>
+</ol>
+<ul>
+<li>tar：</li>
+</ul>
+<ol>
+<li>打包：tar -cf something.tar something</li>
+<li>解包：tar -xf something.tar</li>
+<li><strong>指定路径：-C 参数</strong></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/31/环境变量与查找/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/31/环境变量与查找/" class="post-title-link" itemprop="url">环境变量与文件查找</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-31 18:28:58 / 修改时间：20:57:58" itemprop="dateCreated datePublished" datetime="2019-10-31T18:28:58+08:00">2019-10-31</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux基础入门/" itemprop="url" rel="index"><span itemprop="name">Linux基础入门</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a><strong>环境变量</strong></h1><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a><strong>变量</strong></h2><p>准确的说应该是 Shell 变量，有<strong>作用域</strong>限定。<br>我们可以使用declare创建变量，也可以即用即创建。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">declare</span> tmp <span class="comment">#声明tmp变量</span></span><br><span class="line">tmp=shiyanlou <span class="comment">#直接定义tmp变量的值为shiyanlou</span></span><br></pre></td></tr></table></figure>
+
+<p>使用echo命令和$（表示引用）符号读取变量的值</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$tmp</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="什么是环境变量"><a href="#什么是环境变量" class="headerlink" title="什么是环境变量"></a><strong>什么是环境变量</strong></h2><p>通常我们会涉及到的变量类型有三种：</p>
+<ul>
+<li><p>当前 Shell 进程私有用户自定义变量，如上面我们创建的 tmp 变量，只在当前 Shell 中有效。</p>
+</li>
+<li><p>Shell 本身内建的变量。</p>
+</li>
+<li><p>从自定义变量导出的环境变量。</p>
+<p>而关于环境变量可以简单的理解为可以在当前进程的子进程有效称为环境变量，比如我们刚刚创建的tmp变量，它只在当前的shell中有效，其他进程不能访问调用它，那么它只是属于私有用户的自定义变量，不是环境变量，而我们使用export tmp，将变量导出后，我们新建一个shell，使用echo访问它，可以访问，所以就变成了环境变量，因此有些人也将所有变量统称为环境变量，只是以全局环境变量和局部环境变量进行区分而已。</p>
+<p>实验：在当前shell定义变量tmp，并将其导出，使用zsh新建一个shell，进行访问。<br><img src="https://doc.shiyanlou.com/document-uid735639labid60timestamp1532339293501.png/wm" alt></p>
+<p><strong>注意：为了与普通变量区分，通常我们习惯将环境变量名设为大写。</strong></p>
+<p>与上述三种环境变量相关的命令有：set, env, export，不加参数都是用来打印当前变量的信息，区别是涉及到的变量范围不同。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>命 令</th>
+<th>说 明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;font=red&gt;set</td>
+<td>显示当前 Shell 所有变量，包括其内建环境变量（与 Shell 外观等相关），用户自定义变量及导出的环境变量。</td>
+</tr>
+<tr>
+<td>&lt;font=red&gt;env</td>
+<td>显示与当前用户相关的环境变量，还可以让命令在指定环境中运行。</td>
+</tr>
+<tr>
+<td>&lt;font=red&gt;export</td>
+<td>显示从 Shell 中导出成环境变量的变量，也能通过它将自定义变量导出为环境变量。</td>
+</tr>
+</tbody></table>
+<h2 id="永久生效"><a href="#永久生效" class="headerlink" title="永久生效"></a><strong>永久生效</strong></h2><p>按变量的生存周期来划分，Linux 变量可分为两类：</p>
+<ol>
+<li><p>永久的：需要修改配置文件，变量永久生效；</p>
+</li>
+<li><p>临时的：使用 export 命令行声明即可，变量在关闭 shell 时失效。</p>
+</li>
+</ol>
+<p>而我们一旦关闭shell，我们设置的环境变量也会失效，那么怎么让它永久生效呢？</p>
+<p>这里介绍两个重要文件 &lt;font=red&gt;/etc/bashrc（有的 Linux 没有这个文件） 和 &lt;font=red&gt;/etc/profile ，它们分别存放的是 shell 变量和环境变量。还有要注意区别的是每个用户目录下的一个隐藏文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.profile 可以用 ls -a 查看</span><br><span class="line">cd /home/shiyanlou</span><br><span class="line">ls -a</span><br></pre></td></tr></table></figure>
+
+<p>这个 &lt;font=red&gt;.profile 只对当前用户永久生效。而写在 &lt;font=red&gt;/etc/profile 里面的是对所有用户永久生效，所以如果想要添加一个永久生效的环境变量，只需要打开 &lt;font=red&gt;/etc/profile，在最后加上你想添加的环境变量就好啦。格式是<strong>export 变量名=变量值</strong>，如下图所示：</p>
+<p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8hm3w4bmrj30eg03v3yz.jpg" alt></p>
+<h2 id="命令的查找路径和顺序"><a href="#命令的查找路径和顺序" class="headerlink" title="命令的查找路径和顺序"></a><strong>命令的查找路径和顺序</strong></h2><p>Shell 中输入一个命令，Shell 是怎么知道去哪找到这个命令然后执行的呢？ </p>
+<p>shell 首先检查命令是否是内部命令，不是的话再检查是否是一个应用程序，这里的应用程序可以是Linux本身的实用程序，然后shell试着在搜索路径($PATH)里寻找这些应用程序。如果你键入的命令不是一个内部命令并且在路径里没有找到这个可执行文件，将会显示一条错误信息。而如果命令被成功的找到的话，shell的内部命令或应用程序将被分解为系统调用并传给Linux内核。</p>
+<p>下面我们创建脚本文件和C语言程序，用于执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建一个shell脚本文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/shiyanlou</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> touch hello_shell.sh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gedit hello_shell.sh <span class="comment">#对文件进行编辑，以下是内容</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">---------</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">for ((i=0; i&lt;10; i++));do</span><br><span class="line">    echo "hello shell"</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">exit 0</span><br><span class="line"><span class="meta">#</span><span class="bash">--------</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chmod 755 hello_shell.sh <span class="comment">#为文件添加可执行权限</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">创建一个 C 语言“ hello world ”程序：</span></span><br><span class="line">gedit hello_world.c</span><br><span class="line"><span class="meta">#</span><span class="bash">-----以下是内容</span></span><br><span class="line"><span class="meta">#</span><span class="bash">include &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    printf("hello world!\n");</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">-------</span></span><br><span class="line"><span class="meta">#</span><span class="bash">新建目录，并将可执行文件移到目录下</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir mybin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mv hello_shell.sh hello_world mybin/</span></span><br><span class="line"><span class="meta">#</span><span class="bash">执行程序</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./hello_shell.sh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./hello_world</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://doc.shiyanlou.com/document-uid735639labid60timestamp1532339433567.png/wm" alt></p>
+<p>缺点显而易见，只有在当前目录（除非加上命令的完整路径），才可以使用我们的命令，如何做到像使用系统命令一样执行自己创建的脚本文件或者程序呢？那就要将命令所在路径添加到 <font color="red">PATH</font> 环境变量了。</p>
+<h2 id="添加自定义路径到“-PATH-”环境变量"><a href="#添加自定义路径到“-PATH-”环境变量" class="headerlink" title="添加自定义路径到“ PATH ”环境变量"></a><strong>添加自定义路径到“ PATH ”环境变量</strong></h2><p>在前面我们应该注意到 <strong>PATH</strong> 里面的路径是以 <strong>:</strong> 作为分割符的，所以我们可以这样添加自定义路径：<br> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> PATH=<span class="variable">$PATH</span>:/home/shiyanlou/mybin</span></span><br></pre></td></tr></table></figure></p>
+<p> 因为我给 PATH 环境变量追加了一个路径，它也只是在当前 Shell 有效，我一旦退出终端，再打开就会发现又失效了。有没有方法让添加的环境变量全局有效？或者每次启动 Shell 时自动执行上面添加自定义路径到 PATH 的命令？</p>
+<h2 id="让添加的环境变量全局有效"><a href="#让添加的环境变量全局有效" class="headerlink" title="让添加的环境变量全局有效"></a><strong>让添加的环境变量全局有效</strong></h2><p> 使用前面介绍的export + /etc/profile<br> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/home/shiyanlou/mybin</span><br></pre></td></tr></table></figure></p>
+<p> 每次添加新的环境变量时，修改/etc/profile文件就可以了。</p>
+<h2 id="每次启动-Shell-时自动执行上面添加自定义路径到-PATH-的命令"><a href="#每次启动-Shell-时自动执行上面添加自定义路径到-PATH-的命令" class="headerlink" title="每次启动 Shell 时自动执行上面添加自定义路径到 PATH 的命令"></a><strong>每次启动 Shell 时自动执行上面添加自定义路径到 PATH 的命令</strong></h2><p> 在每个用户的 home 目录中有一个 Shell 每次启动时会默认执行一个配置脚本，以初始化环境，包括添加一些用户自定义环境变量等等。zsh 的配置文件是 .zshrc，相应 Bash 的配置文件为 .bashrc 。它们在 etc 下还都有一个或多个全局的配置文件，不过我们一般只修改用户目录下的配置文件。</p>
+<p> 我们可以简单地使用下面命令直接添加内容到 .zshrc 中：<br> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"PATH=<span class="variable">$PATH</span>:/home/shiyanlou/mybin"</span> &gt;&gt; .zshrc</span></span><br></pre></td></tr></table></figure></p>
+<p> <strong>上述命令中 &gt;&gt; 表示将标准输出以追加的方式重定向到一个文件中，注意前面用到的 &gt; 是以覆盖的方式重定向到一个文件中，使用的时候一定要注意分辨。在指定文件不存在的情况下都会创建新的文件。</strong> <font color="red">也因此每次添加环境变量时，都会将PATH的值写入 .zshrc，个人感觉没有添加全局好</font></p>
+<h2 id="如何让环境变量立即生效"><a href="#如何让环境变量立即生效" class="headerlink" title="如何让环境变量立即生效"></a><strong>如何让环境变量立即生效</strong></h2><p> 前面我们在 Shell 中修改了一个配置脚本文件之后（比如/etc/profile 以及.zshrc），每次都要退出终端重新打开甚至重启主机之后其才能生效，很是麻烦，我们可以使用 source 命令来让其立即生效，如：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/shiyanlou</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">source</span> .zshrc</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="搜索文件"><a href="#搜索文件" class="headerlink" title="搜索文件"></a><strong>搜索文件</strong></h1><p><a href="https://www.cnblogs.com/kex1n/p/5233821.html" target="_blank" rel="noopener">https://www.cnblogs.com/kex1n/p/5233821.html</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/30/Linux目录结构及文件基本操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -462,10 +1152,10 @@
 <p><strong>绝对路径：</strong> 以<font color="red"> / </font>表示根目录</p>
 <p><strong>提示：在进行目录切换的过程中请多使用 <font color="red">Tab</font> 键自动补全，可避免输入错误，连续按两次<font color="red"> Tab </font>可以显示全部候选结果。</strong></p>
 <h1 id="Linux文件的基本操作"><a href="#Linux文件的基本操作" class="headerlink" title="Linux文件的基本操作"></a><strong>Linux文件的基本操作</strong></h1><h2 id="新建"><a href="#新建" class="headerlink" title="新建"></a><strong>新建</strong></h2><h3 id="新建空白文件"><a href="#新建空白文件" class="headerlink" title="新建空白文件"></a><strong>新建空白文件</strong></h3><p>我们一般使用<font color="red">touch</font>命令创建空白文件，关于 touch 命令，其主要作用是来更改已有文件的时间戳的（比如，最近访问时间，最近修改时间，但是同时可以在当前目录创建文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/shiyanlou</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> touch <span class="built_in">test</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd /home/shiyanlou</span><br><span class="line"><span class="meta">$</span> touch test</span><br></pre></td></tr></table></figure>
 
 <h3 id="新建目录"><a href="#新建目录" class="headerlink" title="新建目录"></a><strong>新建目录</strong></h3><p>使用 <font color="red">mkdir</font>（make directories）命令可以创建一个空目录，也可同时指定创建目录的权限属性。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir mydir</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mkdir mydir</span><br></pre></td></tr></table></figure>
 
 <p>使用  <font color="red">-p</font> 参数，同时创建父目录（如果不存在该父目录），如下我们同时创建一个多级目录（这在安装软件、配置安装路径时非常有用）：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p father/son/grandson <span class="comment">#也可以指定绝对路径</span></span><br></pre></td></tr></table></figure>
@@ -1904,487 +2594,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/13/PAT-A1152/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/13/PAT-A1152/" class="post-title-link" itemprop="url">PAT 甲级 1152 Google Recruitment</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-13 18:35:22 / 修改时间：18:41:58" itemprop="dateCreated datePublished" datetime="2019-10-13T18:35:22+08:00">2019-10-13</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>In July 2004, Google posted on a giant billboard along Highway 101 in Silicon Valley (shown in the picture below) for recruitment. The content is super-simple, a URL consisting of the first 10-digit prime found in consecutive digits of the natural constant e. The person who could find this prime number could go to the next step in Google’s hiring process by visiting this website.<br><img src="https://images.ptausercontent.com/57148679-d574-4f49-b048-775c6c07791c.jpg" alt><br>The natural constant e is a well known transcendental number（超越数）. The first several digits are: e = 2.718281828459045235360287471352662497757247093699959574966967627724076630353547594571382178525166427427466391932003059921… where the 10 digits in bold are the answer to Google’s question.</p>
-<p>Now you are asked to solve a more general problem: find the first K-digit prime in consecutive digits of any given L-digit number.</p>
-<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. Each case first gives in a line two positive integers: L (≤ 1,000) and K (&lt; 10), which are the numbers of digits of the given number and the prime to be found, respectively. Then the L-digit number N is given in the next line.</p>
-<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, print in a line the first K-digit prime in consecutive digits of N. If such a number does not exist, output <font color="red">404</font> instead. Note: the leading zeroes must also be counted as part of the K digits. For example, to find the 4-digit prime in 200236, 0023 is a solution. However the first digit 2 must not be treated as a solution 0002 since the leading zeroes are not in the original number.</p>
-<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a><strong>Sample Input 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">20 5</span><br><span class="line">23654987725541023819</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a><strong>Sample Output 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">49877</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a><strong>Sample Input 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10 3</span><br><span class="line">2468024680</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a><strong>Sample Output 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">404</span><br></pre></td></tr></table></figure>
-
-<h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a><strong>题目大意</strong></h2><p>给出一个很大的字符串，找出第一个位数为n的数，不存在输出404</p>
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>用string的substr函数与stoi函数就可以了。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isPrime</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i * i &lt;= x; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(x % i == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d\n"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="built_in">string</span> s, ans=<span class="string">"404"</span>, temp;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; s;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n - m; i++) &#123; <span class="comment">//从[n-m+1, n - 1]的长度是m - 1已经不会构成解</span></span><br><span class="line">       temp = s.substr(i, m);</span><br><span class="line">       <span class="keyword">if</span>(isPrime(stoi(temp)) == <span class="literal">true</span>) &#123;</span><br><span class="line">           ans = temp;</span><br><span class="line">           <span class="keyword">break</span>;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/13/PAT-A1119/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/13/PAT-A1119/" class="post-title-link" itemprop="url">PAT 甲级 1119 Pre- and Post-order Traversals</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-13 16:16:51 / 修改时间：18:20:05" itemprop="dateCreated datePublished" datetime="2019-10-13T16:16:51+08:00">2019-10-13</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>Suppose that all the keys in a binary tree are distinct positive integers. A unique binary tree can be determined by a given pair of postorder and inorder traversal sequences, or preorder and inorder traversal sequences. However, if only the postorder and preorder traversal sequences are given, the corresponding tree may no longer be unique.</p>
-<p>Now given a pair of postorder and preorder traversal sequences, you are supposed to output the corresponding inorder traversal sequence of the tree. If the tree is not unique, simply output any one of them.</p>
-<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line gives a positive integer N (≤ 30), the total number of nodes in the binary tree. The second line gives the preorder sequence and the third line gives the postorder sequence. All the numbers in a line are separated by a space.</p>
-<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, first printf in a line Yes if the tree is unique, or No if not. Then print in the next line the inorder traversal sequence of the corresponding binary tree. If the solution is not unique, any answer would do. It is guaranteed that at least one solution exists. All the numbers in a line must be separated by exactly one space, and there must be no extra space at the end of the line.</p>
-<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a><strong>Sample Input 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">7</span><br><span class="line">1 2 3 4 6 7 5</span><br><span class="line">2 6 7 4 5 3 1</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a><strong>Sample Output 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Yes</span><br><span class="line">2 1 6 4 7 3 5</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a><strong>Sample Input 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">1 2 3 4</span><br><span class="line">2 4 3 1</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a><strong>Sample Output 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">No</span><br><span class="line">2 1 3 4</span><br></pre></td></tr></table></figure>
-
-<h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a><strong>题目大意</strong></h2><p>给出一棵树的前序和后序遍历序列，判断这棵树是否是唯一的，并输出这棵树的中序序列（不唯一，任意）。</p>
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a><strong>代码1</strong></h2><p>我是根据算法笔记上的思路，先建树，然后后序遍历树进行输出。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">40</span>;</span><br><span class="line"><span class="keyword">int</span> pre[maxn], post[maxn], n, cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    node* lchild, *rchild;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">node* <span class="title">newNode</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    node* root = <span class="keyword">new</span> node;</span><br><span class="line">    root-&gt;data = x;</span><br><span class="line">    root-&gt;lchild = root-&gt;rchild = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">node* <span class="title">create</span><span class="params">(<span class="keyword">int</span> preL, <span class="keyword">int</span> preR, <span class="keyword">int</span> postL, <span class="keyword">int</span> postR)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preL &gt; preR) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    node* root = newNode(pre[preL]);</span><br><span class="line">    <span class="keyword">if</span>(preR - preL == <span class="number">1</span>) &#123;<span class="comment">//这个时候序列只有两个元素，不能区分左右孩子，所以不唯一</span></span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        root-&gt;lchild = newNode(pre[preR]); <span class="comment">//默认添加左孩子</span></span><br><span class="line">    &#125;  <span class="keyword">else</span> <span class="keyword">if</span>(preL != preR)&#123;</span><br><span class="line">        <span class="keyword">int</span> indexL, numLeft;</span><br><span class="line">        <span class="keyword">for</span>(indexL = postL; indexL &lt;= postR; indexL++)</span><br><span class="line">            <span class="keyword">if</span>(post[indexL] == pre[preL + <span class="number">1</span>]) <span class="keyword">break</span>;</span><br><span class="line">        numLeft = indexL - postL + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(post[postR - <span class="number">1</span>] == pre[preL + <span class="number">1</span>]) &#123;<span class="comment">//说明没有左孩子</span></span><br><span class="line">            root-&gt;rchild = create(preL + <span class="number">1</span>, preR, postL, postR - <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            root-&gt;lchild = create(preL + <span class="number">1</span>, preL + numLeft, postL, postL + numLeft <span class="number">-1</span>);</span><br><span class="line">            root-&gt;rchild = create(preL + numLeft + <span class="number">1</span>, preR, indexL + <span class="number">1</span>, postR - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(node* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;lchild != <span class="literal">NULL</span>) dfs(root-&gt;lchild);</span><br><span class="line">    cnt++;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, root-&gt;data, cnt == n ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;rchild != <span class="literal">NULL</span>) dfs(root-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;pre[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;post[i]);</span><br><span class="line">    node* root = create(<span class="number">0</span>, n - <span class="number">1</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,flag?<span class="string">"Yes"</span>:<span class="string">"No"</span>);</span><br><span class="line">    dfs(root);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a><strong>代码2</strong></h2><p>发现不需要建树，只需要设置一个数组，按照中序遍历的方式建树，然后填入数字，就能得到序列了。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">40</span>;</span><br><span class="line"><span class="keyword">int</span> pre[maxn], post[maxn], in[maxn],num = <span class="number">0</span>, n, cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(<span class="keyword">int</span> preL, <span class="keyword">int</span> preR, <span class="keyword">int</span> postL, <span class="keyword">int</span> postR)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preL &gt; preR) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(preR - preL == <span class="number">1</span>) &#123;</span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        in[num++] = pre[preR]; <span class="comment">//左孩子</span></span><br><span class="line">        in[num++] = pre[preL]; <span class="comment">//根结点</span></span><br><span class="line">    &#125;  <span class="keyword">else</span> <span class="keyword">if</span>(preL != preR)&#123;</span><br><span class="line">        <span class="keyword">int</span> indexL, numLeft;</span><br><span class="line">        <span class="keyword">for</span>(indexL = postL; indexL &lt;= postR; indexL++)</span><br><span class="line">            <span class="keyword">if</span>(post[indexL] == pre[preL + <span class="number">1</span>]) <span class="keyword">break</span>;</span><br><span class="line">        numLeft = indexL - postL + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(post[postR - <span class="number">1</span>] == pre[preL + <span class="number">1</span>]) &#123;</span><br><span class="line">        	in[num++] = pre[preL]; <span class="comment">//左孩子</span></span><br><span class="line">            create(preL + <span class="number">1</span>, preR, postL, postR - <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            create(preL + <span class="number">1</span>, preL + numLeft, postL, postL + numLeft <span class="number">-1</span>);</span><br><span class="line">            in[num++] = pre[preL];</span><br><span class="line">            create(preL + numLeft + <span class="number">1</span>, preR, indexL + <span class="number">1</span>, postR - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    	in[num++] = pre[preL];<span class="comment">//preL == preR这时只有一个结点</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;pre[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;post[i]);</span><br><span class="line">    create(<span class="number">0</span>, n - <span class="number">1</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,flag?<span class="string">"Yes"</span>:<span class="string">"No"</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, in[i], i == n - <span class="number">1</span> ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://blog.csdn.net/richenyunqi/article/details/80158823" target="_blank" rel="noopener">日沉云起大佬的代码 </a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/13/PAT-1149/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/13/PAT-1149/" class="post-title-link" itemprop="url">PAT 甲级 1149 Dangerous Goods Packaging</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-13 16:00:46 / 修改时间：16:14:33" itemprop="dateCreated datePublished" datetime="2019-10-13T16:00:46+08:00">2019-10-13</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>When shipping goods with containers, we have to be careful not to pack some incompatible goods into the same container, or we might get ourselves in serious trouble. For example, oxidizing agent （氧化剂） must not be packed with flammable liquid （易燃液体）, or it can cause explosion.</p>
-<p>Now you are given a long list of incompatible goods, and several lists of goods to be shipped. You are supposed to tell if all the goods in a list can be packed into the same container.</p>
-<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line gives two positive integers: N (≤10<br>​4<br>​​ ), the number of pairs of incompatible goods, and M (≤100), the number of lists of goods to be shipped.</p>
-<p>Then two blocks follow. The first block contains N pairs of incompatible goods, each pair occupies a line; and the second one contains M lists of goods to be shipped, each list occupies a line in the following format:</p>
-<p>K G[<font color="red">1</font>] G[<font color="red">2</font>] … G[<font color="red">K</font>]<br>where K (≤1,000) is the number of goods and G[i]’s are the IDs of the goods. To make it simple, each good is represented by a 5-digit ID number. All the numbers in a line are separated by spaces.</p>
-<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each shipping list, print in a line <font color="red">Yes</font> if there are no incompatible goods in the list, or <font color="red">No</font> if not.</p>
-<h2 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a><strong>Sample Input:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">6 3</span><br><span class="line">20001 20002</span><br><span class="line">20003 20004</span><br><span class="line">20005 20006</span><br><span class="line">20003 20001</span><br><span class="line">20005 20004</span><br><span class="line">20004 20006</span><br><span class="line">4 00001 20004 00002 20003</span><br><span class="line">5 98823 20002 20003 20006 10010</span><br><span class="line">3 12345 67890 23333</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a><strong>Sample Output:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">No</span><br><span class="line">Yes</span><br><span class="line">Yes</span><br></pre></td></tr></table></figure>
-
-<h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a><strong>题目大意</strong></h2><p>一些货物互相接触，会发生化学反应，给出能够两两发生反应的编号，在给出一些货物编号，问这些货物能否共存。</p>
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>我的原本打算时使用set存储，每个编号存放与自己能够发生反应的编号，然后在查询的过程中挨个遍历进行查询。分析一下复杂度，插入过程时nlogn，查询的时候是nlogn,再加上输入是nnlogn。所以这种方法会超时，柳神的代码是首先用vector存储反应的货物编号，在查询过程中首先建立一个数组a[maxn]，表示所有结点能发生反应的编号是否出现，输入过程中，再遍历vector数组，将a[反应编号] = true，最后再遍历序列如果a[temp] = true，说明里面存在互相反应的编号，输出no。这样算法复杂度只有nn。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxn];</span><br><span class="line"><span class="keyword">int</span> num[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m, k;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> a, b;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;a, &amp;b);</span><br><span class="line">        adj[a].push_back(b);</span><br><span class="line">        adj[b].push_back(a);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(m--) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;k);</span><br><span class="line">        <span class="keyword">bool</span> a[maxn] = &#123;<span class="literal">false</span>&#125;, flag = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num[i]);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; adj[num[i]].size(); j++) &#123;</span><br><span class="line">                a[adj[num[i]][j]] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(a[num[i]] == <span class="literal">true</span>) &#123;</span><br><span class="line">                flag = <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag == <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"Yes\n"</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"No\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2431,7 +2640,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-count">65</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2464,7 +2673,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

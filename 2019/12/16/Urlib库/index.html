@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Urlib基础urlretrieve,urlcleanup,info,getcode,geturl123456789101112131415161718192021import urlib.requesturllib.request.urlretrieve(url, filePath) # 通过url将网页保存urllib.request.urlcleanup() # 清除缓存urllib.req">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Urlib实战">
+<meta property="og:url" content="https://LiuPjia.github.io/2019/12/16/Urlib库/index.html">
+<meta property="og:site_name" content="佳的个人博客">
+<meta property="og:description" content="Urlib基础urlretrieve,urlcleanup,info,getcode,geturl123456789101112131415161718192021import urlib.requesturllib.request.urlretrieve(url, filePath) # 通过url将网页保存urllib.request.urlcleanup() # 清除缓存urllib.req">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/LiuPjia/imageBed/blob/master/QQ%E5%9B%BE%E7%89%8720191217100344.png?raw=true">
+<meta property="og:updated_time" content="2019-12-17T03:31:29.335Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Urlib实战">
+<meta name="twitter:description" content="Urlib基础urlretrieve,urlcleanup,info,getcode,geturl123456789101112131415161718192021import urlib.requesturllib.request.urlretrieve(url, filePath) # 通过url将网页保存urllib.request.urlcleanup() # 清除缓存urllib.req">
+<meta name="twitter:image" content="https://github.com/LiuPjia/imageBed/blob/master/QQ%E5%9B%BE%E7%89%8720191217100344.png?raw=true">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://LiuPjia.github.io/2019/12/16/Urlib库/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Urlib实战 | 佳的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佳的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/16/Urlib库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Urlib实战
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-16 21:32:15" itemprop="dateCreated datePublished" datetime="2019-12-16T21:32:15+08:00">2019-12-16</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-17 11:31:29" itemprop="dateModified" datetime="2019-12-17T11:31:29+08:00">2019-12-17</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Urlib基础"><a href="#Urlib基础" class="headerlink" title="Urlib基础"></a><strong>Urlib基础</strong></h1><h2 id="urlretrieve-urlcleanup-info-getcode-geturl"><a href="#urlretrieve-urlcleanup-info-getcode-geturl" class="headerlink" title="urlretrieve,urlcleanup,info,getcode,geturl"></a><strong>urlretrieve,urlcleanup,info,getcode,geturl</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urlib.request</span><br><span class="line">urllib.request.urlretrieve(url, filePath) <span class="comment"># 通过url将网页保存</span></span><br><span class="line">urllib.request.urlcleanup() <span class="comment"># 清除缓存</span></span><br><span class="line">urllib.request.urlopen(<span class="string">"http://www.baidu.com"</span>).info() <span class="comment">#得到url的信息</span></span><br><span class="line">urllib.request.urlopen(<span class="string">"http://www.baidu.com"</span>).getcode() <span class="comment">#状态码</span></span><br><span class="line">urllib.request.urlopen(<span class="string">"http://www.baidu.com"</span>).geturl() <span class="comment">#得到url</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="comment"># **自动模拟HTTP请求**</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## **get请求**</span></span><br><span class="line">``` py</span><br><span class="line">keywd = <span class="string">"Python"</span> </span><br><span class="line"><span class="comment"># 如果包含中文的话</span></span><br><span class="line">keywd = urllib.requst.quote(keywd)</span><br><span class="line">url = <span class="string">"http://www.baidu.com/s?wd="</span> + keywd + <span class="string">"&amp;ie=utf-8&amp;tn=baidu"</span></span><br><span class="line">req = urllib.request.Request(url)</span><br><span class="line">data = urllib.request.urlopen(req).read()</span><br><span class="line">fh = open(<span class="string">"G:\\python学习\\爬虫\\1.html"</span>, <span class="string">"wb"</span>)</span><br><span class="line">fh.write(data)</span><br><span class="line">fh.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="post请求"><a href="#post请求" class="headerlink" title="post请求"></a><strong>post请求</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">"http://www/iqianyue.com.mypost/"</span> <span class="comment">#设置url地址</span></span><br><span class="line">mydata = urllib.parse.urlencode(&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"jaijia"</span>,</span><br><span class="line">    <span class="string">"pass"</span>: <span class="string">"12345"</span></span><br><span class="line">&#125;).encode(<span class="string">"utf-8"</span>) <span class="comment">#设置数据，并设置编码</span></span><br><span class="line">req = urllib.request.Request(url, mydata) <span class="comment"># 得到连接</span></span><br><span class="line">data = urllib.request.urlopen(req).read() <span class="comment"># 得到网页</span></span><br><span class="line">fh = open(<span class="string">"G:\\python学习\\爬虫\\1.html"</span>, <span class="string">"wb"</span>) <span class="comment"># 写入文件</span></span><br><span class="line">fh.write(data)</span><br><span class="line">fh.close()</span><br></pre></td></tr></table></figure>
+
+<h1 id="爬虫的异常处理"><a href="#爬虫的异常处理" class="headerlink" title="爬虫的异常处理"></a><strong>爬虫的异常处理</strong></h1><h2 id="常见的状态码"><a href="#常见的状态码" class="headerlink" title="常见的状态码"></a><strong>常见的状态码</strong></h2><p><img src="https://github.com/LiuPjia/imageBed/blob/master/QQ%E5%9B%BE%E7%89%8720191217100344.png?raw=true" alt></p>
+<h2 id="URLError与HTTPError"><a href="#URLError与HTTPError" class="headerlink" title="URLError与HTTPError"></a><strong>URLError与HTTPError</strong></h2><p>两者都是异常处理的类，HTTPError是URLError的子类，HTTPError有异常状态码与异常原因，URLError没有异常状态码，所以在处理的时候，不能使用URLError直接代替HTTPError。如果要代替是否有状态码属性。</p>
+<p><strong>URLError的发生情况</strong></p>
+<ol>
+<li>连不上服务器</li>
+<li>远程URL不存在</li>
+<li>本地无网络</li>
+<li>触发了子类HTTPError</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.error</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用try except</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    urllib.request.urlopen(<span class="string">"https://blog.csdn.net"</span>)</span><br><span class="line"><span class="keyword">except</span> urllib.error.HTTPError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">if</span> hasattr(e, <span class="string">"code"</span>):</span><br><span class="line">        print(e.code)</span><br><span class="line">    <span class="keyword">if</span> hasattr(e, <span class="string">"reason"</span>):</span><br><span class="line">        print(e.reason)</span><br></pre></td></tr></table></figure>
+
+<h1 id="爬虫浏览器的伪装技术"><a href="#爬虫浏览器的伪装技术" class="headerlink" title="爬虫浏览器的伪装技术"></a><strong>爬虫浏览器的伪装技术</strong></h1><p>主要是设置报文头</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">"http://news.163.com/18/0306/09/DC71LRR20001875N.html"</span></span><br><span class="line"><span class="comment"># 以字典的形式设置headers</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">"Accept"</span>: <span class="string">"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"</span>,</span><br><span class="line">    <span class="comment"># "Accept-Encoding": "gzip, deflate",</span></span><br><span class="line">    <span class="string">"Accept-Language"</span>: <span class="string">"zh-CN,zh;q=0.9"</span>,</span><br><span class="line">    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"</span>,</span><br><span class="line">    <span class="string">"Connection"</span>: <span class="string">"keep-alive"</span>,</span><br><span class="line">    <span class="string">"referer"</span>: <span class="string">"http://www.163.com"</span></span><br><span class="line">&#125;</span><br><span class="line">headall = [] <span class="comment"># 建立空列表，为了以制定格式存储头信息</span></span><br><span class="line"><span class="keyword">for</span> key, value, <span class="keyword">in</span> headers.items():</span><br><span class="line">    item = (key, value)</span><br><span class="line">    headall.append(item)</span><br><span class="line">opener = urllib.request.build_opener()</span><br><span class="line">opener.addheaders = headall <span class="comment"># 将制定格式的headers信息添加好</span></span><br><span class="line">data = opener.open(url).read()</span><br><span class="line">fh = open(<span class="string">"G:\\python学习\\爬虫\\1.html"</span>, <span class="string">"wb"</span>) <span class="comment"># 写入文件</span></span><br><span class="line">fh.write(data)</span><br><span class="line">fh.close()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/13/python正则表达式/" rel="next" title="python正则表达式">
+                <i class="fa fa-chevron-left"></i> python正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/17/新闻爬虫实战/" rel="prev" title="新闻爬虫实战">
+                新闻爬虫实战 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">佳</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">65</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Urlib基础"><span class="nav-number">1.</span> <span class="nav-text">Urlib基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#urlretrieve-urlcleanup-info-getcode-geturl"><span class="nav-number">1.1.</span> <span class="nav-text">urlretrieve,urlcleanup,info,getcode,geturl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post请求"><span class="nav-number">1.2.</span> <span class="nav-text">post请求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#爬虫的异常处理"><span class="nav-number">2.</span> <span class="nav-text">爬虫的异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的状态码"><span class="nav-number">2.1.</span> <span class="nav-text">常见的状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URLError与HTTPError"><span class="nav-number">2.2.</span> <span class="nav-text">URLError与HTTPError</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#爬虫浏览器的伪装技术"><span class="nav-number">3.</span> <span class="nav-text">爬虫浏览器的伪装技术</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">佳</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
