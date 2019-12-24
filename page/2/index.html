@@ -312,6 +312,454 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/10/PAT-A1066/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/10/PAT-A1066/" class="post-title-link" itemprop="url">PAT 甲级 1066 Root of AVL Tree</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-10 21:13:42 / 修改时间：21:15:37" itemprop="dateCreated datePublished" datetime="2019-12-10T21:13:42+08:00">2019-12-10</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20190724164132309.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
+<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h1><p>这题的意思是，建立一颗avl树，输出根结点的值，直接套模板就可以了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span>  <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    node* lchild;</span><br><span class="line">    node* rchild;</span><br><span class="line">    <span class="keyword">int</span> height;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">node* <span class="title">newNode</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    node* root = <span class="keyword">new</span> node;</span><br><span class="line">    root-&gt;data = x;</span><br><span class="line">    root-&gt;lchild = root-&gt;rchild = <span class="literal">NULL</span>;</span><br><span class="line">    root-&gt;height = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getHeight</span><span class="params">(node* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> root-&gt;height;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getBalance</span><span class="params">(node* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getHeight(root-&gt;lchild) - getHeight(root-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">updateHeight</span><span class="params">(node* root)</span> </span>&#123;</span><br><span class="line">    root-&gt;height = max(getHeight(root-&gt;lchild),getHeight(root-&gt;rchild)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">L</span><span class="params">(node* &amp;root)</span> </span>&#123;</span><br><span class="line">    node* temp = root-&gt;rchild;</span><br><span class="line">    root-&gt;rchild = temp-&gt;lchild;</span><br><span class="line">    temp-&gt;lchild = root;</span><br><span class="line">    updateHeight(root);</span><br><span class="line">    updateHeight(temp);</span><br><span class="line">    root = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">R</span><span class="params">(node* &amp;root)</span> </span>&#123;</span><br><span class="line">    node* temp = root-&gt;lchild;</span><br><span class="line">    root-&gt;lchild = temp-&gt;rchild;</span><br><span class="line">    temp-&gt;rchild = root;</span><br><span class="line">    updateHeight(root);</span><br><span class="line">    updateHeight(temp);</span><br><span class="line">    root = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(node* &amp;root, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>) &#123;root = newNode(x); <span class="keyword">return</span>;&#125;</span><br><span class="line">    <span class="keyword">if</span>(x &lt; root-&gt;data) &#123;</span><br><span class="line">        insert(root-&gt;lchild, x);</span><br><span class="line">        updateHeight(root);</span><br><span class="line">        <span class="keyword">if</span>(getBalance(root) == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(getBalance(root-&gt;lchild) == <span class="number">1</span>) &#123;</span><br><span class="line">                R(root);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(getBalance(root-&gt;lchild) == <span class="number">-1</span>) &#123;</span><br><span class="line">                L(root-&gt;lchild);</span><br><span class="line">                R(root);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        insert(root-&gt;rchild, x);</span><br><span class="line">        updateHeight(root);</span><br><span class="line">        <span class="keyword">if</span>(getBalance(root) == <span class="number">-2</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(getBalance(root-&gt;rchild) == <span class="number">-1</span>) &#123;</span><br><span class="line">                L(root);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(getBalance(root-&gt;rchild) == <span class="number">1</span>) &#123;</span><br><span class="line">                R(root-&gt;rchild);</span><br><span class="line">                L(root);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,a;</span><br><span class="line">    node* root = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a);</span><br><span class="line">        insert(root, a);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, root-&gt;data);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/10/PAT-A1065/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/10/PAT-A1065/" class="post-title-link" itemprop="url">PAT 甲级 1065 A+B and C (64bit)</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-10 20:52:04 / 修改时间：21:03:17" itemprop="dateCreated datePublished" datetime="2019-12-10T20:52:04+08:00">2019-12-10</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226115135607.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
+<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h1><p>由于a + b会大于long long型，所以会产生溢出，即正的过大变成负的，负的过大变成正数，因此可以利用这个性质解题。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> n, a, b, c;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%lld"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%lld %lld %lld"</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Case #%d: "</span>, i);</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> sum = (a + b);</span><br><span class="line">        <span class="keyword">if</span>(a &gt; <span class="number">0</span> &amp;&amp; b &gt; <span class="number">0</span> &amp;&amp; sum &lt; <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"true\n"</span>);<span class="comment">//正数溢出，一定大于c</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(a &lt; <span class="number">0</span> &amp;&amp; b &lt; <span class="number">0</span> &amp;&amp; sum &gt;= <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"false\n"</span>);<span class="comment">//负数溢出，一定小于c</span></span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, (sum &gt; c) ? <span class="string">"true"</span> : <span class="string">"false"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/10/PAT-A1063/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/10/PAT-A1063/" class="post-title-link" itemprop="url">PAT 甲级 1063 Set Similarity</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-10 19:21:05 / 修改时间：20:28:24" itemprop="dateCreated datePublished" datetime="2019-12-10T19:21:05+08:00">2019-12-10</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226115554116.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
+<h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a><strong>算法分析</strong></h1><ol>
+<li><p>用unordered_set<int>[] 存放每一个集合，对于要查询的两个集合A，B，定义一个常量same = 0, 遍历集合A中的每一个数，如果这个数，在B中same++, 结果就是same/A.size() + B.size() - same;</int></p>
+</li>
+<li><p>c++标准库里面有set_intersection（取两个集合交集）、set_union（取两个集合并集）、set_difference（取两个集合差集）的函数。其中，函数参数形式均为X(A.begin(),A.end(),B.begin(),B.end(),inserter( C1 , C1.begin() ) )的形式，其中X可以替换为上述三个函数声明。前四个参数依次是表示第一个集合的首尾区间的迭代器、表示第二个集合的首尾区间的迭代器，第五个参数的意思是将集合A、B取交并差集后的结果存入集合C中。</p>
+</li>
+</ol>
+<h1 id="代码一"><a href="#代码一" class="headerlink" title="代码一"></a><strong>代码一</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, k, num, a, b,index = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; s[<span class="number">60</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a);</span><br><span class="line">            s[j].insert(a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;k);</span><br><span class="line">    <span class="keyword">while</span>(k--) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">double</span> sum = s[a].size() + s[b].size(), same = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; :: iterator it = s[a].begin(); it != s[a].end(); it++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(s[b].count(*it) != <span class="number">0</span>) same++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.1f%c\n"</span>, <span class="number">100</span>*same/(sum - same), <span class="string">'%'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="代码二"><a href="#代码二" class="headerlink" title="代码二"></a><strong>代码二</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> N,M,K;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</span><br><span class="line">    <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;sets[N+<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;v1,v2;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=N;++i)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M);</span><br><span class="line">        <span class="keyword">while</span>(M--)&#123;</span><br><span class="line">            <span class="keyword">int</span> a;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a);</span><br><span class="line">            sets[i].insert(a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K);</span><br><span class="line">    <span class="keyword">while</span>(K--)&#123;</span><br><span class="line">        v1.clear();</span><br><span class="line">        v2.clear();</span><br><span class="line">        <span class="keyword">int</span> a,b;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;a,&amp;b);</span><br><span class="line">        set_union(sets[a].cbegin(),sets[a].cend(),sets[b].cbegin(),sets[b].cend(),inserter(v1,v1.begin()));<span class="comment">//求并集</span></span><br><span class="line">        set_intersection(sets[a].cbegin(),sets[a].cend(),sets[b].cbegin(),sets[b].cend(),inserter(v2,v2.begin()));<span class="comment">//求交集</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.1f%%\n"</span>,(<span class="keyword">double</span>)v2.size()/v1.size()*<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/10/PAT-A1062/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1466,540 +1914,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/06/PAT-A1060/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/06/PAT-A1060/" class="post-title-link" itemprop="url">PAT 甲级 A1060</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-06 20:14:19 / 修改时间：20:42:03" itemprop="dateCreated datePublished" datetime="2019-11-06T20:14:19+08:00">2019-11-06</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1060-Are-They-Equal"><a href="#1060-Are-They-Equal" class="headerlink" title="1060 Are They Equal"></a><strong><center>1060 Are They Equal</center></strong></h2><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8ol9csyxbj310q0m7gnl.jpg" alt="题目"></p>
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>给出两个数，转为科学计数法，但是机器可以存放的小数点后的有效位数是n，即超过n的数字将会丢弃，没有超过n就用0填充，用这种方法判断两个数的科学计数法是否相同。我的思路是，首先将前面的0给去掉，然后设置一个结构体，存放的是有效小数和指数，如果都相同才判断这两个数相同，在判断时，将数据分为了小数部分和整数部分进行处理，因为要通过小数点 ‘.’ 的位置得出指数的大小，所以好的做法是初始为字符串长度。</p>
-<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a><strong>注意点</strong></h2><ul>
-<li><p>给的数据前面又可能有多个0，比如00000.1119, 000099999。</p>
-</li>
-<li><p>如果给的数据是0的话，要输出0.0000*10^0这种形式。</p>
-</li>
-<li><p>综合的0000.00000</p>
-</li>
-</ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">10010</span>]; <span class="comment">//存放的有效数</span></span><br><span class="line">    <span class="keyword">int</span> len; <span class="comment">//指数</span></span><br><span class="line">    node() &#123;len = <span class="number">0</span>;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">judge</span><span class="params">(node&amp; a, <span class="keyword">int</span> b)</span> </span>&#123; <span class="comment">//填充0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = b; i &lt; n; i++) a.str[i] = <span class="string">'0'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">node <span class="title">change</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    node a;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">0</span>, e = <span class="number">0</span>, st = <span class="number">1</span>, temp; <span class="comment">//当前a存放数的长度，指数，开始位置</span></span><br><span class="line">    <span class="keyword">if</span>(s != <span class="string">""</span> &amp;&amp; s[<span class="number">0</span>] == <span class="string">'.'</span>) &#123;<span class="comment">//是小数</span></span><br><span class="line">        <span class="keyword">while</span>(st &lt; s.length() &amp;&amp; s[st] == <span class="string">'0'</span>) &#123;st++; e--;&#125;  <span class="comment">//找到小数后面第一个不为0的数，并记录指数</span></span><br><span class="line">        temp = st;<span class="comment">//得到第一个非0数的位置</span></span><br><span class="line">        <span class="keyword">while</span>(st &lt; s.length() &amp;&amp; b &lt; n) &#123;a.str[st - temp] = s[st]; b++; st++;&#125; <span class="comment">//有效的数进行填充</span></span><br><span class="line">        <span class="keyword">if</span>(b == <span class="number">0</span>) e = <span class="number">0</span>; <span class="comment">//.00000这种情况</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(s != <span class="string">""</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> indexE = s.find(<span class="string">"."</span>); <span class="comment">//找到小数点位置</span></span><br><span class="line">        <span class="keyword">if</span>(indexE &lt; <span class="number">0</span>) indexE = s.length(); <span class="comment">//没有小数点，将位置设为s.length()</span></span><br><span class="line">        st = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123; <span class="comment">//从0遍历字符串</span></span><br><span class="line">            <span class="keyword">if</span>(i &lt; indexE) e++;   <span class="comment">//指数++</span></span><br><span class="line">            <span class="keyword">if</span>(b == n || i == indexE) <span class="keyword">continue</span>;</span><br><span class="line">            a.str[st++] = s[i];  <span class="comment">//填充</span></span><br><span class="line">            b++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    a.len = e;</span><br><span class="line">    judge(a, b);</span><br><span class="line">    a.str[n] = <span class="string">'\0'</span>; <span class="comment">//要在这里添加结束符，否则输出乱码</span></span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">convert</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123; <span class="comment">//去掉字符串s的前0</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; s.length() &amp;&amp; s[i] == <span class="string">'0'</span>) i++;</span><br><span class="line">    <span class="keyword">return</span> s.substr(i, s.length())<span class="string">''</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s1,s2;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; s1 &gt;&gt; s2;</span><br><span class="line">    s1 = convert(s1), s2 = convert(s2);</span><br><span class="line">    node a = change(s1), b = change(s2);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">strcmp</span>(a.str, b.str) == <span class="number">0</span> &amp;&amp; a.len == b.len) <span class="built_in">printf</span>(<span class="string">"YES 0.%s*10^%d\n"</span>, a.str, a.len);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"NO 0.%s*10^%d 0.%s*10^%d\n"</span>,a.str, a.len, b.str, b.len);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/06/PAT-A058/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/06/PAT-A058/" class="post-title-link" itemprop="url">PAT 甲级 1058 A+B in Hogwarts</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-06 19:54:18" itemprop="dateCreated datePublished" datetime="2019-11-06T19:54:18+08:00">2019-11-06</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-12-10 20:22:41" itemprop="dateModified" datetime="2019-12-10T20:22:41+08:00">2019-12-10</time>
-              </span>
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1058-A-B-in-Hogwarts"><a href="#1058-A-B-in-Hogwarts" class="headerlink" title="1058 A+B in Hogwarts"></a>1058 A+B in Hogwarts</h2><h2 id="题目分析"><a href="#题目分析" class="headerlink" title="**题目分析"></a>**题目分析</h2><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8okgnnu8uj310r0fkmye.jpg" alt="题目"><br>这是一道进制转换的题目，理论上来讲这样的进制转换题目都有两种方法：</p>
-<p>（1）将输入数据统一转换到最小单位，进行指定运算后，再将得到的结果转换到所要输出的格式；</p>
-<p>（2）从最小单位开始进行指定运算，向上级单位产生进位或借位，得出最终结果。</p>
-<p>本题选择了第二种，从右至左，分别是29进位，17进位，1e7进位，参考了<a href="https://blog.csdn.net/richenyunqi/article/details/79589889" target="_blank" rel="noopener">日沉云起的博客</a>，给出第一种方法。</p>
-<h2 id="第一种方法代码"><a href="#第一种方法代码" class="headerlink" title="第一种方法代码"></a><strong>第一种方法代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">3</span>]=&#123;<span class="number">0</span>&#125;,b[<span class="number">3</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d.%d.%d %d.%d.%d"</span>,&amp;a[<span class="number">0</span>],&amp;a[<span class="number">1</span>],&amp;a[<span class="number">2</span>],&amp;b[<span class="number">0</span>],&amp;b[<span class="number">1</span>],&amp;b[<span class="number">2</span>]);</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> sum=((<span class="keyword">long</span> <span class="keyword">long</span>)a[<span class="number">0</span>]*<span class="number">17</span>+a[<span class="number">1</span>])*<span class="number">29</span>+a[<span class="number">2</span>];<span class="comment">//有可能超出int存储范围，最好用long long存储</span></span><br><span class="line">    sum+=((<span class="keyword">long</span> <span class="keyword">long</span>)b[<span class="number">0</span>]*<span class="number">17</span>+b[<span class="number">1</span>])*<span class="number">29</span>+b[<span class="number">2</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%lld.%lld.%lld"</span>,sum/(<span class="number">29</span>*<span class="number">17</span>),sum/<span class="number">29</span>%<span class="number">17</span>,sum%<span class="number">29</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="第二种方法代码"><a href="#第二种方法代码" class="headerlink" title="第二种方法代码"></a><strong>第二种方法代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a, b, c, a1, b1, c1, carry1 = <span class="number">0</span>, carry2 = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d.%d.%d %d.%d.%d"</span>, &amp;a, &amp;b, &amp;c, &amp;a1, &amp;b1, &amp;c1);</span><br><span class="line">    <span class="comment">//由低到高进行计算，与进位相加</span></span><br><span class="line">    c += c1;</span><br><span class="line">    carry1 = c / <span class="number">29</span>;</span><br><span class="line">    c = c % <span class="number">29</span>;</span><br><span class="line">    b += carry1 + b1;</span><br><span class="line">    carry2 = b / <span class="number">17</span>;</span><br><span class="line">    b = b % <span class="number">17</span>;</span><br><span class="line">    a += a1 + carry2;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d.%d.%d"</span>, a, b, c);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/04/git的基本用法-上/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/04/git的基本用法-上/" class="post-title-link" itemprop="url">git的基本用法(上)</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-04 20:32:56" itemprop="dateCreated datePublished" datetime="2019-11-04T20:32:56+08:00">2019-11-04</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-11-05 11:35:27" itemprop="dateModified" datetime="2019-11-05T11:35:27+08:00">2019-11-05</time>
-              </span>
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git学习/" itemprop="url" rel="index"><span itemprop="name">git学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Git的初始化"><a href="#Git的初始化" class="headerlink" title="Git的初始化"></a><strong>Git的初始化</strong></h1><p>在使用 Git进行代码管理之前，我们首先要对 Git 进行初始化配置。</p>
-<p>使用 Git 的第一件事就是设置 <font color="red">user.name</font>和 <font color="red">user.email</font>，这些就是你在提交 <font color="red">commit</font> 时的签名，每次提交记录里都会包含这些信息。使用 <font color="red">git config</font> 命令进行配置：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"LiuPjia"</span> </span><br><span class="line">$ git config --global user.email <span class="string">"2516308484@qq.com"</span></span><br></pre></td></tr></table></figure>
-
-<p>–global代表的是全局配置文件，储存在.gitconfig中，如果想在某个项目中与全局变量不同，可以使用不带–global的选项来设置，会在当前项目创建.git/config文件，代表这个项目的配置。</p>
-<h1 id="获得一个Git仓库"><a href="#获得一个Git仓库" class="headerlink" title="获得一个Git仓库"></a><strong>获得一个Git仓库</strong></h1><p>我们需要一个 Git 仓库。有两种方法可以得到它：一种是从已有的Git 仓库中 clone （克隆，复制）；还有一种是新建一个仓库，把未进行版本控制的文件进行版本控制。</p>
-<h2 id="Clone一个仓库"><a href="#Clone一个仓库" class="headerlink" title="Clone一个仓库"></a><strong>Clone一个仓库</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /home/shiyanlou/</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/shiyanlou/gitproject</span><br></pre></td></tr></table></figure>
-
-<h2 id="初始化一个新仓库"><a href="#初始化一个新仓库" class="headerlink" title="初始化一个新仓库"></a><strong>初始化一个新仓库</strong></h2><p>创建目录，并使用git init初始化Git仓库</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir project</span><br><span class="line"><span class="built_in">cd</span> project</span><br><span class="line">git init</span><br></pre></td></tr></table></figure>
-
-<p>通过 ls -la 命令会发现project目录下会有一个名叫 .git 的目录被创建，这意味着一个仓库被初始化了。</p>
-<h1 id="正常的工作流程"><a href="#正常的工作流程" class="headerlink" title="正常的工作流程"></a><strong>正常的工作流程</strong></h1><p>Git 的基本流程如下：</p>
-<ol>
-<li>创建或修改文件</li>
-<li>使用 git add 命令添加新创建或修改的文件到本地的缓存区（Index）</li>
-<li>使用 git commit 命令提交到本地代码库</li>
-<li>（可选，有的时候并没有可以同步的远端代码库）使用git push命令将本地代码库同步到远端代码库</li>
-</ol>
-<h2 id="创建或修改文件"><a href="#创建或修改文件" class="headerlink" title="创建或修改文件"></a><strong>创建或修改文件</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建三个文件</span></span><br><span class="line">$ <span class="built_in">cd</span> /home/shiyanlou/project</span><br><span class="line">$ touch file&#123;1..3&#125;</span><br><span class="line"><span class="comment"># 修改文件</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"test"</span> &gt;&gt; file1 &gt;&gt; file2 &gt;&gt; file3</span><br><span class="line"><span class="comment"># 使用 git status 命令查看当前 Git 仓库的状态：</span></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line"></span><br><span class="line">Initial commit</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">   （use <span class="string">"git add &lt;file&gt;..."</span>） to include <span class="keyword">in</span> what will be committed）</span><br><span class="line"></span><br><span class="line">       file1</span><br><span class="line">       file2</span><br><span class="line">       file3</span><br><span class="line">nothing added to commit but untracked files present （use <span class="string">"git add"</span> to track）</span><br><span class="line"><span class="comment"># 有三个文件处于 untracked 状态，需要用 git add 命令将他们加入到缓存区（Index）</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-git-add-加入缓存区"><a href="#使用-git-add-加入缓存区" class="headerlink" title="使用 git add 加入缓存区"></a><strong>使用 git add 加入缓存区</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 git add 命令将新建的文件添加到缓存区：</span></span><br><span class="line">$ git add file1 file2 file3</span><br><span class="line"><span class="comment"># 再次执行 git status 就会发现新的变化：</span></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line"></span><br><span class="line">Initial commit</span><br><span class="line"></span><br><span class="line">Changes to be committed:</span><br><span class="line">    （use <span class="string">"git rm --cached &lt;file&gt;..."</span> to unstage）</span><br><span class="line"></span><br><span class="line">       new file: file1</span><br><span class="line">       new file: file2</span><br><span class="line">       new file: file3</span><br></pre></td></tr></table></figure>
-
-<p>现在为 commit 做好了准备，你可以使用 <font color="red">git diff</font> 命令再加上 –cached 参数，看看缓存区中哪些文件被修改了。(q退出)，如果没有–cached参数，<font color="red">git diff</font> 会显示当前你所有已做的但没有加入到缓存区里的修改。</p>
-<h2 id="使用-git-commit-提交修改"><a href="#使用-git-commit-提交修改" class="headerlink" title="使用 git commit 提交修改"></a><strong>使用 git commit 提交修改</strong></h2><p>当所有新建，修改的文件都被添加到了缓存区，我们就要使用 git commit 提交到本地仓库：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"add 3 files"</span> <span class="comment">#m代表修改的注释</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="分支与合并"><a href="#分支与合并" class="headerlink" title="分支与合并"></a><strong>分支与合并</strong></h1><p>Git 的分支可以让你在主线（master 分支）之外进行代码提交，同时又不会影响代码库主线。分支的作用体现在多人协作开发中，比如一个团队开发软件，你负责独立的一个功能需要一个月的时间来完成，你就可以创建一个分支，只把该功能的代码提交到这个分支，而其他同事仍然可以继续使用主线开发，你每天的提交不会对他们造成任何影响。当你完成功能后，测试通过再把你的功能分支合并到主线。</p>
-<h2 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a><strong>创建分支</strong></h2><p>一个 Git 仓库可以维护很多开发分支。现在我们来创建一个新的叫 experimental 的分支：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch experimental</span><br></pre></td></tr></table></figure>
-
-<p>运行 git branch 命令可以查看当前的分支列表，以及目前的开发环境处在哪个分支上：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line"> experimental</span><br><span class="line">* master <span class="comment">#*代表现在处的分支</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用git-checkout-分支名-切换分支"><a href="#使用git-checkout-分支名-切换分支" class="headerlink" title="使用git checkout 分支名 切换分支"></a><strong>使用git checkout 分支名 切换分支</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout experimental</span><br></pre></td></tr></table></figure>
-
-<p>在当前分支上修改的内容，其他分支看不到。</p>
-<h2 id="使用git-merge合并分支"><a href="#使用git-merge合并分支" class="headerlink" title="使用git merge合并分支"></a><strong>使用git merge合并分支</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到master分支</span></span><br><span class="line">$ git checkout master</span><br><span class="line"><span class="comment"># 将experimental分支合并到master</span></span><br><span class="line">$ git merge -m <span class="string">'merge experimental branch'</span> experimental <span class="comment">#-m 参数仍然是需要填写合并的注释信息。</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a><strong>删除分支</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d experimental</span><br></pre></td></tr></table></figure>
-
-<p>git branch -d只能删除那些已经被当前分支的合并的分支. 如果你要强制删除某个分支的话就用git branch –D</p>
-<h2 id="撤销一个合并"><a href="#撤销一个合并" class="headerlink" title="撤销一个合并"></a><strong>撤销一个合并</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
-
-<h1 id="Git日志"><a href="#Git日志" class="headerlink" title="Git日志"></a><strong>Git日志</strong></h1><h2 id="使用git-log查看所有提交"><a href="#使用git-log查看所有提交" class="headerlink" title="使用git log查看所有提交"></a><strong>使用git log查看所有提交</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2046,7 +1960,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">65</span>
+                    <span class="site-state-item-count">68</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2081,7 +1995,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
