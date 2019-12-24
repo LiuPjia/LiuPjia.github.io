@@ -312,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/22/vim快速入门/">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/24/vim文档编辑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="佳">
@@ -332,7 +332,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/12/22/vim快速入门/" class="post-title-link" itemprop="url">vim快速入门¨</a>
+                <a href="/2019/12/24/vim文档编辑/" class="post-title-link" itemprop="url">vim文档编辑</a>
               
             
           </h1>
@@ -357,13 +357,284 @@
                 
               
 
-              <time title="创建时间：2019-12-22 10:45:55 / 修改时间：11:31:41" itemprop="dateCreated datePublished" datetime="2019-12-22T10:45:55+08:00">2019-12-22</time>
+              <time title="创建时间：2019-12-24 10:06:52 / 修改时间：11:09:19" itemprop="dateCreated datePublished" datetime="2019-12-24T10:06:52+08:00">2019-12-24</time>
             </span>
           
 
           
             
 
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/vim/" itemprop="url" rel="index"><span itemprop="name">vim</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="vim重复命令"><a href="#vim重复命令" class="headerlink" title="vim重复命令"></a><strong>vim重复命令</strong></h1><ul>
+<li><p>在普通模式下.(小数点)表示重复上一次的命令操作</p>
+</li>
+<li><p>进入普通模式输入N<command>，N 表示重复后面的次数，例如</p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2dd</span><br><span class="line">10x</span><br><span class="line">10X</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="游标的快速跳转"><a href="#游标的快速跳转" class="headerlink" title="游标的快速跳转"></a><strong>游标的快速跳转</strong></h1><h2 id="行间跳转"><a href="#行间跳转" class="headerlink" title="行间跳转"></a><strong>行间跳转</strong></h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nG(n Shift+g)</td>
+<td>游标移动到第 n 行(<strong>如果默认没有显示行号，请先进入命令模式，输入:set nu以显示行号</strong>)</td>
+</tr>
+<tr>
+<td>gg</td>
+<td>游标移动到到第一行</td>
+</tr>
+<tr>
+<td>G(Shift+g)</td>
+<td>到最后一行</td>
+</tr>
+</tbody></table>
+<p><strong>小技巧:</strong></p>
+<p>你在完成依次跳转后，可以使用 <strong>Ctrl+o</strong> 快速回到上一次(跳转前)光标所在位置,这个技巧很实用，比如当你在写代码时，忽然想起有个 bug，需要修改，这时候你跳过去改好了，只需要按下 <strong>Ctrl+o</strong> 就可以回到你之前的位置。</p>
+<h2 id="行内跳转"><a href="#行内跳转" class="headerlink" title="行内跳转"></a><strong>行内跳转</strong></h2><p>普通模式下使用下列命令在行内按照单词为单位进行跳转</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w</td>
+<td>到下一个单词的开头</td>
+</tr>
+<tr>
+<td>e</td>
+<td>到当前单词的结尾</td>
+</tr>
+<tr>
+<td>b</td>
+<td>到前一个单词的开头</td>
+</tr>
+<tr>
+<td>ge</td>
+<td>到前一个单词的结尾</td>
+</tr>
+<tr>
+<td><font color="red">0或^</font></td>
+<td>到行头</td>
+</tr>
+<tr>
+<td><font color="red">$    </font></td>
+<td>到行尾</td>
+</tr>
+<tr>
+<td><font color="red">f&lt;字母&gt;</font></td>
+<td>向后搜索&lt;字母&gt;并跳转到第一个匹配的位置(非常实用)</td>
+</tr>
+<tr>
+<td>F&lt;字母&gt;</td>
+<td>向前搜索&lt;字母&gt;并跳转到第一个匹配的位置</td>
+</tr>
+<tr>
+<td>t&lt;字母&gt;</td>
+<td>向后搜索&lt;字母&gt;并跳转到第一个匹配位置之前的一个字母(不常用)</td>
+</tr>
+<tr>
+<td>T&lt;字母&gt;</td>
+<td>向前搜索&lt;字母&gt;并跳转到第一个匹配位置之后的一个字母(不常用)</td>
+</tr>
+</tbody></table>
+<p><strong>小技巧:</strong></p>
+<p>~ 将游标所在字母变成大写或小写</p>
+<h1 id="复制粘贴和剪切"><a href="#复制粘贴和剪切" class="headerlink" title="复制粘贴和剪切"></a><strong>复制粘贴和剪切</strong></h1><h2 id="复制及粘贴及文本"><a href="#复制及粘贴及文本" class="headerlink" title="复制及粘贴及文本"></a><strong>复制及粘贴及文本</strong></h2><ul>
+<li><p>普通模式中使用y复制</p>
+<ul>
+<li>普通模式中，yy复制游标所在的整行（3yy表示复制3行）</li>
+<li>普通模式中，y^ 复制至行首，或y0。不含光标所在处字符。</li>
+<li>普通模式中，y$ 复制至行尾。含光标所在处字符。</li>
+<li>普通模式中，yw 复制一个单词。</li>
+<li>普通模式中，y2w 复制两个单词。</li>
+<li>普通模式中，yG 复制至文本末。</li>
+<li>普通模式中，y1G 复制至文本开头。</li>
+</ul>
+</li>
+<li><p>普通模式中使用 p 粘贴</p>
+<ul>
+<li>普通模式中，p(小写)代表粘贴至光标后（下）</li>
+<li>普通模式中，P(大写)代表粘贴至光标前（上）</li>
+</ul>
+</li>
+</ul>
+<h2 id="剪切及粘贴"><a href="#剪切及粘贴" class="headerlink" title="剪切及粘贴"></a><strong>剪切及粘贴</strong></h2><p>其实前面讲得 dd 删除命令就是剪切，你每次 dd 删除文档内容后，便可以使用 p 来粘贴，也这一点可以让我们实现一个很爽快的功能——交换上下行。 <strong>ddp</strong></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/22/vim快速入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/22/vim快速入门/" class="post-title-link" itemprop="url">vim快速入门</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-22 10:45:55" itemprop="dateCreated datePublished" datetime="2019-12-22T10:45:55+08:00">2019-12-22</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-24 09:57:45" itemprop="dateModified" datetime="2019-12-24T09:57:45+08:00">2019-12-24</time>
+              </span>
             
           
 
@@ -2012,161 +2283,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/11/PAT-A1067/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/11/PAT-A1067/" class="post-title-link" itemprop="url">PAT 甲级 1067 Sort with Swap(0, i)</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-11 18:48:02 / 修改时间：19:01:32" itemprop="dateCreated datePublished" datetime="2019-12-11T18:48:02+08:00">2019-12-11</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226120303897.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt="题目"></p>
-<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h1><p>这道题的意思是，假设0的位置是i,那么交换0 和 i,所在数字的位置交换，求最小的交换次数。</p>
-<h1 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a><strong>注意点</strong></h1><ol>
-<li><p>如果0在位置0上，那么应该从前往后，进行遍历找出第一个位置不是有序位置的地方。但是如果一旦出现a[0] = [0]的情况，我们都需要从头遍历，会造成两个测试点超时。</p>
-</li>
-<li><p>而我们仔细观察会发现根本没必要每次从1开始遍历，因为其实每次遍历都保证1至index - 1之前都是有序的，所以不需要画蛇添足，每次从1开始遍历。</p>
-</li>
-</ol>
-<h1 id="超时代码"><a href="#超时代码" class="headerlink" title="超时代码"></a><strong>超时代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, a, step = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">int</span> pos[n], index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a);</span><br><span class="line">        pos[a] = i; <span class="comment">//数字a的位置是i</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span>(pos[<span class="number">0</span>] != <span class="number">0</span>) &#123; <span class="comment">//如果0不在0位置</span></span><br><span class="line">            swap(pos[<span class="number">0</span>], pos[pos[<span class="number">0</span>]]); <span class="comment">//交换0,和pos[0]</span></span><br><span class="line">            step++; <span class="comment">//次数加1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//0在0位置，从头遍历，找出第一个无序的地方，会造成超时</span></span><br><span class="line">        <span class="keyword">for</span>(index = <span class="number">1</span>; index &lt; n; index++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(pos[index] != index) &#123;</span><br><span class="line">                swap(pos[<span class="number">0</span>], pos[index]);</span><br><span class="line">                step++;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(index == n) <span class="keyword">break</span>; <span class="comment">//所有元素都已有序</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, step);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="ac代码"><a href="#ac代码" class="headerlink" title="ac代码"></a><strong>ac代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, a, step = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">int</span> pos[n], index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a);</span><br><span class="line">        pos[a] = i; <span class="comment">//数字a的位置是i</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span>(pos[<span class="number">0</span>] != <span class="number">0</span>) &#123; <span class="comment">//如果0不在0位置</span></span><br><span class="line">            swap(pos[<span class="number">0</span>], pos[pos[<span class="number">0</span>]]); <span class="comment">//交换0,和pos[0]</span></span><br><span class="line">            step++; <span class="comment">//次数加1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//注意这里并没有从头遍历，因为1至index-1都是有序的</span></span><br><span class="line">        <span class="keyword">for</span>( ; index&lt; n; index++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(pos[index] != index) &#123;</span><br><span class="line">                swap(pos[<span class="number">0</span>], pos[index]);</span><br><span class="line">                step++;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(index == n) <span class="keyword">break</span>; <span class="comment">//所有元素都已有序</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, step);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2213,7 +2329,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">68</span>
+                    <span class="site-state-item-count">69</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
