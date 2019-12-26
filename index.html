@@ -312,6 +312,263 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/26/python-pandas数据处理基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/26/python-pandas数据处理基础/" class="post-title-link" itemprop="url">pandas数据处理基础</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-26 08:57:55 / 修改时间：15:09:15" itemprop="dateCreated datePublished" datetime="2019-12-26T08:57:55+08:00">2019-12-26</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="pandas介绍"><a href="#pandas介绍" class="headerlink" title="pandas介绍"></a><strong>pandas介绍</strong></h1><p>Pandas 是非常著名的开源数据处理库，其基于 NumPy 开发，该工具是 Scipy 生态中为了解决数据分析任务而设计。Pandas 纳入了大量库和一些标准的数据模型，提供了高效地操作大型数据集所需的函数和方法。</p>
+<p>特有的数据结构是 Pandas 的优势和核心。简单来讲，我们可以将任意格式的数据转换为 Pandas 的数据类型，并使用 Pandas 提供的一系列方法进行转换、操作，最终得到我们期望的结果。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a><strong>数据类型</strong></h1><p>Pandas 的数据类型主要有以下几种，它们分别是：<strong>Series</strong>（一维数组），<strong>DataFrame</strong>（二维数组），<strong>Panel</strong>（三维数组），<strong>Panel4D</strong>（四维数组），<strong>PanelND</strong>（更多维数组）。其中 Series 和 DataFrame 应用的最为广泛，几乎占据了使用频率 90% 以上。</p>
+<h2 id="Series"><a href="#Series" class="headerlink" title="Series"></a><strong>Series</strong></h2><p>Series 是 Pandas 中最基本的一维数组形式。其可以储存整数、浮点数、字符串等类型的数据。Series 基本结构如下：</p>
+<p><strong>注意:</strong>其中，data 可以是字典，或者NumPy 里的 ndarray 对象等。<font color="red">index</font> 是数据索引，<strong>索引是 Pandas 数据结构中的一大特性，它主要的功能是帮助我们更快速地定位数据。</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">pandas.Series(data=<span class="literal">None</span>, index=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 例子：</span></span><br><span class="line"><span class="comment"># numpy 数组为data</span></span><br><span class="line">pd.Series(np.arange(<span class="number">9</span>),  index=[<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"tree"</span>, <span class="string">"four"</span>, <span class="string">"five"</span>, <span class="string">"six"</span>, <span class="string">"seven"</span>, <span class="string">"eight"</span>, <span class="string">"nine"</span>])</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">one      0</span></span><br><span class="line"><span class="string">two      1</span></span><br><span class="line"><span class="string">tree     2</span></span><br><span class="line"><span class="string">four     3</span></span><br><span class="line"><span class="string">five     4</span></span><br><span class="line"><span class="string">six      5</span></span><br><span class="line"><span class="string">seven    6</span></span><br><span class="line"><span class="string">eight    7</span></span><br><span class="line"><span class="string">nine     8</span></span><br><span class="line"><span class="string">dtype: int32</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="comment"># 字典为data，可以看出数据值的类型默认识别为int64</span></span><br><span class="line">s = pd.Series(&#123;<span class="string">'a'</span>: <span class="number">10</span>, <span class="string">'b'</span>: <span class="number">20</span>, <span class="string">'c'</span>: <span class="number">30</span>&#125;)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">a    10</span></span><br><span class="line"><span class="string">b    20</span></span><br><span class="line"><span class="string">c    30</span></span><br><span class="line"><span class="string">dtype: int64</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a><strong>DataFrame</strong></h2><p>DataFrame 是 Pandas 中最为常见、最重要且使用频率最高的数据结构。DataFrame 和平常的电子表格或 SQL 表结构相似。你可以把 DataFrame 看成是 Series 的扩展类型，它仿佛是由多个 Series 拼合而成。它和 Series 的直观区别在于，数据不但具有行索引，且具有列索引。</p>
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/uid214893-20190531-1559284057250.jpg?raw=true" alt="DataFrame介绍"></p>
+<p>DataFrame 基本结构如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pandas.DataFrame(data=<span class="literal">None</span>, index=<span class="literal">None</span>, columns=<span class="literal">None</span>)</span><br><span class="line">df = pd.DataFrame([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]], index=[<span class="string">"one1"</span>, <span class="string">"two1"</span>], columns=[<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>])</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">      one  two  three</span></span><br><span class="line"><span class="string">one1    1    2      3</span></span><br><span class="line"><span class="string">two1    4    5      6</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>区别于 Series，其增加了 columns 列索引,<font color="red">二者的核心区别是 Series 没有列索引。</font>DataFrame 可以由以下多个类型的数据构建：</p>
+<ul>
+<li><p>一维数组、列表、字典或者 Series 字典。</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一维数组创建</span></span><br><span class="line">df = pd.DataFrame(np.random.randint(<span class="number">10</span>, size=(<span class="number">2</span>,<span class="number">3</span>)))</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">   0  1  2</span></span><br><span class="line"><span class="string">0  0  6  3</span></span><br><span class="line"><span class="string">1  4  2  7</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="comment"># 列表创建，通过索引：列表,构成字典</span></span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">'one'</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="string">'two'</span>: [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]&#125;)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">     one  two</span></span><br><span class="line"><span class="string">0    1    4</span></span><br><span class="line"><span class="string">1    2    5</span></span><br><span class="line"><span class="string">2    3    6</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="comment"># 由带字典的列表生成 DataFrame</span></span><br><span class="line">df = pd.DataFrame([&#123;<span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'two'</span>: <span class="number">4</span>&#125;, &#123;<span class="string">'one'</span>: <span class="number">2</span>, <span class="string">'two'</span>: <span class="number">5</span>&#125;, &#123;<span class="string">'one'</span>: <span class="number">3</span>, <span class="string">'two'</span>: <span class="number">6</span>&#125;])</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">     one  two</span></span><br><span class="line"><span class="string">0    1    4</span></span><br><span class="line"><span class="string">1    2    5</span></span><br><span class="line"><span class="string">2    3    6</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>二维或者结构化的 numpy.array()。</p>
+</li>
+<li><p>一个 Series 或者另一个 DataFrame。</p>
+</li>
+</ul>
+<h1 id="数据读取"><a href="#数据读取" class="headerlink" title="数据读取"></a><strong>数据读取</strong></h1><p>Pandas 针对数据操作的全部方法都是基于 Pandas 支持的数据结构设计的。也就是说，只有 Series 或者 DataFrame 才能使用 Pandas 提供的方法和函数进行处理。所以，学习真正数据处理方法之前，我们需要将数据转换生成为 Series 或 DataFrame 类型。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#读取数据库</span></span><br><span class="line">conn = pymysql.connect(host=<span class="string">"127.0.0.1"</span>, user=<span class="string">"root"</span>, passwd=<span class="string">"root"</span>, db=<span class="string">"hexun"</span>)</span><br><span class="line">sql = <span class="string">"select * from myhexun"</span></span><br><span class="line">k = pda.read_sql(sql, conn)</span><br><span class="line"><span class="comment">#读取html文件中的&lt;table&gt;标签</span></span><br><span class="line">k = pda.read_html(<span class="string">"url"</span>)</span><br><span class="line"><span class="comment">#读取txt</span></span><br><span class="line">n = pda.read_table(<span class="string">"url"</span>)</span><br><span class="line"><span class="comment">#读取csv</span></span><br><span class="line">df = pd.read_csv(<span class="string">"https://labfile.oss.aliyuncs.com/courses/906/los_census.csv"</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a><strong>基本方法</strong></h2><p>有些时候，我们读取的文件很大。如果全部输出预览这些文件，既不美观，又很耗时。还好，Pandas 提供了 head() 和 tail() 方法，它可以帮助我们只预览一小块数据。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.head()  <span class="comment"># 默认显示前 5 条</span></span><br><span class="line">df.tail(<span class="number">7</span>)  <span class="comment"># 指定显示后 7 条</span></span><br></pre></td></tr></table></figure>
+
+<p>Pandas 还提供了统计和描述性方法，方便你从宏观的角度去了解数据集。describe() 相当于对数据集进行概览</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">df.describe()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"> Zip Code  Total Population  Median Age  ...  Total Females  Total Households  Average Household Size</span></span><br><span class="line"><span class="string">count    319.000000        319.000000  319.000000  ...     319.000000        319.000000              319.000000</span></span><br><span class="line"><span class="string">mean   91000.673981      33241.341693   36.527586  ...   16849.777429      10964.570533                2.828119</span></span><br><span class="line"><span class="string">std      908.360203      21644.417455    8.692999  ...   10934.986468       6270.646400                0.835658</span></span><br><span class="line"><span class="string">min    90001.000000          0.000000    0.000000  ...       0.000000          0.000000                0.000000</span></span><br><span class="line"><span class="string">25%    90243.500000      19318.500000   32.400000  ...    9633.500000       6765.500000                2.435000</span></span><br><span class="line"><span class="string">50%    90807.000000      31481.000000   37.100000  ...   16202.000000      10968.000000                2.830000</span></span><br><span class="line"><span class="string">75%    91417.000000      44978.000000   41.000000  ...   22690.500000      14889.500000                3.320000</span></span><br><span class="line"><span class="string">max    93591.000000     105549.000000   74.000000  ...   53185.000000      31087.000000                4.670000</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="comment"># count      mean  std  min    25% 50% 75% max  </span></span><br><span class="line"><span class="comment"># 列元素个数 平均数 方差 最小值 分位数       最大值</span></span><br><span class="line"><span class="comment"># 分位数指将一个随机变量的概率分布范围分为几个等份的数值点，常用的有中位数（即二分位数）、四分位数、百分位数等</span></span><br></pre></td></tr></table></figure>
+
+<p>DataFrame 还有一些常见属性</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df.values <span class="comment"># .values 将 DataFrame 转换为 NumPy 数组。</span></span><br><span class="line">df.index  <span class="comment"># 查看索引</span></span><br><span class="line">df.columns  <span class="comment"># 查看列名</span></span><br><span class="line">df.shape  <span class="comment"># 查看形状</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="数据的选择，删除，增加"><a href="#数据的选择，删除，增加" class="headerlink" title="数据的选择，删除，增加"></a><strong>数据的选择，删除，增加</strong></h1><h2 id="数据选择"><a href="#数据选择" class="headerlink" title="数据选择"></a><strong>数据选择</strong></h2><p>在数据预处理过程中，我们往往会对数据集进行切分，只将需要的某些行、列，或者数据块保留下来，输出到下一个流程中去。这也就是所谓的数据选择，或者数据索引。</p>
+<p>由于 Pandas 的数据结构中存在行索引、列标签，所以我们可以通过多轴索引完成对数据的选择。</p>
+<h3 id="基于索引数字选择"><a href="#基于索引数字选择" class="headerlink" title="基于索引数字选择"></a><strong>基于索引数字选择</strong></h3><p>可以基于数字索引对数据集进行选择。这里用到的 Pandas 中的 <strong>.iloc[]</strong> (index-location)方法，类似于切片。该方法可以接受的类型有：</p>
+<ul>
+<li>整数。例如：5</li>
+<li>整数构成的列表或数组。例如：[1, 2, 3]</li>
+<li>布尔数组。</li>
+<li>可返回索引值的函数或参数。<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df.iloc[<span class="number">5</span>] <span class="comment"># 选择第六行</span></span><br><span class="line">df.iloc[:<span class="number">3</span>] <span class="comment"># 选择前三行</span></span><br><span class="line">df.iloc[[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]] <span class="comment"># 选择1，3，5行</span></span><br><span class="line">df.iloc[:, <span class="number">1</span>:<span class="number">4</span>] <span class="comment"># 选择2-4列</span></span><br><span class="line">df.iloc[[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>], [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>]] <span class="comment"># 前面为行，后面为列</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="基于标签名称选择"><a href="#基于标签名称选择" class="headerlink" title="基于标签名称选择"></a><strong>基于标签名称选择</strong></h3><p>除了根据数字索引选择，还可以直接根据标签对应的名称选择。这里用到的方法和上面的 iloc 很相似，少了个 i 为 <strong>df.loc[]</strong>。</p>
+<p>df.loc[] 可以接受的类型有：</p>
+<ul>
+<li>单个标签。例如：2 或 ‘a’，这里的 2 指的是标签而不是索引位置。</li>
+<li>列表或数组包含的标签。例如：[‘A’, ‘B’, ‘C’]。</li>
+<li>切片对象。例如：’A’:’E’，注意这里和上面切片的不同支持，首尾都包含在内。</li>
+<li>布尔数组。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df.loc[<span class="number">2</span>] <span class="comment"># 选择标签为2的行</span></span><br><span class="line">df.loc[[<span class="number">0</span>:<span class="number">2</span>]] <span class="comment"># 选择标签从0-2的行</span></span><br><span class="line">df.loc[:, <span class="string">'Total Population'</span>:<span class="string">'Total Males'</span>] <span class="comment"># 选择2-4列</span></span><br><span class="line">df.loc[[<span class="number">0</span>, <span class="number">2</span>], <span class="string">'Median Age'</span>:] <span class="comment"># 选择 1，3 行和 Median Age 后面的列</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="数据删减"><a href="#数据删减" class="headerlink" title="数据删减"></a><strong>数据删减</strong></h2><p>虽然我们可以通过数据选择方法从一个完整的数据集中拿到我们需要的数据，但有的时候直接删除不需要的数据更加简单直接。Pandas 中，以 .drop 开头的方法都与数据删减有关。</p>
+<h3 id="drop-duplicates"><a href="#drop-duplicates" class="headerlink" title="drop_duplicates"></a><strong>drop_duplicates</strong></h3><p>DataFrame.drop_duplicates 通常用于数据去重,去除特定列下面的重复行。返回DataFrame格式的数据。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DataFrame.drop_duplicates(subset=<span class="literal">None</span>, keep=<span class="string">'first'</span>, inplace=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>subset : column label or sequence of labels, optional </p>
+<p>  用来指定特定的列，默认所有列</p>
+</li>
+<li><p>keep : {‘first’, ‘last’, False}, default ‘first’ </p>
+<p>  删除重复项并保留第一次出现的项</p>
+</li>
+<li><p>inplace : boolean, default False </p>
+<p>  是直接在原来数据上修改还是保留一个副本</p>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(&#123;<span class="string">'A'</span>: [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>], <span class="string">'B'</span> : [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>]&#125;)</span><br><span class="line">print(df)</span><br><span class="line">df.drop_duplicates(<span class="string">'B'</span>, <span class="string">'first'</span>, inplace=<span class="literal">True</span>) <span class="comment"># 再B列上修改，如果B列的值相同，保留第一个</span></span><br><span class="line">print(df)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">修改前</span></span><br><span class="line"><span class="string">   A  B</span></span><br><span class="line"><span class="string">0  1  a</span></span><br><span class="line"><span class="string">1  1  b</span></span><br><span class="line"><span class="string">2  2  a</span></span><br><span class="line"><span class="string">3  2  b</span></span><br><span class="line"><span class="string">修改后</span></span><br><span class="line"><span class="string">   A  B</span></span><br><span class="line"><span class="string">0  1  a</span></span><br><span class="line"><span class="string">1  1  b</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="drop"><a href="#drop" class="headerlink" title="drop"></a><strong>drop</strong></h3><p>可以直接去掉数据集中指定的列和行。一般在使用时，我们指定 labels 标签参数，然后再通过 axis 指定按列或按行删除即可。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.drop([<span class="string">'B'</span>, <span class="string">'C'</span>], axis=<span class="number">1</span>) <span class="comment"># 1为列，这点和numpy相反</span></span><br><span class="line">df.drop(columns=[<span class="string">'B'</span>, <span class="string">'C'</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="dropna"><a href="#dropna" class="headerlink" title="dropna"></a><strong>dropna</strong></h3><p>其主要的用途是删除缺少值，即数据集中空缺的数据列或行。</p>
+<h2 id="数据填充"><a href="#数据填充" class="headerlink" title="数据填充"></a><strong>数据填充</strong></h2><p>对于一个给定的数据集而言，我们一般不会乱填数据，而更多的是对缺失值进行填充。</p>
+<h3 id="检测缺失值"><a href="#检测缺失值" class="headerlink" title="检测缺失值"></a><strong>检测缺失值</strong></h3><p>Pandas 为了更方便地检测缺失值，将不同类型数据的缺失均采用 NaN 标记。这里的 NaN 代表 Not a Number，它仅仅是作为一个标记。例外是，在时间序列里，时间戳的丢失采用 NaT 标记。</p>
+<p>Pandas 中用于检测缺失值主要用到两个方法，分别是：<strong>isna()</strong> 和 <strong>notna()</strong>，故名思意就是「是缺失值」和「不是缺失值」。默认会返回布尔值用于判断。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(np.random.rand(<span class="number">9</span>, <span class="number">5</span>), columns=list(<span class="string">'ABCDE'</span>))</span><br><span class="line"><span class="comment"># 插入 T 列，并打上时间戳</span></span><br><span class="line">df.insert(value=pd.Timestamp(<span class="string">'2017-10-1'</span>), loc=<span class="number">0</span>, column=<span class="string">'Time'</span>)</span><br><span class="line"><span class="comment"># 将 1, 3, 5 列的 1，3，5 行置为缺失值</span></span><br><span class="line">df.iloc[[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>], [<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>]] = np.nan</span><br><span class="line"><span class="comment"># 将 2, 4, 6 列的 2，4，6 行置为缺失值</span></span><br><span class="line">df.iloc[[<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>], [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]] = np.nan</span><br><span class="line">print(df.isna())</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">        Time         A         B         C         D         E</span></span><br><span class="line"><span class="string">0 2017-10-01  0.323914  0.519607  0.301421  0.681026  0.154270</span></span><br><span class="line"><span class="string">1        NaT  0.590222       NaN  0.985797       NaN  0.231858</span></span><br><span class="line"><span class="string">2 2017-10-01       NaN  0.596661       NaN  0.370029       NaN</span></span><br><span class="line"><span class="string">3        NaT  0.964551       NaN  0.844908       NaN  0.371320</span></span><br><span class="line"><span class="string">4 2017-10-01       NaN  0.636056       NaN  0.696204       NaN</span></span><br><span class="line"><span class="string">5        NaT  0.099082       NaN  0.711983       NaN  0.113029</span></span><br><span class="line"><span class="string">6 2017-10-01       NaN  0.322928       NaN  0.228482       NaN</span></span><br><span class="line"><span class="string">7        NaT  0.229671       NaN  0.672192       NaN  0.891411</span></span><br><span class="line"><span class="string">8 2017-10-01       NaN  0.944573       NaN  0.761049       NaN</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="填充数据"><a href="#填充数据" class="headerlink" title="填充数据"></a><strong>填充数据</strong></h3><ul>
+<li><p>用相同的标量值替换 NaN，比如用 0。</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.fillna(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用缺失值前面的值进行填充，（上一行的数据）</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.fillna(method=<span class="string">'pad'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后面的值</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.fillna(method=<span class="string">'bfill'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过 Pandas 自带的求平均值方法等来填充特定列或行</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.fillna(df.mean()[<span class="string">'C'</span>:<span class="string">'E'</span>])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用插值df.interpolate()</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/24/vim文档编辑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2146,156 +2403,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/11/PAT-A1069/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/11/PAT-A1069/" class="post-title-link" itemprop="url">PAT 甲级 1069 The Black Hole of Numbers</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-11 19:07:51 / 修改时间：19:15:36" itemprop="dateCreated datePublished" datetime="2019-12-11T19:07:51+08:00">2019-12-11</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226120131249.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
-<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h1><p>这题大致意思是，对一个四位数，分别对他们的四位数字进行从大到小，与从小到大排序得到两个数之差，最后这个数为6174。有以下值得注意的地方。</p>
-<p>（1）题目并未保证输入的n一定是在[1000,10000)之间的数，所以对于输入为53这样的数，第一行输出应为5300 - 0035 = 5265。</p>
-<p>（2）当输入的数为0或者6174时要特殊判断，输入0输出应为0000 - 0000 = 0000；输入6174输出应为7641 - 1467= 6174，而不能没有输出。因此使用do,while循环，而不是简单的while循环。</p>
-<p>（3）输出的数必须为4位，不够4位要在高位补0。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s, s1;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; num;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        s = to_string(num);</span><br><span class="line">        <span class="keyword">while</span>(s.size() &lt; <span class="number">4</span>) s += <span class="string">'0'</span>; <span class="comment">//不是4位数，补0</span></span><br><span class="line">        <span class="keyword">if</span>(s[<span class="number">0</span>] == s[<span class="number">1</span>] &amp;&amp; s[<span class="number">1</span>] == s[<span class="number">2</span>] &amp;&amp; s[<span class="number">2</span>] == s[<span class="number">3</span>]) &#123;<span class="built_in">printf</span>(<span class="string">"%s - %s = 0000\n"</span>, s.c_str(), s.c_str()); <span class="keyword">break</span>;&#125;;</span><br><span class="line">        sort(s.begin(), s.end());<span class="comment">//从小到大排序</span></span><br><span class="line">        s1 = s;</span><br><span class="line">        reverse(s.begin(), s.end());<span class="comment">//从大到小排序</span></span><br><span class="line">        <span class="keyword">int</span> a = stoi(s), b = stoi(s1);</span><br><span class="line">        num = a - b;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%04d - %04d = %04d\n"</span>, a, b, num);</span><br><span class="line">    &#125; <span class="keyword">while</span>(num != <span class="number">6174</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2342,7 +2449,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">69</span>
+                    <span class="site-state-item-count">70</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

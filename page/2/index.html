@@ -312,6 +312,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/11/PAT-A1069/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/11/PAT-A1069/" class="post-title-link" itemprop="url">PAT 甲级 1069 The Black Hole of Numbers</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-11 19:07:51 / 修改时间：19:15:36" itemprop="dateCreated datePublished" datetime="2019-12-11T19:07:51+08:00">2019-12-11</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226120131249.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
+<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h1><p>这题大致意思是，对一个四位数，分别对他们的四位数字进行从大到小，与从小到大排序得到两个数之差，最后这个数为6174。有以下值得注意的地方。</p>
+<p>（1）题目并未保证输入的n一定是在[1000,10000)之间的数，所以对于输入为53这样的数，第一行输出应为5300 - 0035 = 5265。</p>
+<p>（2）当输入的数为0或者6174时要特殊判断，输入0输出应为0000 - 0000 = 0000；输入6174输出应为7641 - 1467= 6174，而不能没有输出。因此使用do,while循环，而不是简单的while循环。</p>
+<p>（3）输出的数必须为4位，不够4位要在高位补0。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s, s1;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; num;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        s = to_string(num);</span><br><span class="line">        <span class="keyword">while</span>(s.size() &lt; <span class="number">4</span>) s += <span class="string">'0'</span>; <span class="comment">//不是4位数，补0</span></span><br><span class="line">        <span class="keyword">if</span>(s[<span class="number">0</span>] == s[<span class="number">1</span>] &amp;&amp; s[<span class="number">1</span>] == s[<span class="number">2</span>] &amp;&amp; s[<span class="number">2</span>] == s[<span class="number">3</span>]) &#123;<span class="built_in">printf</span>(<span class="string">"%s - %s = 0000\n"</span>, s.c_str(), s.c_str()); <span class="keyword">break</span>;&#125;;</span><br><span class="line">        sort(s.begin(), s.end());<span class="comment">//从小到大排序</span></span><br><span class="line">        s1 = s;</span><br><span class="line">        reverse(s.begin(), s.end());<span class="comment">//从大到小排序</span></span><br><span class="line">        <span class="keyword">int</span> a = stoi(s), b = stoi(s1);</span><br><span class="line">        num = a - b;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%04d - %04d = %04d\n"</span>, a, b, num);</span><br><span class="line">    &#125; <span class="keyword">while</span>(num != <span class="number">6174</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/11/PAT-A1067/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1718,198 +1868,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/21/文件系统操作和磁盘管理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/21/文件系统操作和磁盘管理/" class="post-title-link" itemprop="url">文件系统操作和磁盘管理</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-21 16:37:53" itemprop="dateCreated datePublished" datetime="2019-11-21T16:37:53+08:00">2019-11-21</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-11-22 16:28:33" itemprop="dateModified" datetime="2019-11-22T16:28:33+08:00">2019-11-22</time>
-              </span>
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux基础入门/" itemprop="url" rel="index"><span itemprop="name">Linux基础入门</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="实验知识点"><a href="#实验知识点" class="headerlink" title="实验知识点"></a><strong>实验知识点</strong></h1><ul>
-<li>df，du，mount命令的使用</li>
-<li>磁盘相关知识学习</li>
-</ul>
-<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a><strong>基本操作</strong></h1><h2 id="查看磁盘"><a href="#查看磁盘" class="headerlink" title="查看磁盘"></a><strong>查看磁盘</strong></h2><p><strong>使用df命令查看磁盘的容量</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> df -h <span class="comment">#以我们方便看懂的方式</span></span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://doc.shiyanlou.com/document-uid600404labid6122timestamp1523871955863.png/wm" alt="1"></p>
-<p><strong>使用du命令查看目录的容量</strong></p>
-<p>在此之前我们已经经常使用du命令，查看文件的容量，比如我们使用du -h /home/shiyanlou/test，查看test文件的大小。<br>而如果我们直接du -h 目录的话，会将这个目录下所有文件及大小打印。当然我们也可以使用 -d 参数打印指定深度的目录文件大小。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 只查看1级目录的信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> du -h -d 0 /home <span class="comment">#只会打印/home目录的大小，因为这是1级目录</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看2级</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> du -h -d 1 /home <span class="comment">#会打印/home/shiyanlou, /home/project ...等的大小</span></span></span><br></pre></td></tr></table></figure>
-
-<h1 id="简单的磁盘管理"><a href="#简单的磁盘管理" class="headerlink" title="简单的磁盘管理"></a><strong>简单的磁盘管理</strong></h1><h2 id="dd命令简介"><a href="#dd命令简介" class="headerlink" title="dd命令简介"></a><strong>dd命令简介</strong></h2><p>dd命令用于转换和复制文件，不过它的复制不同于cp。dd默认从标准输入中读取，并写入到标准输出中，但可以用选项if（input file，输入文件）和of（output file，输出文件）改变。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">以下两条命令是等价的</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dd of=<span class="built_in">test</span> bs=10 count=1 </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dd <span class="keyword">if</span>=/dev/stdin of=<span class="built_in">test</span> bs=10 count=1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">从标准输入中读取，输出到文件<span class="built_in">test</span>中，一共每块大小是10字节，共1块。</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-dd-命令创建虚拟镜像文件"><a href="#使用-dd-命令创建虚拟镜像文件" class="headerlink" title="使用 dd 命令创建虚拟镜像文件"></a><strong>使用 dd 命令创建虚拟镜像文件</strong></h2><p>从/dev/zero设备创建一个容量为 256M 的空文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dd <span class="keyword">if</span>=/dev/zero of=virtual.img bs=1M count=256</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> du -h virtual.img</span></span><br></pre></td></tr></table></figure>
-
-<p>然后我们要将这个文件格式化（写入文件系统）</p>
-<h2 id="使用-mkfs-命令格式化磁盘（我们这里是自己创建的虚拟磁盘镜像）"><a href="#使用-mkfs-命令格式化磁盘（我们这里是自己创建的虚拟磁盘镜像）" class="headerlink" title="使用 mkfs 命令格式化磁盘（我们这里是自己创建的虚拟磁盘镜像）"></a><strong>使用 mkfs 命令格式化磁盘（我们这里是自己创建的虚拟磁盘镜像）</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkfs.ext4 virtual.img <span class="comment">#将我们的虚拟磁盘镜像格式化为ext4文件系统</span></span></span><br></pre></td></tr></table></figure>
-
-<p>还有使用mount挂载和fdisk分区，现在不是很理解后序补充。。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1956,7 +1914,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">69</span>
+                    <span class="site-state-item-count">70</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
