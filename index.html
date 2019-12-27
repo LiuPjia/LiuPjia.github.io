@@ -312,6 +312,355 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/27/matplotlib基础绘制方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/27/matplotlib基础绘制方法/" class="post-title-link" itemprop="url">matplotlib基础绘制方法(二维)</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-27 10:14:59 / 修改时间：15:19:52" itemprop="dateCreated datePublished" datetime="2019-12-27T10:14:59+08:00">2019-12-27</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="简单的二维图像绘制方法"><a href="#简单的二维图像绘制方法" class="headerlink" title="简单的二维图像绘制方法"></a><strong>简单的二维图像绘制方法</strong></h1><p>需要导入 pyplot 模块，并约定简称为 plt。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+
+<h2 id="pyplot的绘图方法"><a href="#pyplot的绘图方法" class="headerlink" title="pyplot的绘图方法"></a><strong>pyplot的绘图方法</strong></h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>matplotlib.pyplot.angle_spectrum</td>
+<td>绘制电子波谱图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.bar</td>
+<td>绘制柱状图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.barh</td>
+<td>绘制直方图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.broken_barh</td>
+<td>绘制水平直方图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.contour</td>
+<td>绘制等高线图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.errorbar</td>
+<td>绘制误差线</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.hexbin</td>
+<td>绘制六边形图案</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.hist</td>
+<td>绘制柱形图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.hist2d</td>
+<td>绘制水平柱状图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.pie</td>
+<td>绘制饼状图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.quiver</td>
+<td>绘制量场图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.scatter</td>
+<td>散点图</td>
+</tr>
+<tr>
+<td>matplotlib.pyplot.specgram</td>
+<td>绘制光谱图</td>
+</tr>
+</tbody></table>
+<h2 id="通过折线图-plot绘制正弦曲线"><a href="#通过折线图-plot绘制正弦曲线" class="headerlink" title="通过折线图.plot绘制正弦曲线"></a><strong>通过折线图.plot绘制正弦曲线</strong></h2><p>在这里绘制的正弦曲线，实际上不是严格意义上的曲线图，而在两点之间依旧是直线。这里看起来像曲线是因为样本点相互挨得很近。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 -2PI 和 2PI 之间等间距生成 1000 个值，也就是 X 坐标</span></span><br><span class="line">x = np.linespace(<span class="number">-2</span>*np.pi, <span class="number">2</span>*np.pi, <span class="number">1000</span>)</span><br><span class="line"><span class="comment"># 计算 y 坐标</span></span><br><span class="line">y = np.sin(x)</span><br><span class="line"><span class="comment"># 向方法中 `*args` 输入 X，y 坐标</span></span><br><span class="line">plt.plot(x, y)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E6%8A%98%E7%BA%BF%E5%9B%BE1.png?raw=true" alt></p>
+<h2 id="通过-bar绘制柱状图"><a href="#通过-bar绘制柱状图" class="headerlink" title="通过.bar绘制柱状图"></a><strong>通过.bar绘制柱状图</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.bar([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E6%95%A3%E7%82%B9%E5%9B%BE1.png?raw=true" alt></p>
+<h2 id="通过-scatter绘制散点图"><a href="#通过-scatter绘制散点图" class="headerlink" title="通过.scatter绘制散点图"></a><strong>通过.scatter绘制散点图</strong></h2><p>散点图就是呈现在二维平面的一些点，这种图像的需求也是非常常见</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># x,y 的坐标均有 numpy 在 0 到 1 中随机生成 1000 个值</span></span><br><span class="line">x = np.random.ranf(<span class="number">1000</span>)</span><br><span class="line">y = np.random.ranf(<span class="number">1000</span>)</span><br><span class="line">plt.scatter(x, y)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E6%9F%B1%E7%8A%B6%E5%9B%BE1.png?raw=true" alt></p>
+<h2 id="通过-pie绘制饼状图"><a href="#通过-pie绘制饼状图" class="headerlink" title="通过.pie绘制饼状图"></a><strong>通过.pie绘制饼状图</strong></h2><p>饼状图在有限列表以百分比呈现时特别有用，你可以很清晰地看出来各类别之间的大小关系，以及各类别占总体的比例。<br><img src="https://github.com/LiuPjia/imageBed/blob/master/%E9%A5%BC%E7%8A%B6%E5%9B%BE1.png?raw=true" alt></p>
+<hr>
+<h1 id="定制图形样式"><a href="#定制图形样式" class="headerlink" title="定制图形样式"></a><strong>定制图形样式</strong></h1><p><strong>二维线形图常用的也有 10 余项，选取一些比较有代表性的参数列举如下:</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>alpha=</td>
+<td>设置线型的透明度，从 0.0 到 1.0</td>
+</tr>
+<tr>
+<td>color=</td>
+<td>设置线型的颜色</td>
+</tr>
+<tr>
+<td>fillstyle=</td>
+<td>设置线型的填充样式</td>
+</tr>
+<tr>
+<td>linestyle=</td>
+<td>设置线型的样式</td>
+</tr>
+<tr>
+<td>linewidth=</td>
+<td>设置线型的宽度</td>
+</tr>
+<tr>
+<td>marker=</td>
+<td>设置标记点的样式</td>
+</tr>
+<tr>
+<td>……</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<p><strong>散点图也是相似的，它们的很多样式参数都是大同小异</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>s=</td>
+<td>散点大小</td>
+</tr>
+<tr>
+<td>c=</td>
+<td>散点颜色</td>
+</tr>
+<tr>
+<td>marker=</td>
+<td>散点样式</td>
+</tr>
+<tr>
+<td>cmap=</td>
+<td>定义多类别散点的颜色</td>
+</tr>
+<tr>
+<td>alpha=</td>
+<td>点的透明度</td>
+</tr>
+<tr>
+<td>edgecolors=</td>
+<td>散点边缘颜色</td>
+</tr>
+</tbody></table>
+<h2 id="重绘sin-cos折线图"><a href="#重绘sin-cos折线图" class="headerlink" title="重绘sin,cos折线图"></a><strong>重绘sin,cos折线图</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = np.linespance(<span class="number">-2</span>*np.pi, <span class="number">2</span>*np.pi, <span class="number">1000</span>)</span><br><span class="line">y1 = np.sin(x)</span><br><span class="line">y2 = np.cos(x)</span><br><span class="line"><span class="comment"># 指定线的颜色、样式、宽度、透明度</span></span><br><span class="line">plt.plot(x, y1, color=<span class="string">'r'</span>, linestyle=<span class="string">'--'</span>, linewidth=<span class="number">2</span>, alpha=<span class="number">0.8</span>)</span><br><span class="line">plt.plot(x, y2, color=<span class="string">'b'</span>, linestyle=<span class="string">'-'</span>, linewidth=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E6%8A%98%E7%BA%BF%E5%9B%BE2.png?raw=true" alt></p>
+<h2 id="重绘散点图"><a href="#重绘散点图" class="headerlink" title="重绘散点图"></a><strong>重绘散点图</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.rand(<span class="number">100</span>)</span><br><span class="line">y = np.random.rand(<span class="number">100</span>)</span><br><span class="line">colors = np.random.rand(<span class="number">100</span>)</span><br><span class="line">size = np.random.normal(<span class="number">50</span>, <span class="number">60</span>, <span class="number">10</span>) <span class="comment"># 正态分布，均值为50，标准差为60，个数是10</span></span><br><span class="line"></span><br><span class="line">plt.scatter(x, y, s=size, c=colors)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E6%95%A3%E7%82%B9%E5%9B%BE2.png?raw=true" alt></p>
+<h2 id="重绘饼状图"><a href="#重绘饼状图" class="headerlink" title="重绘饼状图"></a><strong>重绘饼状图</strong></h2><p>进一步设置它的颜色、标签、阴影等各类样式</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">label = <span class="string">'Cat'</span>, <span class="string">'Dog'</span>, <span class="string">'Cattle'</span>, <span class="string">'Sheep'</span>, <span class="string">'Horse'</span>  <span class="comment"># 各类别标签</span></span><br><span class="line">color = <span class="string">'r'</span>, <span class="string">'g'</span>, <span class="string">'r'</span>, <span class="string">'g'</span>, <span class="string">'y'</span>  <span class="comment"># 各类别颜色</span></span><br><span class="line">size = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]  <span class="comment"># 各类别占比</span></span><br><span class="line">explode = (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.2</span>)  <span class="comment"># 各类别的偏移半径</span></span><br><span class="line"><span class="comment"># 绘制饼状图</span></span><br><span class="line">plt.pie(size, colors=color, explode=explode,</span><br><span class="line">        labels=label, shadow=<span class="literal">True</span>, autopct=<span class="string">'%1.1f%%'</span>) <span class="comment"># 保留几位小数点</span></span><br><span class="line"><span class="comment"># 饼状图呈正圆</span></span><br><span class="line">plt.axis(<span class="string">'equal'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E9%A5%BC%E7%8A%B6%E5%9B%BE2.png?raw=true" alt></p>
+<h2 id="组合图形"><a href="#组合图形" class="headerlink" title="组合图形"></a><strong>组合图形</strong></h2><p>并不是任何的代码放在一起都是组合图。两张图的横坐标必须共享，才能够被 Matplotlib 自动判断为组合图效果。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">15</span>, <span class="number">17</span>, <span class="number">19</span>]</span><br><span class="line">y_bar = [<span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">11</span>, <span class="number">7</span>, <span class="number">8</span>]</span><br><span class="line">y_line = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">6</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">plt.bar(x, y_bar)</span><br><span class="line">plt.plot(x, y_line, <span class="string">'-o'</span>, color=<span class="string">'y'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E7%BB%84%E5%90%88%E5%9B%BE.png?raw=true" alt></p>
+<h1 id="图形规范化"><a href="#图形规范化" class="headerlink" title="图形规范化"></a><strong>图形规范化</strong></h1><p>关于图形的安放位置，即，figure,subplots,subplot方法可以参考这篇<a href="https://blog.csdn.net/htuhxf/article/details/82986440" target="_blank" rel="noopener">博客</a></p>
+<h2 id="添加图标题，图例"><a href="#添加图标题，图例" class="headerlink" title="添加图标题，图例"></a><strong>添加图标题，图例</strong></h2><p>绘制包含图标题、坐标轴标题以及图例的图形</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots() <span class="comment">#fig是图形，axes是画布</span></span><br><span class="line"></span><br><span class="line">axes.set_xlabel(<span class="string">'x label'</span>)  <span class="comment"># 横轴名称</span></span><br><span class="line">axes.set_ylabel(<span class="string">'y label'</span>)</span><br><span class="line">axes.set_title(<span class="string">'title'</span>)  <span class="comment"># 图形名称</span></span><br><span class="line"></span><br><span class="line">axes.plot(x, x**<span class="number">2</span>)</span><br><span class="line">axes.plot(x, x**<span class="number">3</span>)</span><br><span class="line">axes.legend([<span class="string">"y = x**2"</span>, <span class="string">"y = x**3"</span>], loc=<span class="number">0</span>)  <span class="comment"># 图例</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意:</strong>图例中的 loc 参数标记图例位置，1，2，3，4 依次代表：右上角、左上角、左下角，右下角；0 代表自适应。</p>
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E6%B7%BB%E5%8A%A0%E5%9B%BE%E6%A0%87%E9%A2%98%E3%80%81%E5%9B%BE%E4%BE%8B.png?raw=true" alt></p>
+<h2 id="线型、颜色、透明度"><a href="#线型、颜色、透明度" class="headerlink" title="线型、颜色、透明度"></a><strong>线型、颜色、透明度</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots()</span><br><span class="line"></span><br><span class="line">axes.plot(x, x+<span class="number">1</span>, color=<span class="string">"red"</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line">axes.plot(x, x+<span class="number">2</span>, color=<span class="string">"#1155dd"</span>)</span><br><span class="line">axes.plot(x, x+<span class="number">3</span>, color=<span class="string">"#15cc55"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E7%BA%BF%E5%9E%8B%E3%80%81%E9%A2%9C%E8%89%B2%E3%80%81%E9%80%8F%E6%98%8E%E5%BA%A6.png?raw=true" alt></p>
+<p>除了实线、虚线之外，还有很多丰富的线型</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">12</span>, <span class="number">6</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 线宽</span></span><br><span class="line">ax.plot(x, x+<span class="number">1</span>, color=<span class="string">"blue"</span>, linewidth=<span class="number">0.25</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">2</span>, color=<span class="string">"blue"</span>, linewidth=<span class="number">0.50</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">3</span>, color=<span class="string">"blue"</span>, linewidth=<span class="number">1.00</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">4</span>, color=<span class="string">"blue"</span>, linewidth=<span class="number">2.00</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 虚线类型</span></span><br><span class="line">ax.plot(x, x+<span class="number">5</span>, color=<span class="string">"red"</span>, lw=<span class="number">2</span>, linestyle=<span class="string">'-'</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">6</span>, color=<span class="string">"red"</span>, lw=<span class="number">2</span>, ls=<span class="string">'-.'</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">7</span>, color=<span class="string">"red"</span>, lw=<span class="number">2</span>, ls=<span class="string">':'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 虚线交错宽度</span></span><br><span class="line">line, = ax.plot(x, x+<span class="number">8</span>, color=<span class="string">"black"</span>, lw=<span class="number">1.50</span>)</span><br><span class="line">line.set_dashes([<span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 符号</span></span><br><span class="line">ax.plot(x, x + <span class="number">9</span>, color=<span class="string">"green"</span>, lw=<span class="number">2</span>, ls=<span class="string">'--'</span>, marker=<span class="string">'+'</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">10</span>, color=<span class="string">"green"</span>, lw=<span class="number">2</span>, ls=<span class="string">'--'</span>, marker=<span class="string">'o'</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">11</span>, color=<span class="string">"green"</span>, lw=<span class="number">2</span>, ls=<span class="string">'--'</span>, marker=<span class="string">'s'</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">12</span>, color=<span class="string">"green"</span>, lw=<span class="number">2</span>, ls=<span class="string">'--'</span>, marker=<span class="string">'1'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 符号大小和颜色</span></span><br><span class="line">ax.plot(x, x+<span class="number">13</span>, color=<span class="string">"purple"</span>, lw=<span class="number">1</span>, ls=<span class="string">'-'</span>, marker=<span class="string">'o'</span>, markersize=<span class="number">2</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">14</span>, color=<span class="string">"purple"</span>, lw=<span class="number">1</span>, ls=<span class="string">'-'</span>, marker=<span class="string">'o'</span>, markersize=<span class="number">4</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">15</span>, color=<span class="string">"purple"</span>, lw=<span class="number">1</span>, ls=<span class="string">'-'</span>,</span><br><span class="line">        marker=<span class="string">'o'</span>, markersize=<span class="number">8</span>, markerfacecolor=<span class="string">"red"</span>)</span><br><span class="line">ax.plot(x, x+<span class="number">16</span>, color=<span class="string">"purple"</span>, lw=<span class="number">1</span>, ls=<span class="string">'-'</span>, marker=<span class="string">'s'</span>, markersize=<span class="number">8</span>,</span><br><span class="line">        markerfacecolor=<span class="string">"yellow"</span>, markeredgewidth=<span class="number">2</span>, markeredgecolor=<span class="string">"blue"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E5%85%B6%E4%BB%96%E4%B8%B0%E5%AF%8C%E7%9A%84%E7%BA%BF%E5%9E%8B.png?raw=true" alt></p>
+<h2 id="画布网格、坐标轴范围"><a href="#画布网格、坐标轴范围" class="headerlink" title="画布网格、坐标轴范围"></a><strong>画布网格、坐标轴范围</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">10</span>, <span class="number">5</span>)) <span class="comment"># 1个图，两个画布，图的大小是10x5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示网格</span></span><br><span class="line">axes[<span class="number">0</span>].plot(x, x**<span class="number">2</span>, x, x**<span class="number">3</span>, lw=<span class="number">2</span>)</span><br><span class="line">axes[<span class="number">0</span>].grid(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置坐标轴范围</span></span><br><span class="line">axes[<span class="number">1</span>].plot(x, x**<span class="number">2</span>, x, x**<span class="number">3</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_ylim([<span class="number">0</span>, <span class="number">60</span>])</span><br><span class="line">axes[<span class="number">1</span>].set_xlim([<span class="number">2</span>, <span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E7%94%BB%E5%B8%83%E7%BD%91%E7%BB%9C.png?raw=true" alt></p>
+<p>绘制其他图</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">n = np.array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line"></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">4</span>, figsize=(<span class="number">16</span>, <span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">axes[<span class="number">0</span>].scatter(x, x + <span class="number">0.25</span>*np.random.randn(len(x))) </span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">"scatter"</span>) <span class="comment"># 散点图</span></span><br><span class="line"></span><br><span class="line">axes[<span class="number">1</span>].step(n, n**<span class="number">2</span>, lw=<span class="number">2</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">"step"</span>) <span class="comment"># 梯步图</span></span><br><span class="line"></span><br><span class="line">axes[<span class="number">2</span>].bar(n, n**<span class="number">2</span>, align=<span class="string">"center"</span>, width=<span class="number">0.5</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line">axes[<span class="number">2</span>].set_title(<span class="string">"bar"</span>) <span class="comment"># 条形图</span></span><br><span class="line"></span><br><span class="line">axes[<span class="number">3</span>].fill_between(x, x**<span class="number">2</span>, x**<span class="number">3</span>, color=<span class="string">"green"</span>, alpha=<span class="number">0.5</span>) <span class="comment"># 面积图</span></span><br><span class="line">axes[<span class="number">3</span>].set_title(<span class="string">"fill_between"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/QQ%E6%88%AA%E5%9B%BE20191227145348.png?raw=true" alt></p>
+<h2 id="图形标注"><a href="#图形标注" class="headerlink" title="图形标注"></a><strong>图形标注</strong></h2><p>图像标注，就是在画面上添加文字注释、指示箭头、图框等各类标注元素。</p>
+<h3 id="文字标注"><a href="#文字标注" class="headerlink" title="文字标注"></a><strong>文字标注</strong></h3><p>文字标注的方法由 matplotlib.pyplot.text() 实现。最基本的样式为 matplotlib.pyplot.text(x, y, s)，其中 x, y 用于标注位置定位，s 代表标注的字符串。除此之外，你还可以通过 fontsize= , horizontalalignment= 等参数调整标注字体的大小，对齐样式等。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots()</span><br><span class="line"></span><br><span class="line">x_bar = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>]  <span class="comment"># 柱形图横坐标</span></span><br><span class="line">y_bar = [<span class="number">0.5</span>, <span class="number">0.6</span>, <span class="number">0.3</span>, <span class="number">0.4</span>, <span class="number">0.8</span>]  <span class="comment"># 柱形图纵坐标</span></span><br><span class="line">bars = axes.bar(x_bar, y_bar, color=<span class="string">'blue'</span>, label=x_bar, width=<span class="number">2</span>)  <span class="comment"># 绘制柱形图</span></span><br><span class="line"><span class="keyword">for</span> i, rect <span class="keyword">in</span> enumerate(bars):</span><br><span class="line">    x_text = rect.get_x()  <span class="comment"># 获取柱形图横坐标</span></span><br><span class="line">    y_text = rect.get_height() + <span class="number">0.01</span>  <span class="comment"># 获取柱子的高度并增加 0.01</span></span><br><span class="line">    plt.text(x_text, y_text, <span class="string">'%.1f'</span> % y_bar[i])  <span class="comment"># 标注文字</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E6%96%87%E5%AD%97%E6%A0%87%E6%B3%A8.png?raw=true" alt></p>
+<h3 id="箭头标注"><a href="#箭头标注" class="headerlink" title="箭头标注"></a><strong>箭头标注</strong></h3><p>通过 matplotlib.pyplot.annotate() 方法向图像中添加箭头等样式标注。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots()</span><br><span class="line"></span><br><span class="line">bars = axes.bar(x_bar, y_bar, color=<span class="string">'blue'</span>, label=x_bar, width=<span class="number">2</span>)  <span class="comment"># 绘制柱形图</span></span><br><span class="line"><span class="keyword">for</span> i, rect <span class="keyword">in</span> enumerate(bars):</span><br><span class="line">    x_text = rect.get_x()  <span class="comment"># 获取柱形图横坐标</span></span><br><span class="line">    y_text = rect.get_height() + <span class="number">0.01</span>  <span class="comment"># 获取柱子的高度并增加 0.01</span></span><br><span class="line">    plt.text(x_text, y_text, <span class="string">'%.1f'</span> % y_bar[i])  <span class="comment"># 标注文字</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 增加箭头标注</span></span><br><span class="line">    plt.annotate(<span class="string">'Min'</span>, xy=(<span class="number">32</span>, <span class="number">0.3</span>), xytext=(<span class="number">36</span>, <span class="number">0.3</span>),</span><br><span class="line">                 arrowprops=dict(facecolor=<span class="string">'black'</span>, width=<span class="number">1</span>, headwidth=<span class="number">7</span>))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/LiuPjia/imageBed/blob/master/%E7%AE%AD%E5%A4%B4%E6%A0%87%E6%B3%A8.png?raw=true" alt></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/26/python-pandas数据处理基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2256,158 +2605,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/11/PAT-A1070/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/11/PAT-A1070/" class="post-title-link" itemprop="url">PAT 甲级 1070 Mooncake</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-11 19:16:25 / 修改时间：19:25:24" itemprop="dateCreated datePublished" datetime="2019-12-11T19:16:25+08:00">2019-12-11</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226120030511.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
-<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h1><p>建立一个结构体moon，有总价，总量，单价(<strong>题目没有说是正整数，所以使用double作为数据类型</strong>)。对月饼进行排序，每次都选择单价最高的月饼，知道月饼卖完或者市场饱和为止，得到最大利润。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> esp = <span class="number">1e-9</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">moon</span> &#123;</span></span><br><span class="line">    <span class="keyword">double</span> sum, sumPrice, price;<span class="comment">//总量，总价，单价</span></span><br><span class="line">&#125;Node[<span class="number">1010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(moon a, moon b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.price &gt; b.price; <span class="comment">//依据单价排序</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, msm, index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">double</span> profit = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;msm);<span class="comment">//月饼种类，市场份额</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%lf"</span>, &amp;Node[i].sum);<span class="comment">//输入每种月饼的总量</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%lf"</span>, &amp;Node[i].sumPrice); <span class="comment">//输入每种月饼的总价</span></span><br><span class="line">        Node[i].price = Node[i].sumPrice / Node[i].sum; <span class="comment">//计算月饼的单价</span></span><br><span class="line">    &#125;</span><br><span class="line">    sort(Node, Node + n, cmp); <span class="comment">//根据单价排序</span></span><br><span class="line">    <span class="keyword">while</span>(msm != <span class="number">0</span> &amp;&amp; index &lt; n) &#123; <span class="comment">//如果市场份额没有被占领完，并且，还有库存</span></span><br><span class="line">        <span class="keyword">if</span>((msm - Node[index].sum) &gt; esp) &#123; <span class="comment">//市场份额 &gt; 最高单价月饼的总量</span></span><br><span class="line">            profit += Node[index].sumPrice; </span><br><span class="line">            msm -= Node[index].sum;</span><br><span class="line">            index++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">//市场份额小于最高单价月饼的总量</span></span><br><span class="line">            profit += Node[index].price * msm;</span><br><span class="line">            msm = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%.2f"</span>, profit);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2449,7 +2651,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">70</span>
+                    <span class="site-state-item-count">71</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
