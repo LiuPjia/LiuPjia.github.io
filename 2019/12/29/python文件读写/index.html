@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文件读写读文件读写文件使用with语句，避免处理异常 12with open(&quot;1.txt&quot;, &apos;r&apos;) as f:    f.read()     方法 含义    f.read() 读取文件的全部内容   f.read(size) 最多读取size个字节   f.readline() 每次读取一行内容   f.readlines() 一次性读取所有内容，并按行返回list   1234with">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python文件读写">
+<meta property="og:url" content="https://LiuPjia.github.io/2019/12/29/python文件读写/index.html">
+<meta property="og:site_name" content="佳的个人博客">
+<meta property="og:description" content="文件读写读文件读写文件使用with语句，避免处理异常 12with open(&quot;1.txt&quot;, &apos;r&apos;) as f:    f.read()     方法 含义    f.read() 读取文件的全部内容   f.read(size) 最多读取size个字节   f.readline() 每次读取一行内容   f.readlines() 一次性读取所有内容，并按行返回list   1234with">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-29T03:42:59.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python文件读写">
+<meta name="twitter:description" content="文件读写读文件读写文件使用with语句，避免处理异常 12with open(&quot;1.txt&quot;, &apos;r&apos;) as f:    f.read()     方法 含义    f.read() 读取文件的全部内容   f.read(size) 最多读取size个字节   f.readline() 每次读取一行内容   f.readlines() 一次性读取所有内容，并按行返回list   1234with">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://LiuPjia.github.io/2019/12/29/python文件读写/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python文件读写 | 佳的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佳的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/29/python文件读写/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python文件读写
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-29 10:47:35 / 修改时间：11:42:59" itemprop="dateCreated datePublished" datetime="2019-12-29T10:47:35+08:00">2019-12-29</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a><strong>文件读写</strong></h1><h2 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a><strong>读文件</strong></h2><p>读写文件使用<strong>with</strong>语句，避免处理异常</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">"1.txt"</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.read()</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>f.read()</td>
+<td>读取文件的全部内容</td>
+</tr>
+<tr>
+<td>f.read(size)</td>
+<td>最多读取size个字节</td>
+</tr>
+<tr>
+<td>f.readline()</td>
+<td>每次读取一行内容</td>
+</tr>
+<tr>
+<td>f.readlines()</td>
+<td>一次性读取所有内容，并按行返回list</td>
+</tr>
+</tbody></table>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">"1.txt"</span>, <span class="string">"r"</span>, encoding=<span class="string">"utf-8"</span>, errors=<span class="string">"ignore"</span>) <span class="keyword">as</span> f:</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">以utf-8编码的格式读取文件内容，如果出错，选择忽视</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a><strong>写文件</strong></h2><p>写文件和读文件的方法类似，只是参数不同</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">"1.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>w参数是覆盖，每次都会覆盖掉文件</li>
+<li>使用a，append，追加文件</li>
+</ul>
+<h1 id="对csv文件进行读写"><a href="#对csv文件进行读写" class="headerlink" title="对csv文件进行读写"></a><strong>对csv文件进行读写</strong></h1><p>当我们对数据进行读写的时候，一般是讲它们存储到.csv文件中，然后使用python的csv库进行读写。</p>
+<p><strong>不管是对csv进行读也好写也好，第一步都是先创建一个文件对象，即上面我们使用的f = open(filepath, method),将f创建出来。</strong></p>
+<h2 id="csv的写"><a href="#csv的写" class="headerlink" title="csv的写"></a><strong>csv的写</strong></h2><h3 id="写入列表型数据"><a href="#写入列表型数据" class="headerlink" title="写入列表型数据"></a><strong>写入列表型数据</strong></h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">headers = [<span class="string">'class'</span>,<span class="string">'name'</span>,<span class="string">'sex'</span>,<span class="string">'height'</span>,<span class="string">'year'</span>] <span class="comment"># 列名</span></span><br><span class="line"></span><br><span class="line">rows = [</span><br><span class="line">        [<span class="number">1</span>,<span class="string">'xiaoming'</span>,<span class="string">'male'</span>,<span class="number">168</span>,<span class="number">23</span>],</span><br><span class="line">        [<span class="number">1</span>,<span class="string">'xiaohong'</span>,<span class="string">'female'</span>,<span class="number">162</span>,<span class="number">22</span>],</span><br><span class="line">        [<span class="number">2</span>,<span class="string">'xiaozhang'</span>,<span class="string">'female'</span>,<span class="number">163</span>,<span class="number">21</span>],</span><br><span class="line">        [<span class="number">2</span>,<span class="string">'xiaoli'</span>,<span class="string">'male'</span>,<span class="number">158</span>,<span class="number">21</span>]</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'test.csv'</span>,<span class="string">'w'</span>, newline=<span class="string">''</span>)<span class="keyword">as</span> f: <span class="comment"># 创建一个文件对象，以覆盖的形式，写一行不加换行</span></span><br><span class="line">    f_csv = csv.writer(f)      <span class="comment"># 套接，对csv进行写操作</span></span><br><span class="line">    f_csv.writerow(headers)    <span class="comment"># 写入列名，只有一行</span></span><br><span class="line">    f_csv.writerows(rows)      <span class="comment"># 写入数据，一次性写入多行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="写入列表型数据-1"><a href="#写入列表型数据-1" class="headerlink" title="写入列表型数据"></a><strong>写入列表型数据</strong></h3><p>在写入字典序列类型数据的时候，需要传入两个参数，一个是文件对象——f，一个是字段名称——fieldnames（列表类型），到时候要写入表头的时候，只需要调用writerheader方法，写入一行字典系列数据调用writerrow方法（字典类型），并传入相应字典参数，写入多行调用writerows(列表类型)。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">headers = [<span class="string">'class'</span>,<span class="string">'name'</span>,<span class="string">'sex'</span>,<span class="string">'height'</span>,<span class="string">'year'</span>]</span><br><span class="line"></span><br><span class="line">rows = [</span><br><span class="line">        &#123;<span class="string">'class'</span>:<span class="number">1</span>,<span class="string">'name'</span>:<span class="string">'xiaoming'</span>,<span class="string">'sex'</span>:<span class="string">'male'</span>,<span class="string">'height'</span>:<span class="number">168</span>,<span class="string">'year'</span>:<span class="number">23</span>&#125;,</span><br><span class="line">        &#123;<span class="string">'class'</span>:<span class="number">1</span>,<span class="string">'name'</span>:<span class="string">'xiaohong'</span>,<span class="string">'sex'</span>:<span class="string">'female'</span>,<span class="string">'height'</span>:<span class="number">162</span>,<span class="string">'year'</span>:<span class="number">22</span>&#125;,</span><br><span class="line">        &#123;<span class="string">'class'</span>:<span class="number">2</span>,<span class="string">'name'</span>:<span class="string">'xiaozhang'</span>,<span class="string">'sex'</span>:<span class="string">'female'</span>,<span class="string">'height'</span>:<span class="number">163</span>,<span class="string">'year'</span>:<span class="number">21</span>&#125;,</span><br><span class="line">        &#123;<span class="string">'class'</span>:<span class="number">2</span>,<span class="string">'name'</span>:<span class="string">'xiaoli'</span>,<span class="string">'sex'</span>:<span class="string">'male'</span>,<span class="string">'height'</span>:<span class="number">158</span>,<span class="string">'year'</span>:<span class="number">21</span>&#125;,</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'test2.csv'</span>,<span class="string">'w'</span>,newline=<span class="string">''</span>)<span class="keyword">as</span> f: <span class="comment"># 创建文件对象</span></span><br><span class="line">    f_csv = csv.DictWriter(f,headers) <span class="comment"># 套节流，对csv进行操作，并传入表头</span></span><br><span class="line">    f_csv.writeheader() <span class="comment"># 写表头</span></span><br><span class="line">    f_csv.writerows(rows) <span class="comment"># 写入多行数据</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="csv的读"><a href="#csv的读" class="headerlink" title="csv的读"></a><strong>csv的读</strong></h2><p>读取csv时需要使用reader，并传如一个文件对象，而且reader返回的是一个可迭代的对象，需要使用for循环遍历。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'test.csv'</span>)<span class="keyword">as</span> f:</span><br><span class="line">    f_csv = csv.reader(f)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> f_csv:  <span class="comment"># 进行遍历，row是一个列表</span></span><br><span class="line">        print(row)</span><br><span class="line">        print(row[<span class="number">1</span>]) <span class="comment"># 因为是列表，所以可以使用下标进行访问。</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/27/matplotlib基础绘制方法/" rel="next" title="matplotlib基础绘制方法(二维)">
+                <i class="fa fa-chevron-left"></i> matplotlib基础绘制方法(二维)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">佳</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件读写"><span class="nav-number">1.</span> <span class="nav-text">文件读写</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读文件"><span class="nav-number">1.1.</span> <span class="nav-text">读文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写文件"><span class="nav-number">1.2.</span> <span class="nav-text">写文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对csv文件进行读写"><span class="nav-number">2.</span> <span class="nav-text">对csv文件进行读写</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#csv的写"><span class="nav-number">2.1.</span> <span class="nav-text">csv的写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#写入列表型数据"><span class="nav-number">2.1.1.</span> <span class="nav-text">写入列表型数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写入列表型数据-1"><span class="nav-number">2.1.2.</span> <span class="nav-text">写入列表型数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#csv的读"><span class="nav-number">2.2.</span> <span class="nav-text">csv的读</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">佳</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
