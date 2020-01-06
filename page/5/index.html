@@ -312,6 +312,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/13/PAT-A1119/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/13/PAT-A1119/" class="post-title-link" itemprop="url">PAT 甲级 1119 Pre- and Post-order Traversals</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-13 16:16:51 / 修改时间：18:20:05" itemprop="dateCreated datePublished" datetime="2019-10-13T16:16:51+08:00">2019-10-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>Suppose that all the keys in a binary tree are distinct positive integers. A unique binary tree can be determined by a given pair of postorder and inorder traversal sequences, or preorder and inorder traversal sequences. However, if only the postorder and preorder traversal sequences are given, the corresponding tree may no longer be unique.</p>
+<p>Now given a pair of postorder and preorder traversal sequences, you are supposed to output the corresponding inorder traversal sequence of the tree. If the tree is not unique, simply output any one of them.</p>
+<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line gives a positive integer N (≤ 30), the total number of nodes in the binary tree. The second line gives the preorder sequence and the third line gives the postorder sequence. All the numbers in a line are separated by a space.</p>
+<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, first printf in a line Yes if the tree is unique, or No if not. Then print in the next line the inorder traversal sequence of the corresponding binary tree. If the solution is not unique, any answer would do. It is guaranteed that at least one solution exists. All the numbers in a line must be separated by exactly one space, and there must be no extra space at the end of the line.</p>
+<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a><strong>Sample Input 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">7</span><br><span class="line">1 2 3 4 6 7 5</span><br><span class="line">2 6 7 4 5 3 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a><strong>Sample Output 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Yes</span><br><span class="line">2 1 6 4 7 3 5</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a><strong>Sample Input 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">1 2 3 4</span><br><span class="line">2 4 3 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a><strong>Sample Output 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">No</span><br><span class="line">2 1 3 4</span><br></pre></td></tr></table></figure>
+
+<h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a><strong>题目大意</strong></h2><p>给出一棵树的前序和后序遍历序列，判断这棵树是否是唯一的，并输出这棵树的中序序列（不唯一，任意）。</p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a><strong>代码1</strong></h2><p>我是根据算法笔记上的思路，先建树，然后后序遍历树进行输出。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">40</span>;</span><br><span class="line"><span class="keyword">int</span> pre[maxn], post[maxn], n, cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    node* lchild, *rchild;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">node* <span class="title">newNode</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    node* root = <span class="keyword">new</span> node;</span><br><span class="line">    root-&gt;data = x;</span><br><span class="line">    root-&gt;lchild = root-&gt;rchild = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">node* <span class="title">create</span><span class="params">(<span class="keyword">int</span> preL, <span class="keyword">int</span> preR, <span class="keyword">int</span> postL, <span class="keyword">int</span> postR)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preL &gt; preR) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    node* root = newNode(pre[preL]);</span><br><span class="line">    <span class="keyword">if</span>(preR - preL == <span class="number">1</span>) &#123;<span class="comment">//这个时候序列只有两个元素，不能区分左右孩子，所以不唯一</span></span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        root-&gt;lchild = newNode(pre[preR]); <span class="comment">//默认添加左孩子</span></span><br><span class="line">    &#125;  <span class="keyword">else</span> <span class="keyword">if</span>(preL != preR)&#123;</span><br><span class="line">        <span class="keyword">int</span> indexL, numLeft;</span><br><span class="line">        <span class="keyword">for</span>(indexL = postL; indexL &lt;= postR; indexL++)</span><br><span class="line">            <span class="keyword">if</span>(post[indexL] == pre[preL + <span class="number">1</span>]) <span class="keyword">break</span>;</span><br><span class="line">        numLeft = indexL - postL + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(post[postR - <span class="number">1</span>] == pre[preL + <span class="number">1</span>]) &#123;<span class="comment">//说明没有左孩子</span></span><br><span class="line">            root-&gt;rchild = create(preL + <span class="number">1</span>, preR, postL, postR - <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            root-&gt;lchild = create(preL + <span class="number">1</span>, preL + numLeft, postL, postL + numLeft <span class="number">-1</span>);</span><br><span class="line">            root-&gt;rchild = create(preL + numLeft + <span class="number">1</span>, preR, indexL + <span class="number">1</span>, postR - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(node* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;lchild != <span class="literal">NULL</span>) dfs(root-&gt;lchild);</span><br><span class="line">    cnt++;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, root-&gt;data, cnt == n ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;rchild != <span class="literal">NULL</span>) dfs(root-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;pre[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;post[i]);</span><br><span class="line">    node* root = create(<span class="number">0</span>, n - <span class="number">1</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,flag?<span class="string">"Yes"</span>:<span class="string">"No"</span>);</span><br><span class="line">    dfs(root);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a><strong>代码2</strong></h2><p>发现不需要建树，只需要设置一个数组，按照中序遍历的方式建树，然后填入数字，就能得到序列了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">40</span>;</span><br><span class="line"><span class="keyword">int</span> pre[maxn], post[maxn], in[maxn],num = <span class="number">0</span>, n, cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(<span class="keyword">int</span> preL, <span class="keyword">int</span> preR, <span class="keyword">int</span> postL, <span class="keyword">int</span> postR)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preL &gt; preR) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(preR - preL == <span class="number">1</span>) &#123;</span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        in[num++] = pre[preR]; <span class="comment">//左孩子</span></span><br><span class="line">        in[num++] = pre[preL]; <span class="comment">//根结点</span></span><br><span class="line">    &#125;  <span class="keyword">else</span> <span class="keyword">if</span>(preL != preR)&#123;</span><br><span class="line">        <span class="keyword">int</span> indexL, numLeft;</span><br><span class="line">        <span class="keyword">for</span>(indexL = postL; indexL &lt;= postR; indexL++)</span><br><span class="line">            <span class="keyword">if</span>(post[indexL] == pre[preL + <span class="number">1</span>]) <span class="keyword">break</span>;</span><br><span class="line">        numLeft = indexL - postL + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(post[postR - <span class="number">1</span>] == pre[preL + <span class="number">1</span>]) &#123;</span><br><span class="line">        	in[num++] = pre[preL]; <span class="comment">//左孩子</span></span><br><span class="line">            create(preL + <span class="number">1</span>, preR, postL, postR - <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            create(preL + <span class="number">1</span>, preL + numLeft, postL, postL + numLeft <span class="number">-1</span>);</span><br><span class="line">            in[num++] = pre[preL];</span><br><span class="line">            create(preL + numLeft + <span class="number">1</span>, preR, indexL + <span class="number">1</span>, postR - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    	in[num++] = pre[preL];<span class="comment">//preL == preR这时只有一个结点</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;pre[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;post[i]);</span><br><span class="line">    create(<span class="number">0</span>, n - <span class="number">1</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,flag?<span class="string">"Yes"</span>:<span class="string">"No"</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, in[i], i == n - <span class="number">1</span> ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://blog.csdn.net/richenyunqi/article/details/80158823" target="_blank" rel="noopener">日沉云起大佬的代码 </a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/10/13/PAT-1149/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1758,158 +1923,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/26/PAT-A1086/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/09/26/PAT-A1086/" class="post-title-link" itemprop="url">PAT 甲级 1086 Tree Traversals Again</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-26 18:51:56 / 修改时间：19:31:27" itemprop="dateCreated datePublished" datetime="2019-09-26T18:51:56+08:00">2019-09-26</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>An inorder binary tree traversal can be implemented in a non-recursive way with a stack. For example, suppose that when a 6-node binary tree (with the keys numbered from 1 to 6) is traversed, the stack operations are: push(1); push(2); push(3); pop(); pop(); push(4); pop(); pop(); push(5); push(6); pop(); pop(). Then a unique binary tree (shown in Figure 1) can be generated from this sequence of operations. Your task is to give the postorder traversal sequence of this tree.</p>
-<p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g7d57ot2i4j304y03hdgh.jpg" alt></p>
-<p>Figure 1</p>
-<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line contains a positive integer N (≤30) which is the total number of nodes in a tree (and hence the nodes are numbered from 1 to N). Then 2N lines follow, each describes a stack operation in the format: “Push X” where X is the index of the node being pushed onto the stack; or “Pop” meaning to pop one node from the stack.</p>
-<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, print the postorder traversal sequence of the corresponding tree in one line. A solution is guaranteed to exist. All the numbers must be separated by exactly one space, and there must be no extra space at the end of the line.</p>
-<h2 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a><strong>Sample Input:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">6</span><br><span class="line">Push 1</span><br><span class="line">Push 2</span><br><span class="line">Push 3</span><br><span class="line">Pop</span><br><span class="line">Pop</span><br><span class="line">Push 4</span><br><span class="line">Pop</span><br><span class="line">Pop</span><br><span class="line">Push 5</span><br><span class="line">Push 6</span><br><span class="line">Pop</span><br><span class="line">Pop</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a><strong>Sample Output:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3 4 2 6 5 1</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1956,7 +1969,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">73</span>
+                    <span class="site-state-item-count">74</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

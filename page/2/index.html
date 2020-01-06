@@ -312,6 +312,192 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/16/Urlib库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/16/Urlib库/" class="post-title-link" itemprop="url">Urlib实战</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-16 21:32:15" itemprop="dateCreated datePublished" datetime="2019-12-16T21:32:15+08:00">2019-12-16</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-17 11:31:29" itemprop="dateModified" datetime="2019-12-17T11:31:29+08:00">2019-12-17</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Urlib基础"><a href="#Urlib基础" class="headerlink" title="Urlib基础"></a><strong>Urlib基础</strong></h1><h2 id="urlretrieve-urlcleanup-info-getcode-geturl"><a href="#urlretrieve-urlcleanup-info-getcode-geturl" class="headerlink" title="urlretrieve,urlcleanup,info,getcode,geturl"></a><strong>urlretrieve,urlcleanup,info,getcode,geturl</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urlib.request</span><br><span class="line">urllib.request.urlretrieve(url, filePath) <span class="comment"># 通过url将网页保存</span></span><br><span class="line">urllib.request.urlcleanup() <span class="comment"># 清除缓存</span></span><br><span class="line">urllib.request.urlopen(<span class="string">"http://www.baidu.com"</span>).info() <span class="comment">#得到url的信息</span></span><br><span class="line">urllib.request.urlopen(<span class="string">"http://www.baidu.com"</span>).getcode() <span class="comment">#状态码</span></span><br><span class="line">urllib.request.urlopen(<span class="string">"http://www.baidu.com"</span>).geturl() <span class="comment">#得到url</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="comment"># **自动模拟HTTP请求**</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## **get请求**</span></span><br><span class="line">``` py</span><br><span class="line">keywd = <span class="string">"Python"</span> </span><br><span class="line"><span class="comment"># 如果包含中文的话</span></span><br><span class="line">keywd = urllib.requst.quote(keywd)</span><br><span class="line">url = <span class="string">"http://www.baidu.com/s?wd="</span> + keywd + <span class="string">"&amp;ie=utf-8&amp;tn=baidu"</span></span><br><span class="line">req = urllib.request.Request(url)</span><br><span class="line">data = urllib.request.urlopen(req).read()</span><br><span class="line">fh = open(<span class="string">"G:\\python学习\\爬虫\\1.html"</span>, <span class="string">"wb"</span>)</span><br><span class="line">fh.write(data)</span><br><span class="line">fh.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="post请求"><a href="#post请求" class="headerlink" title="post请求"></a><strong>post请求</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">"http://www/iqianyue.com.mypost/"</span> <span class="comment">#设置url地址</span></span><br><span class="line">mydata = urllib.parse.urlencode(&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"jaijia"</span>,</span><br><span class="line">    <span class="string">"pass"</span>: <span class="string">"12345"</span></span><br><span class="line">&#125;).encode(<span class="string">"utf-8"</span>) <span class="comment">#设置数据，并设置编码</span></span><br><span class="line">req = urllib.request.Request(url, mydata) <span class="comment"># 得到连接</span></span><br><span class="line">data = urllib.request.urlopen(req).read() <span class="comment"># 得到网页</span></span><br><span class="line">fh = open(<span class="string">"G:\\python学习\\爬虫\\1.html"</span>, <span class="string">"wb"</span>) <span class="comment"># 写入文件</span></span><br><span class="line">fh.write(data)</span><br><span class="line">fh.close()</span><br></pre></td></tr></table></figure>
+
+<h1 id="爬虫的异常处理"><a href="#爬虫的异常处理" class="headerlink" title="爬虫的异常处理"></a><strong>爬虫的异常处理</strong></h1><h2 id="常见的状态码"><a href="#常见的状态码" class="headerlink" title="常见的状态码"></a><strong>常见的状态码</strong></h2><p><img src="https://github.com/LiuPjia/imageBed/blob/master/QQ%E5%9B%BE%E7%89%8720191217100344.png?raw=true" alt></p>
+<h2 id="URLError与HTTPError"><a href="#URLError与HTTPError" class="headerlink" title="URLError与HTTPError"></a><strong>URLError与HTTPError</strong></h2><p>两者都是异常处理的类，HTTPError是URLError的子类，HTTPError有异常状态码与异常原因，URLError没有异常状态码，所以在处理的时候，不能使用URLError直接代替HTTPError。如果要代替是否有状态码属性。</p>
+<p><strong>URLError的发生情况</strong></p>
+<ol>
+<li>连不上服务器</li>
+<li>远程URL不存在</li>
+<li>本地无网络</li>
+<li>触发了子类HTTPError</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.error</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用try except</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    urllib.request.urlopen(<span class="string">"https://blog.csdn.net"</span>)</span><br><span class="line"><span class="keyword">except</span> urllib.error.HTTPError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">if</span> hasattr(e, <span class="string">"code"</span>):</span><br><span class="line">        print(e.code)</span><br><span class="line">    <span class="keyword">if</span> hasattr(e, <span class="string">"reason"</span>):</span><br><span class="line">        print(e.reason)</span><br></pre></td></tr></table></figure>
+
+<h1 id="爬虫浏览器的伪装技术"><a href="#爬虫浏览器的伪装技术" class="headerlink" title="爬虫浏览器的伪装技术"></a><strong>爬虫浏览器的伪装技术</strong></h1><p>主要是设置报文头</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">"http://news.163.com/18/0306/09/DC71LRR20001875N.html"</span></span><br><span class="line"><span class="comment"># 以字典的形式设置headers</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">"Accept"</span>: <span class="string">"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"</span>,</span><br><span class="line">    <span class="comment"># "Accept-Encoding": "gzip, deflate",</span></span><br><span class="line">    <span class="string">"Accept-Language"</span>: <span class="string">"zh-CN,zh;q=0.9"</span>,</span><br><span class="line">    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"</span>,</span><br><span class="line">    <span class="string">"Connection"</span>: <span class="string">"keep-alive"</span>,</span><br><span class="line">    <span class="string">"referer"</span>: <span class="string">"http://www.163.com"</span></span><br><span class="line">&#125;</span><br><span class="line">headall = [] <span class="comment"># 建立空列表，为了以制定格式存储头信息</span></span><br><span class="line"><span class="keyword">for</span> key, value, <span class="keyword">in</span> headers.items():</span><br><span class="line">    item = (key, value)</span><br><span class="line">    headall.append(item)</span><br><span class="line">opener = urllib.request.build_opener()</span><br><span class="line">opener.addheaders = headall <span class="comment"># 将制定格式的headers信息添加好</span></span><br><span class="line">data = opener.open(url).read()</span><br><span class="line">fh = open(<span class="string">"G:\\python学习\\爬虫\\1.html"</span>, <span class="string">"wb"</span>) <span class="comment"># 写入文件</span></span><br><span class="line">fh.write(data)</span><br><span class="line">fh.close()</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/13/python正则表达式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1769,153 +1955,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/05/PAT-A1151/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/05/PAT-A1151/" class="post-title-link" itemprop="url">PAT 甲级 1151 LCA in a Binary Tree</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-05 18:37:11 / 修改时间：18:46:38" itemprop="dateCreated datePublished" datetime="2019-12-05T18:37:11+08:00">2019-12-05</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20190225232028472.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
-<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h1><p>这题和A1143基本一样，都是通过倍增法解决问题</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10010</span>;</span><br><span class="line"><span class="keyword">int</span> pre[maxn], in[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data, father, level;</span><br><span class="line">    node(<span class="keyword">int</span> data, <span class="keyword">int</span> father, <span class="keyword">int</span> level) : data(data), father(father), level(level) &#123;&#125;</span><br><span class="line">    node() &#123;&#125;</span><br><span class="line">&#125;Node[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> father, <span class="keyword">int</span> level)</span> </span>&#123; <span class="comment">//递归创建树</span></span><br><span class="line">    <span class="keyword">if</span>(left &gt; right) <span class="keyword">return</span>;</span><br><span class="line">    Node[root] = node(pre[root], father, level);</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    <span class="keyword">for</span>(k = left; k &lt;= right; k++) </span><br><span class="line">        <span class="keyword">if</span>(in[k] == pre[root])</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    create(root + <span class="number">1</span>, left, k - <span class="number">1</span>, root, level + <span class="number">1</span>);</span><br><span class="line">    create(root + <span class="number">1</span> + k - left, k + <span class="number">1</span>, right, root, level + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m, a, b;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt; mp;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;in[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;pre[i]); mp[pre[i]] = <span class="literal">true</span>;&#125;</span><br><span class="line">    create(<span class="number">0</span>, <span class="number">0</span>, m - <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">if</span>(mp[a] != <span class="literal">true</span> &amp;&amp; mp[b] != <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"ERROR: %d and %d are not found.\n"</span>, a, b);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(mp[a] != <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"ERROR: %d is not found.\n"</span>, a);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(mp[b] != <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"ERROR: %d is not found.\n"</span>, b);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> tempA = a, tempB = b, ida = <span class="number">-1</span>, idb = <span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;<span class="comment">//找到结点的下标</span></span><br><span class="line">                <span class="keyword">if</span>(Node[i].data == a) ida = i;</span><br><span class="line">                <span class="keyword">if</span>(Node[i].data == b) idb = i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(Node[ida].level &lt; Node[idb].level) &#123;<span class="comment">//让ida是层数较大的结点</span></span><br><span class="line">                swap(ida, idb);</span><br><span class="line">                swap(a, b);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span>(Node[ida].level != Node[idb].level) ida = Node[ida].father;<span class="comment">//调整ida与idb是同一层</span></span><br><span class="line">            <span class="keyword">if</span>(ida == idb) <span class="built_in">printf</span>(<span class="string">"%d is an ancestor of %d.\n"</span>, b, a); <span class="comment">//说明b是a的祖先</span></span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span>(ida != idb) &#123; <span class="comment">//同时向上调整a, b直至找到公共祖先</span></span><br><span class="line">                    ida = Node[ida].father;</span><br><span class="line">                    idb = Node[idb].father;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"LCA of %d and %d is %d.\n"</span>, tempA, tempB, Node[ida].data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1962,7 +2001,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">73</span>
+                    <span class="site-state-item-count">74</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
