@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="KNN算法的背景介绍KNN算法采用测量不同特征值之间的距离方法进来分类，思想类似成语近朱者赤近墨者黑。 通俗理解给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的 k 个实例，这 k 个实例的多数属于某个类，就把该输入实例分为这个类。 流程 收集数据，转化为结构化的数据结构（numpy数组）  归一化，因为有些属性数据范围相差太大，比如用0，1代表性别，1000代表每天跑步的米">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KNN算法之优化约会网站的配对效果">
+<meta property="og:url" content="https://LiuPjia.github.io/2019/12/30/KNN算法/index.html">
+<meta property="og:site_name" content="佳的个人博客">
+<meta property="og:description" content="KNN算法的背景介绍KNN算法采用测量不同特征值之间的距离方法进来分类，思想类似成语近朱者赤近墨者黑。 通俗理解给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的 k 个实例，这 k 个实例的多数属于某个类，就把该输入实例分为这个类。 流程 收集数据，转化为结构化的数据结构（numpy数组）  归一化，因为有些属性数据范围相差太大，比如用0，1代表性别，1000代表每天跑步的米">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdn.net/20180927100857870?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhamsyMDE3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180927101008814?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhamsyMDE3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180927101138181?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhamsyMDE3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2019-12-30T13:04:45.213Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KNN算法之优化约会网站的配对效果">
+<meta name="twitter:description" content="KNN算法的背景介绍KNN算法采用测量不同特征值之间的距离方法进来分类，思想类似成语近朱者赤近墨者黑。 通俗理解给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的 k 个实例，这 k 个实例的多数属于某个类，就把该输入实例分为这个类。 流程 收集数据，转化为结构化的数据结构（numpy数组）  归一化，因为有些属性数据范围相差太大，比如用0，1代表性别，1000代表每天跑步的米">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180927100857870?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhamsyMDE3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://LiuPjia.github.io/2019/12/30/KNN算法/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>KNN算法之优化约会网站的配对效果 | 佳的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佳的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/30/KNN算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">KNN算法之优化约会网站的配对效果
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-30 19:11:41 / 修改时间：21:04:45" itemprop="dateCreated datePublished" datetime="2019-12-30T19:11:41+08:00">2019-12-30</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="KNN算法的背景介绍"><a href="#KNN算法的背景介绍" class="headerlink" title="KNN算法的背景介绍"></a><strong>KNN算法的背景介绍</strong></h1><p>KNN算法采用测量不同特征值之间的距离方法进来分类，思想类似成语近朱者赤近墨者黑。</p>
+<h2 id="通俗理解"><a href="#通俗理解" class="headerlink" title="通俗理解"></a><strong>通俗理解</strong></h2><p>给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的 k 个实例，这 k 个实例的多数属于某个类，就把该输入实例分为这个类。</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a><strong>流程</strong></h2><ul>
+<li><p>收集数据，转化为结构化的数据结构（numpy数组）</p>
+</li>
+<li><p>归一化，因为有些属性数据范围相差太大，比如用0，1代表性别，1000代表每天跑步的米数，相差太大。归一化就是要把你需要处理的数据经过处理后（通过某种算法）限制在你需要的一定范围内。首先归一化是为了后面数据处理的方便，其次是保正程序运行时收敛加快。常用的归一化方法：</p>
+<ul>
+<li><p>线性函数变换</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y=(x-MinValue)/(MaxValue-MinValue)　　</span><br><span class="line"></span><br><span class="line">说明：x、y分别为转换前、后的值，MaxValue、MinValue分别为样本的最大值和最小值。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对数函数变换</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y=log10(x)　　</span><br><span class="line"></span><br><span class="line">说明：以10为底的对数函数转换。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>反余切函数转换</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y=arctan(x)*2/PI</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>计算距离,样本空间内的两个点之间的距离量度表示两个样本点之间的相似程度：距离越短，表示相似程度越高；反之，相似程度越低。</p>
+<ul>
+<li><p>闵可夫斯基距离</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">闵可夫斯基距离本身不是一种距离，而是一类距离的定义。对于n维空间中的两个点x(x1,x2,…,xn)和y(y1,y2,…,yn)，x和y之间的闵可夫斯基距离可以表示为：</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="https://img-blog.csdn.net/20180927100857870?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhamsyMDE3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">其中，p是一个可变参数：</span><br><span class="line">当p=1时，被称为曼哈顿距离；</span><br><span class="line">当p=2时，被称为欧氏距离；</span><br><span class="line">当p=\infty时，被称为切比雪夫距离。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>欧氏距离<br>  <img src="https://img-blog.csdn.net/20180927101008814?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhamsyMDE3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+</li>
+<li><p>曼哈顿距离<br>  <img src="https://img-blog.csdn.net/20180927101138181?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhamsyMDE3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+</li>
+<li><p>切比雪夫距离</p>
+</li>
+<li><p>余弦距离</p>
+<h1 id="优化约会网站的配对效果"><a href="#优化约会网站的配对效果" class="headerlink" title="优化约会网站的配对效果"></a><strong>优化约会网站的配对效果</strong></h1><p><a href="https://ailearning.apachecn.org/" target="_blank" rel="noopener">https://ailearning.apachecn.org/</a></p>
+<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a><strong>算法设计</strong></h2></li>
+</ul>
+</li>
+<li><p>读取训练数据，使用python的文件读取功能，将文件中的数据读入到numpy数组中，并将数据分割为<strong>训练数据</strong>和<strong>标签</strong>，并返回。</p>
+</li>
+<li><p>分析这题我们可以得到，飞行公里数的数据范围太大，因此我们需要进行归一化，使用线型函数变换，将归一化的数据返回。</p>
+</li>
+<li><p>编写KNN函数，参数值有，测试数据，训练数据，标签和k值，使用欧拉函数计算距离，选取前k个距离最小的标签，统计标签数，返回数量最大的标签。</p>
+</li>
+<li><p>测试算法，首先读取测试数据，将测试数据中的标签分割，代入KNN函数中，将实际标签和理想标签进行比对，如果不相同则，errornum++。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件内容转为矩阵</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">file2matrix</span><span class="params">(filename)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(filename, <span class="string">'r'</span>, errors=<span class="string">'ignore'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="comment"># 读取文件的所有内容，返回列表</span></span><br><span class="line">        content = f.readlines()</span><br><span class="line">        numberoflines = len(content) <span class="comment"># 文件行数</span></span><br><span class="line">        returnMat = np.zeros((numberoflines, <span class="number">3</span>)) <span class="comment"># 建立行数 x 3的矩阵，因为最后的类别单独返回</span></span><br><span class="line">        <span class="comment"># 类别vector</span></span><br><span class="line">        classLabelVector = []</span><br><span class="line">        index = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> content:</span><br><span class="line">            <span class="comment"># 移除头尾的空格换行符，返回新的字符串</span></span><br><span class="line">            line = line.strip()</span><br><span class="line">            listFromline = line.split(<span class="string">'\t'</span>) <span class="comment"># ‘\t’分割字符串</span></span><br><span class="line">            returnMat[index, :] = listFromline[<span class="number">0</span>: <span class="number">3</span>]</span><br><span class="line">            classLabelVector.append(int(listFromline[<span class="number">-1</span>]))</span><br><span class="line">            index += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> returnMat, classLabelVector <span class="comment">#返回矩阵和类别vector</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">autoNorm</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">    <span class="comment"># 计算每种属性的最大值、最小值、范围</span></span><br><span class="line">    minVals = dataSet.min(<span class="number">0</span>) <span class="comment">#0代表每列的最小数据</span></span><br><span class="line">    maxVals = dataSet.max(<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 得到极差</span></span><br><span class="line">    ranges = maxVals - minVals <span class="comment"># 极差</span></span><br><span class="line">    normDataSet = np.zeros(shape=np.shape(dataSet))</span><br><span class="line">    m = dataSet.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 生成于最小值之差组成的矩阵</span></span><br><span class="line">    normDataSet= dataSet - np.tile(minVals, (m, <span class="number">1</span>))</span><br><span class="line">    <span class="comment"># 根据公式计算，最小值之差除以范围</span></span><br><span class="line">    normDataSet = normDataSet / np.tile(ranges, (m, <span class="number">1</span>))</span><br><span class="line">    <span class="keyword">return</span> normDataSet, ranges, minVals</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify0</span><span class="params">(inX, dataSet,labels, k)</span>:</span></span><br><span class="line">    dataSetSize = dataSet.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 距离度量 欧氏距离</span></span><br><span class="line">    diffMat = np.tile(inX, (dataSetSize, <span class="number">1</span>)) - dataSet</span><br><span class="line">    sqDiffMat = diffMat**<span class="number">2</span></span><br><span class="line">    sqDistances = sqDiffMat.sum(axis=<span class="number">1</span>) <span class="comment"># 行上的元素相加</span></span><br><span class="line"></span><br><span class="line">    distances = sqDistances**<span class="number">0.5</span>  <span class="comment"># 开方</span></span><br><span class="line"></span><br><span class="line">    sortedDistIndices = distances.argsort() <span class="comment"># 排序，但是确是索引</span></span><br><span class="line">    classCount = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</span><br><span class="line">        voteIlabel = labels[sortedDistIndices[i]] <span class="comment"># 根据索引得到标签的值</span></span><br><span class="line">        <span class="comment"># &#123;&#125;.get(value, 0)判断字典里面是不是有value元素，如果有返回，否则返回0</span></span><br><span class="line">        classCount[voteIlabel] = classCount.get(voteIlabel, <span class="number">0</span>) + <span class="number">1</span></span><br><span class="line">    <span class="comment"># 返回列表类型的数据，排序sorted(),iterable, key, 大数在前，根据第二个域的值尽心排序，及value</span></span><br><span class="line">    sortedClassCount= sorted(classCount.items(), key=operator.itemgetter(<span class="number">1</span>), reverse=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>] <span class="comment"># 返回标签</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">datingClassTest</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 设置测试数据的的一个比例（训练数据集比例=1-hoRatio）</span></span><br><span class="line">    hoRatio = <span class="number">0.1</span>  <span class="comment"># 测试范围,一部分测试一部分作为样本</span></span><br><span class="line">    <span class="comment"># 从文件中加载数据</span></span><br><span class="line">    datingDataMat, datingLabels = file2matrix(<span class="string">'..\\machinelearninginaction\\Ch02\\datingTestSet2.txt'</span>)</span><br><span class="line">    <span class="comment"># 归一化数据</span></span><br><span class="line">    normMat, ranges, minVals = autoNorm(datingDataMat)</span><br><span class="line">    <span class="comment"># m是数据的行数，即矩阵的第一维</span></span><br><span class="line">    m = normMat.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 设置测试的样本数量， numTestVecs:m表示训练样本的数量</span></span><br><span class="line">    numTestVecs = int(m * hoRatio)</span><br><span class="line">    print(<span class="string">'numTestVecs'</span>, numTestVecs)</span><br><span class="line">    errorCount = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numTestVecs):</span><br><span class="line">        <span class="comment"># 对数据测试</span></span><br><span class="line">        classifierResult = classify0(normMat[i, :], normMat[numTestVecs:m, :], datingLabels[numTestVecs:m], <span class="number">3</span>)</span><br><span class="line">        <span class="keyword">print</span> (<span class="string">"the classifier came back with: %d, the real answer is: %d"</span> % (classifierResult, datingLabels[i]))</span><br><span class="line">        <span class="keyword">if</span> (classifierResult != datingLabels[i]) : errorCount += <span class="number">1.0</span></span><br><span class="line">    print(<span class="string">"the total error rate is: %f"</span> % (errorCount / float(numTestVecs)))</span><br><span class="line">    print(errorCount)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    datingClassTest()</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/29/python文件读写/" rel="next" title="python文件读写">
+                <i class="fa fa-chevron-left"></i> python文件读写
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">佳</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">73</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#KNN算法的背景介绍"><span class="nav-number">1.</span> <span class="nav-text">KNN算法的背景介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通俗理解"><span class="nav-number">1.1.</span> <span class="nav-text">通俗理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程"><span class="nav-number">1.2.</span> <span class="nav-text">流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化约会网站的配对效果"><span class="nav-number">2.</span> <span class="nav-text">优化约会网站的配对效果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法设计"><span class="nav-number">2.1.</span> <span class="nav-text">算法设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.2.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">佳</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
