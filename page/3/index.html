@@ -312,6 +312,307 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/10/PAT-A1063/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/10/PAT-A1063/" class="post-title-link" itemprop="url">PAT 甲级 1063 Set Similarity</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-10 19:21:05 / 修改时间：20:28:24" itemprop="dateCreated datePublished" datetime="2019-12-10T19:21:05+08:00">2019-12-10</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226115554116.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
+<h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a><strong>算法分析</strong></h1><ol>
+<li><p>用unordered_set<int>[] 存放每一个集合，对于要查询的两个集合A，B，定义一个常量same = 0, 遍历集合A中的每一个数，如果这个数，在B中same++, 结果就是same/A.size() + B.size() - same;</int></p>
+</li>
+<li><p>c++标准库里面有set_intersection（取两个集合交集）、set_union（取两个集合并集）、set_difference（取两个集合差集）的函数。其中，函数参数形式均为X(A.begin(),A.end(),B.begin(),B.end(),inserter( C1 , C1.begin() ) )的形式，其中X可以替换为上述三个函数声明。前四个参数依次是表示第一个集合的首尾区间的迭代器、表示第二个集合的首尾区间的迭代器，第五个参数的意思是将集合A、B取交并差集后的结果存入集合C中。</p>
+</li>
+</ol>
+<h1 id="代码一"><a href="#代码一" class="headerlink" title="代码一"></a><strong>代码一</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, k, num, a, b,index = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; s[<span class="number">60</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a);</span><br><span class="line">            s[j].insert(a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;k);</span><br><span class="line">    <span class="keyword">while</span>(k--) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">double</span> sum = s[a].size() + s[b].size(), same = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; :: iterator it = s[a].begin(); it != s[a].end(); it++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(s[b].count(*it) != <span class="number">0</span>) same++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.1f%c\n"</span>, <span class="number">100</span>*same/(sum - same), <span class="string">'%'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="代码二"><a href="#代码二" class="headerlink" title="代码二"></a><strong>代码二</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> N,M,K;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</span><br><span class="line">    <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;sets[N+<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;v1,v2;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=N;++i)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M);</span><br><span class="line">        <span class="keyword">while</span>(M--)&#123;</span><br><span class="line">            <span class="keyword">int</span> a;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a);</span><br><span class="line">            sets[i].insert(a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K);</span><br><span class="line">    <span class="keyword">while</span>(K--)&#123;</span><br><span class="line">        v1.clear();</span><br><span class="line">        v2.clear();</span><br><span class="line">        <span class="keyword">int</span> a,b;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;a,&amp;b);</span><br><span class="line">        set_union(sets[a].cbegin(),sets[a].cend(),sets[b].cbegin(),sets[b].cend(),inserter(v1,v1.begin()));<span class="comment">//求并集</span></span><br><span class="line">        set_intersection(sets[a].cbegin(),sets[a].cend(),sets[b].cbegin(),sets[b].cend(),inserter(v2,v2.begin()));<span class="comment">//求交集</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.1f%%\n"</span>,(<span class="keyword">double</span>)v2.size()/v1.size()*<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/10/PAT-A1062/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/10/PAT-A1062/" class="post-title-link" itemprop="url">PAT 甲级 1062 Talent and Virtue</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-10 19:11:26 / 修改时间：19:19:44" itemprop="dateCreated datePublished" datetime="2019-12-10T19:11:26+08:00">2019-12-10</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226115707917.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
+<h1 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h1><p>这题是一道排序题，将人分为四类：圣人、君子、愚人、小人，然后根据他们的分数对他们进行分类，然后排序输出即可。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span><span class="comment">//存放一个人的id, 等级、总分，道德分、智慧分</span></span><br><span class="line">    <span class="keyword">int</span> level, id, v, t, sum;</span><br><span class="line">    node()&#123;&#125;;</span><br><span class="line">    node(<span class="keyword">int</span> id, <span class="keyword">int</span> v, <span class="keyword">int</span> t, <span class="keyword">int</span> sum) : id(id), v(v), t(t), sum(sum)&#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">const</span> node&amp; a, <span class="keyword">const</span> node&amp; b)</span> </span>&#123; <span class="comment">//比较次序是等级 &gt; 总分 &gt; 道德分 &gt; id</span></span><br><span class="line">    <span class="keyword">if</span>(a.level != b.level) <span class="keyword">return</span> a.level &lt; b.level;</span><br><span class="line">    <span class="keyword">if</span>(a.sum != b.sum) <span class="keyword">return</span> a.sum &gt; b.sum;</span><br><span class="line">    <span class="keyword">if</span>(a.v != b.v) <span class="keyword">return</span> a.v &gt; b.v;</span><br><span class="line">    <span class="keyword">return</span> a.id &lt; b.id;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, l, h;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;n, &amp;l, &amp;h);</span><br><span class="line">    <span class="built_in">vector</span>&lt;node&gt; nv;</span><br><span class="line">    <span class="keyword">while</span>(n--) &#123;</span><br><span class="line">        <span class="keyword">int</span> id, v, t;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;id, &amp;v, &amp;t);</span><br><span class="line">        <span class="keyword">if</span>(v &gt;= l &amp;&amp; t &gt;= l) &#123; <span class="comment">//符合条件的结点</span></span><br><span class="line">            node temp = node(id, v, t, v + t);</span><br><span class="line">            <span class="keyword">if</span>(v &gt;= h &amp;&amp; t &gt;= h) temp.level = <span class="number">1</span>; <span class="comment">//圣人，第一等</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>((v &gt;= h || t &gt;= h) &amp;&amp; v &gt;= t) temp.level = <span class="number">2</span>; <span class="comment">//君子，第二等</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(v &lt;= h &amp;&amp; t &lt;= h &amp;&amp; v &gt;= t) temp.level = <span class="number">3</span>; <span class="comment">//愚人，第三等</span></span><br><span class="line">            <span class="keyword">else</span> temp.level = <span class="number">4</span>; <span class="comment">//小人，第四等</span></span><br><span class="line">            nv.push_back(temp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, nv.size());</span><br><span class="line">    sort(nv.begin(), nv.end(), cmp);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nv.size(); i++) <span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>, nv[i].id, nv[i].v, nv[i].t);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/05/PAT-A1151/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1639,430 +1940,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/04/git的基本用法-上/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/04/git的基本用法-上/" class="post-title-link" itemprop="url">git的基本用法(上)</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-04 20:32:56" itemprop="dateCreated datePublished" datetime="2019-11-04T20:32:56+08:00">2019-11-04</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-11-05 11:35:27" itemprop="dateModified" datetime="2019-11-05T11:35:27+08:00">2019-11-05</time>
-              </span>
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git学习/" itemprop="url" rel="index"><span itemprop="name">git学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Git的初始化"><a href="#Git的初始化" class="headerlink" title="Git的初始化"></a><strong>Git的初始化</strong></h1><p>在使用 Git进行代码管理之前，我们首先要对 Git 进行初始化配置。</p>
-<p>使用 Git 的第一件事就是设置 <font color="red">user.name</font>和 <font color="red">user.email</font>，这些就是你在提交 <font color="red">commit</font> 时的签名，每次提交记录里都会包含这些信息。使用 <font color="red">git config</font> 命令进行配置：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"LiuPjia"</span> </span><br><span class="line">$ git config --global user.email <span class="string">"2516308484@qq.com"</span></span><br></pre></td></tr></table></figure>
-
-<p>–global代表的是全局配置文件，储存在.gitconfig中，如果想在某个项目中与全局变量不同，可以使用不带–global的选项来设置，会在当前项目创建.git/config文件，代表这个项目的配置。</p>
-<h1 id="获得一个Git仓库"><a href="#获得一个Git仓库" class="headerlink" title="获得一个Git仓库"></a><strong>获得一个Git仓库</strong></h1><p>我们需要一个 Git 仓库。有两种方法可以得到它：一种是从已有的Git 仓库中 clone （克隆，复制）；还有一种是新建一个仓库，把未进行版本控制的文件进行版本控制。</p>
-<h2 id="Clone一个仓库"><a href="#Clone一个仓库" class="headerlink" title="Clone一个仓库"></a><strong>Clone一个仓库</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /home/shiyanlou/</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/shiyanlou/gitproject</span><br></pre></td></tr></table></figure>
-
-<h2 id="初始化一个新仓库"><a href="#初始化一个新仓库" class="headerlink" title="初始化一个新仓库"></a><strong>初始化一个新仓库</strong></h2><p>创建目录，并使用git init初始化Git仓库</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir project</span><br><span class="line"><span class="built_in">cd</span> project</span><br><span class="line">git init</span><br></pre></td></tr></table></figure>
-
-<p>通过 ls -la 命令会发现project目录下会有一个名叫 .git 的目录被创建，这意味着一个仓库被初始化了。</p>
-<h1 id="正常的工作流程"><a href="#正常的工作流程" class="headerlink" title="正常的工作流程"></a><strong>正常的工作流程</strong></h1><p>Git 的基本流程如下：</p>
-<ol>
-<li>创建或修改文件</li>
-<li>使用 git add 命令添加新创建或修改的文件到本地的缓存区（Index）</li>
-<li>使用 git commit 命令提交到本地代码库</li>
-<li>（可选，有的时候并没有可以同步的远端代码库）使用git push命令将本地代码库同步到远端代码库</li>
-</ol>
-<h2 id="创建或修改文件"><a href="#创建或修改文件" class="headerlink" title="创建或修改文件"></a><strong>创建或修改文件</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建三个文件</span></span><br><span class="line">$ <span class="built_in">cd</span> /home/shiyanlou/project</span><br><span class="line">$ touch file&#123;1..3&#125;</span><br><span class="line"><span class="comment"># 修改文件</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"test"</span> &gt;&gt; file1 &gt;&gt; file2 &gt;&gt; file3</span><br><span class="line"><span class="comment"># 使用 git status 命令查看当前 Git 仓库的状态：</span></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line"></span><br><span class="line">Initial commit</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">   （use <span class="string">"git add &lt;file&gt;..."</span>） to include <span class="keyword">in</span> what will be committed）</span><br><span class="line"></span><br><span class="line">       file1</span><br><span class="line">       file2</span><br><span class="line">       file3</span><br><span class="line">nothing added to commit but untracked files present （use <span class="string">"git add"</span> to track）</span><br><span class="line"><span class="comment"># 有三个文件处于 untracked 状态，需要用 git add 命令将他们加入到缓存区（Index）</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-git-add-加入缓存区"><a href="#使用-git-add-加入缓存区" class="headerlink" title="使用 git add 加入缓存区"></a><strong>使用 git add 加入缓存区</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 git add 命令将新建的文件添加到缓存区：</span></span><br><span class="line">$ git add file1 file2 file3</span><br><span class="line"><span class="comment"># 再次执行 git status 就会发现新的变化：</span></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line"></span><br><span class="line">Initial commit</span><br><span class="line"></span><br><span class="line">Changes to be committed:</span><br><span class="line">    （use <span class="string">"git rm --cached &lt;file&gt;..."</span> to unstage）</span><br><span class="line"></span><br><span class="line">       new file: file1</span><br><span class="line">       new file: file2</span><br><span class="line">       new file: file3</span><br></pre></td></tr></table></figure>
-
-<p>现在为 commit 做好了准备，你可以使用 <font color="red">git diff</font> 命令再加上 –cached 参数，看看缓存区中哪些文件被修改了。(q退出)，如果没有–cached参数，<font color="red">git diff</font> 会显示当前你所有已做的但没有加入到缓存区里的修改。</p>
-<h2 id="使用-git-commit-提交修改"><a href="#使用-git-commit-提交修改" class="headerlink" title="使用 git commit 提交修改"></a><strong>使用 git commit 提交修改</strong></h2><p>当所有新建，修改的文件都被添加到了缓存区，我们就要使用 git commit 提交到本地仓库：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"add 3 files"</span> <span class="comment">#m代表修改的注释</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="分支与合并"><a href="#分支与合并" class="headerlink" title="分支与合并"></a><strong>分支与合并</strong></h1><p>Git 的分支可以让你在主线（master 分支）之外进行代码提交，同时又不会影响代码库主线。分支的作用体现在多人协作开发中，比如一个团队开发软件，你负责独立的一个功能需要一个月的时间来完成，你就可以创建一个分支，只把该功能的代码提交到这个分支，而其他同事仍然可以继续使用主线开发，你每天的提交不会对他们造成任何影响。当你完成功能后，测试通过再把你的功能分支合并到主线。</p>
-<h2 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a><strong>创建分支</strong></h2><p>一个 Git 仓库可以维护很多开发分支。现在我们来创建一个新的叫 experimental 的分支：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch experimental</span><br></pre></td></tr></table></figure>
-
-<p>运行 git branch 命令可以查看当前的分支列表，以及目前的开发环境处在哪个分支上：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line"> experimental</span><br><span class="line">* master <span class="comment">#*代表现在处的分支</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用git-checkout-分支名-切换分支"><a href="#使用git-checkout-分支名-切换分支" class="headerlink" title="使用git checkout 分支名 切换分支"></a><strong>使用git checkout 分支名 切换分支</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout experimental</span><br></pre></td></tr></table></figure>
-
-<p>在当前分支上修改的内容，其他分支看不到。</p>
-<h2 id="使用git-merge合并分支"><a href="#使用git-merge合并分支" class="headerlink" title="使用git merge合并分支"></a><strong>使用git merge合并分支</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到master分支</span></span><br><span class="line">$ git checkout master</span><br><span class="line"><span class="comment"># 将experimental分支合并到master</span></span><br><span class="line">$ git merge -m <span class="string">'merge experimental branch'</span> experimental <span class="comment">#-m 参数仍然是需要填写合并的注释信息。</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a><strong>删除分支</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d experimental</span><br></pre></td></tr></table></figure>
-
-<p>git branch -d只能删除那些已经被当前分支的合并的分支. 如果你要强制删除某个分支的话就用git branch –D</p>
-<h2 id="撤销一个合并"><a href="#撤销一个合并" class="headerlink" title="撤销一个合并"></a><strong>撤销一个合并</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
-
-<h1 id="Git日志"><a href="#Git日志" class="headerlink" title="Git日志"></a><strong>Git日志</strong></h1><h2 id="使用git-log查看所有提交"><a href="#使用git-log查看所有提交" class="headerlink" title="使用git log查看所有提交"></a><strong>使用git log查看所有提交</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/11/03/Linux任务计划crontab/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/03/Linux任务计划crontab/" class="post-title-link" itemprop="url">Linux任务计划crontab</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-03 08:53:08" itemprop="dateCreated datePublished" datetime="2019-11-03T08:53:08+08:00">2019-11-03</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-11-04 20:29:50" itemprop="dateModified" datetime="2019-11-04T20:29:50+08:00">2019-11-04</time>
-              </span>
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux基础入门/" itemprop="url" rel="index"><span itemprop="name">Linux基础入门</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="实验介绍"><a href="#实验介绍" class="headerlink" title="实验介绍"></a><strong>实验介绍</strong></h1><p>我们时常会有一些定期定时的任务，如周期性的清理一下／tmp，周期性的去备份一次数据库，周期性的分析日志等等。而且有时候因为某些因素的限制，执行该任务的时间会很尴尬。本节就是很好的利用Linux系统的计划工具<strong>crontab</strong>。</p>
-<h1 id="crontab的使用"><a href="#crontab的使用" class="headerlink" title="*crontab的使用"></a><em>*crontab的使用</em></h1><p>crontab 命令常见于 Unix 和类 Unix 的操作系统之中（Linux 就属于类 Unix 操作系统），用于设置周期性被执行的指令。</p>
-<h2 id="crontab简介"><a href="#crontab简介" class="headerlink" title="crontab简介"></a><strong>crontab简介</strong></h2><p>crontab 命令从输入设备读取指令，并将其存放于 crontab 文件中，以供之后读取和执行。通常，crontab 储存的指令被守护进程激活，crond 为其守护进程，crond 常常在后台运行，每一分钟会检查一次是否有预定的作业需要执行。</p>
-<p>通过 crontab 命令，我们可以在固定的间隔时间执行指定的系统指令或 shell　script 脚本。时间间隔的单位可以是分钟、小时、日、月、周的任意组合。</p>
-<p>这里我们看一看crontab 的格式</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example of job definition:</span></span><br><span class="line"><span class="comment"># .---------------- minute (0 - 59)</span></span><br><span class="line"><span class="comment"># |  .------------- hour (0 - 23)</span></span><br><span class="line"><span class="comment"># |  |  .---------- day of month (1 - 31)</span></span><br><span class="line"><span class="comment"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span></span><br><span class="line"><span class="comment"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span></span><br><span class="line"><span class="comment"># |  |  |  |  |</span></span><br><span class="line"><span class="comment"># *  *  *  *  * user-name command to be executed    表示每分钟执行这个指令一次</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="crontab准备"><a href="#crontab准备" class="headerlink" title="crontab准备"></a><strong>crontab准备</strong></h2><ul>
-<li><p>首先我们会启动 <strong>rsyslog</strong>，以便我们可以通过日志中的信息来了解我们的任务是否真正的被执行了（ubuntu会默认执行）</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动rsyslog，便于查看日志信息</span></span><br><span class="line">sudo apt-get install -y rsyslog</span><br><span class="line">sudo service rsyslog start</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动<strong>crontab</strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cron －f &amp;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="crontab的使用-1"><a href="#crontab的使用-1" class="headerlink" title="crontab的使用"></a><strong>crontab的使用</strong></h2><h3 id="添加一个计划任务"><a href="#添加一个计划任务" class="headerlink" title="添加一个计划任务"></a><strong>添加一个计划任务</strong></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用vim在最后一行添加计划"><a href="#使用vim在最后一行添加计划" class="headerlink" title="使用vim在最后一行添加计划"></a><strong>使用vim在最后一行添加计划</strong></h2><p>文档的最后一排加上这样一排命令,该任务是每分钟我们会在/home/shiyanlou目录下创建一个以当前的年月日时分秒为名字的空白文件。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/1 * * * * touch /home/shiyanlou/$(date +\%Y\%m\%d\%H\%M\%S) <span class="comment"># "\"表示将"%"转义</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用crontab-l查看添加了哪些任务"><a href="#使用crontab-l查看添加了哪些任务" class="headerlink" title="使用crontab -l查看添加了哪些任务"></a><strong>使用crontab -l查看添加了哪些任务</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://dn-simplecloud.shiyanlou.com/1135081468204230683-wm" alt></p>
-<h2 id="启动cron的守护进程"><a href="#启动cron的守护进程" class="headerlink" title="启动cron的守护进程"></a><strong>启动cron的守护进程</strong></h2><p>虽然我们添加了任务，但是如果 cron 的守护进程并没有启动，它根本都不会监测到有任务，当然也就不会帮我们执行，我们可以通过以下2种方式来确定我们的 cron 是否成功的在后台启动，默默的帮我们做事。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep cron</span><br><span class="line"></span><br><span class="line">or</span><br><span class="line"></span><br><span class="line">pgrep cron</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看执行任务的信息反馈"><a href="#查看执行任务的信息反馈" class="headerlink" title="查看执行任务的信息反馈"></a><strong>查看执行任务的信息反馈</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tail -f /var/<span class="built_in">log</span>/syslog</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除任务：crontab-r"><a href="#删除任务：crontab-r" class="headerlink" title="删除任务：crontab -r"></a><strong>删除任务：crontab -r</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -r</span><br></pre></td></tr></table></figure>
-
-<h1 id="例子：备份日志"><a href="#例子：备份日志" class="headerlink" title="例子：备份日志"></a><strong>例子：备份日志</strong></h1><p>小明是一个服务器管理员，他需要每天备份论坛数据（这里我们用 alternatives.log 日志替代），备份当天的日志并删除之前的日志。而且备份之后文件名是 年-月-日 的格式。alternatives.log 在 /var/log/ 下面。</p>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a><strong>目标</strong></h2><hr>
-<ol>
-<li>为 shiyanlou 用户添加计划任务</li>
-<li>每天凌晨 3 点的时候定时备份 alternatives.log 到 /home/shiyanlou/tmp/ 目录</li>
-<li>命名格式为 年-月-日，比如今天是2017年4月1日，那么文件名为 2017-04-01<h2 id="参考答案"><a href="#参考答案" class="headerlink" title="参考答案"></a><strong>参考答案</strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo cron -f &amp; <span class="comment">#启动crontab</span></span><br><span class="line">crontab -e <span class="comment">#添加</span></span><br><span class="line">0 3 * * * sudo rm /home/shiyanlou/tmp/*</span><br><span class="line">0 3 * * * sudo cp /var/<span class="built_in">log</span>/alternatives.log /home/shiyanlou/tmp/$(date +\%Y-\%m-\%d)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2109,7 +1986,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-count">76</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2146,7 +2023,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

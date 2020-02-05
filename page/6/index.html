@@ -312,6 +312,328 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/28/PAT-A1073/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/09/28/PAT-A1073/" class="post-title-link" itemprop="url">PAT 甲级 1073 Scientific Notation</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-28 13:31:20 / 修改时间：14:16:34" itemprop="dateCreated datePublished" datetime="2019-09-28T13:31:20+08:00">2019-09-28</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>Scientific notation is the way that scientists easily handle very large numbers or very small numbers. The notation matches the regular expression [+-][1-9].[0-9]+E[+-][0-9]+ which means that the integer portion has exactly one digit, there is at least one digit in the fractional portion, and the number and its exponent’s signs are always provided even when they are positive.</p>
+<p>Now given a real number A in scientific notation, you are supposed to print A in the conventional notation while keeping all the significant figures.</p>
+<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input contains one test case. For each case, there is one line containing the real number A in scientific notation. The number is no more than 9999 bytes in length and the exponent’s absolute value is no more than 9999.</p>
+<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, print in one line the input number A in the conventional notation, with all the significant figures kept, including trailing zeros.</p>
+<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a><strong>Sample Input 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+1.23400E-03</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a><strong>Sample Output 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.00123400</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a><strong>Sample Input 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1.2E+10</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a><strong>Sample Output 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-12000000000</span><br></pre></td></tr></table></figure>
+
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>首先确定这个数的符号，如果是符号然后输出，接着确定E的位置posE，就能得到指数e和前面小数的长度；接下来分类讨论一共有三种情况：</p>
+<ol>
+<li>指数是负数，那么先输出0.在输出n - 1个0最后输出E前面的数字去掉’.’</li>
+<li>指数是整数，足够大，可以保证数字没有小数点(e &gt;= posE - 3，减去符号位，第一个数字小数点)，输出前面的数字，再输出e -= posE - 3个0</li>
+<li>指数是整数，不够大，数字最后还有小数点，按要求输出。</li>
+</ol>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; s;</span><br><span class="line">    <span class="keyword">int</span> len = s.length(), posE = s.find(<span class="string">"E"</span>);;</span><br><span class="line">    <span class="keyword">if</span>(s[<span class="number">0</span>] == <span class="string">'-'</span>) <span class="built_in">cout</span> &lt;&lt; <span class="string">'-'</span>;</span><br><span class="line">    <span class="keyword">int</span> e = stoi(s.substr(posE + <span class="number">1</span>, len));</span><br><span class="line">    <span class="keyword">if</span>(e &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; -e; i++) <span class="built_in">cout</span>&lt;&lt;<span class="string">"0"</span>&lt;&lt;(i == <span class="number">0</span> ?<span class="string">"."</span> : <span class="string">""</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; posE; i++) <span class="keyword">if</span>(s[i] != <span class="string">'.'</span>) <span class="built_in">cout</span> &lt;&lt; s[i];</span><br><span class="line">        </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(e &gt;= posE - <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; s[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt; posE; i++) <span class="built_in">cout</span> &lt;&lt; s[i];</span><br><span class="line">        e -= posE - <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; e; i++) <span class="built_in">cout</span> &lt;&lt; <span class="string">"0"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; s[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt; posE; i++) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; (i == e + <span class="number">3</span> ? <span class="string">"."</span> : <span class="string">""</span>) &lt;&lt; s[i];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/28/PAT-A1078/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/09/28/PAT-A1078/" class="post-title-link" itemprop="url">PAT 甲级 A1078 Hashing</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-28 09:23:46 / 修改时间：09:48:23" itemprop="dateCreated datePublished" datetime="2019-09-28T09:23:46+08:00">2019-09-28</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>The task of this problem is simple: insert a sequence of distinct positive integers into a hash table, and output the positions of the input numbers. The hash function is defined to be H(key)=key%TSize where TSize is the maximum size of the hash table. <strong>Quadratic probing</strong> (with positive increments only) is used to solve the collisions.</p>
+<p>Note that the table size is better to be prime. If the maximum size given by the user is not prime, you must re-define the table size to be the smallest prime number which is larger than the size given by the user.</p>
+<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line contains two positive numbers: MSize (≤10<br>​4<br>​​ ) and N (≤MSize) which are the user-defined table size and the number of input numbers, respectively. Then N distinct positive integers are given in the next line. All the numbers in a line are separated by a space.</p>
+<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, print the corresponding positions (index starts from 0) of the input numbers in one line. All the numbers in a line are separated by a space, and there must be no extra space at the end of the line. In case it is impossible to insert the number, print “-“ instead.</p>
+<h2 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a><strong>Sample Input:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4 4</span><br><span class="line">10 6 4 15</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a><strong>Sample Output:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 1 4 -</span><br></pre></td></tr></table></figure>
+
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>这题没有读懂题意，因为单词不认识：<strong>Quadratic probing</strong>二次方探查法，明明背了单词probe探查的意思，哎。下面给出<strong>Quadratic probing</strong>的定义（柳神博客）：</p>
+<h3 id="知识点：二分探查法"><a href="#知识点：二分探查法" class="headerlink" title="知识点：二分探查法"></a><strong>知识点：二分探查法</strong></h3><p>如果hashTable⾥⾯key % size的下标对应的hashTable为false,说明这个下标没有被使⽤过，直接输<br>出。否则step步⻓从1加到size-1，⼀次次尝试是否能使index = (key + step * step) % size;所对应的位置<br>没有元素，如果都没有找到就输出“-”，否则就输出这个找到的元素的位置～ – 注意 是(key + step *<br>step) % size ⽽不是(key % size + step * step)。</p>
+<p>知道了这个问题描述，这题就简单了，首先求大于等于表长的第一个素数，有两种办法，第一种办法是从表长开始，如果Size不是素数，Size++，这里为了锻炼自己，使用了埃氏筛法+二分查找。</p>
+<h3 id="知识点：埃氏筛法"><a href="#知识点：埃氏筛法" class="headerlink" title="知识点：埃氏筛法"></a><strong>知识点：埃氏筛法</strong></h3><p>设置两个数组bool p[maxn], int prime[maxn], num; p[i]表示i是不是素数,prime存放maxn范围的素数表，遍历从2开始进行迭代，每次迭代，都将素数的倍数筛去，及prime[i<em>?] = true,然后存放在prime中。*</em>注意点：**在这题使用二分查找时，上限可以取到num-1，因为可以确定素数表中一定有自己需要的数据。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #include &lt;cstdio&gt;</span></span><br><span class="line"><span class="comment">// #include &lt;cmath&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// bool isPrime(int x) &#123;</span></span><br><span class="line"><span class="comment">//     if(x &lt;= 1) return false;</span></span><br><span class="line"><span class="comment">//     int sq = (int)sqrt(1.0*x);</span></span><br><span class="line"><span class="comment">//     for(int i = 2; i &lt;= sq; i++) &#123;</span></span><br><span class="line"><span class="comment">//         if(x % i == 0) return false;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//     return true;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// const int maxn = 10010;</span></span><br><span class="line"><span class="comment">// int main() &#123;</span></span><br><span class="line"><span class="comment">//     bool vis[maxn] = &#123;false&#125;;</span></span><br><span class="line"><span class="comment">//     int temp, m, n;</span></span><br><span class="line"><span class="comment">//     scanf("%d %d", &amp;m, &amp;n);</span></span><br><span class="line"><span class="comment">//     while(isPrime(m) == false) m++;</span></span><br><span class="line"><span class="comment">//     for(int i = 0; i &lt; n; i++) &#123;</span></span><br><span class="line"><span class="comment">//         scanf("%d", &amp;temp);</span></span><br><span class="line"><span class="comment">//         bool flag = true;</span></span><br><span class="line"><span class="comment">//         for(int step = 0; step &lt;= m - 1; step++) &#123;</span></span><br><span class="line"><span class="comment">//             long long r = (long long)(temp + step * step) % m;</span></span><br><span class="line"><span class="comment">//             if(vis[r] == false) &#123;</span></span><br><span class="line"><span class="comment">//                 printf("%d%c", r, i == n - 1 ? '\n' : ' ');</span></span><br><span class="line"><span class="comment">//                 flag = false;</span></span><br><span class="line"><span class="comment">//                 vis[r] = true;</span></span><br><span class="line"><span class="comment">//                 break;</span></span><br><span class="line"><span class="comment">//             &#125;</span></span><br><span class="line"><span class="comment">//         &#125;</span></span><br><span class="line"><span class="comment">//         if(flag == true) printf("-%c",  i == n - 1 ? '\n' : ' ');</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//     return 0;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">10010</span>;</span><br><span class="line"><span class="keyword">bool</span> p[maxn] = &#123;<span class="literal">false</span>&#125;,  vis[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> prime[maxn], num = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">findPrime</span><span class="params">()</span> </span>&#123; <span class="comment">//埃氏筛法</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; maxn; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(p[i] == <span class="literal">false</span>) &#123;</span><br><span class="line">            prime[num++] = i;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i + i; j &lt; maxn; j += i) &#123;</span><br><span class="line">                p[j] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BinarySearch</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(left &lt; right) &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(prime[mid] &gt;= x) right = mid;</span><br><span class="line">        <span class="keyword">else</span> left = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp, m, n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;m, &amp;n);</span><br><span class="line">    findPrime();</span><br><span class="line">    m = prime[BinarySearch(m, <span class="number">0</span>, num - <span class="number">1</span>)]; <span class="comment">//可以减一，因为可以确定元素一定存在</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;temp);</span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> step = <span class="number">0</span>; step &lt;= m - <span class="number">1</span>; step++) &#123;</span><br><span class="line">            <span class="keyword">long</span> <span class="keyword">long</span> r = (<span class="keyword">long</span> <span class="keyword">long</span>)(temp + step * step) % m;</span><br><span class="line">            <span class="keyword">if</span>(vis[r] == <span class="literal">false</span>) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, r, i == n - <span class="number">1</span> ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">                flag = <span class="literal">false</span>;</span><br><span class="line">                vis[r] = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag == <span class="literal">true</span>) <span class="built_in">printf</span>(<span class="string">"-%c"</span>,  i == n - <span class="number">1</span> ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/26/PAT-A1086/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1577,1453 +1899,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/25/PAT-A1089/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/09/25/PAT-A1089/" class="post-title-link" itemprop="url">PAT 甲级 1089 Insert or Merge</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-25 19:14:00 / 修改时间：19:35:51" itemprop="dateCreated datePublished" datetime="2019-09-25T19:14:00+08:00">2019-09-25</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>According to Wikipedia:</p>
-<p><strong>Insertion sort</strong> iterates, consuming one input element each repetition, and growing a sorted output list. Each iteration, insertion sort removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there. It repeats until no input elements remain.</p>
-<p><strong>Merge sort</strong> works as follows: Divide the unsorted list into N sublists, each containing 1 element (a list of 1 element is considered sorted). Then repeatedly merge two adjacent sublists to produce new sorted sublists until there is only 1 sublist remaining.</p>
-<p>Now given the initial sequence of integers, together with a sequence which is a result of several iterations of some sorting method, can you tell which sorting method we are using?</p>
-<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line gives a positive integer N (≤100). Then in the next line, N integers are given as the initial sequence. The last line contains the partially sorted sequence of the N numbers. It is assumed that the target sequence is always ascending. All the numbers in a line are separated by a space.</p>
-<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, print in the first line either “Insertion Sort” or “Merge Sort” to indicate the method used to obtain the partial result. Then run this method for one more iteration and output in the second line the resuling sequence. It is guaranteed that the answer is unique for each test case. All the numbers in a line must be separated by a space, and there must be no extra space at the end of the line.</p>
-<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a><strong>Sample Input 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">3 1 2 8 7 5 9 4 6 0</span><br><span class="line">1 2 3 7 8 5 9 4 6 0</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a><strong>Sample Output 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Insertion Sort</span><br><span class="line">1 2 3 5 7 8 9 4 6 0</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a><strong>Sample Input 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">3 1 2 8 7 5 9 4 0 6</span><br><span class="line">1 3 2 8 5 7 4 9 0 6</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a><strong>Sample Output 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Merge Sort</span><br><span class="line">1 2 3 8 4 5 7 9 0 6</span><br></pre></td></tr></table></figure>
-
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>这题时对插入排序和归并排序的实现，通过这题也复习了归并排序的算法。<br>下面介绍归并排序:</p>
-<ul>
-<li>归并排序的核心点就是合并两个有序的序列，这里使用了merge作为合并函数，传递的参数是两个序列的的范围参数，使用二分法的思想，首先设立一个数组temp用来存储有序序列，最后再将temp里的值传入数组。</li>
-<li>然后是mergeSort()，将序列进行分割，这题用的是非递归算法，首先确定步长step = 2,这个步长指的是左右子序列的长度和，做个这题后，我终于理解了为什么设定的是step / 2 &lt;= n：假如n = 45，step作为步长一定是2的幂，如果是step &lt;= n那么实际排序只有前面32个，后面无法进行排序。然后从起始点0开始遍历所有分组，分组是n/step，所以i += step，接下来要做的就是确定左右子序列的下标了，首先确定分组的中点,mid = i + step - 1,在这里可以判断mid + 1的大小如果小于n才进行合并，可以省点时间。merge(i, mid, mid + 1, min(n - 1, i + step - 1))。</li>
-</ul>
-<p><strong>插入排序</strong>要从下标1开始</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">110</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; is, ms, nums, s;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    is.resize(n);</span><br><span class="line">    ms.resize(n);</span><br><span class="line">    nums.resize(n);</span><br><span class="line">    s.resize(n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k = x;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = x - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span>(is[k] &lt; is[i]) &#123;</span><br><span class="line">            swap(is[k], is[i]);</span><br><span class="line">            k = i;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> l1, <span class="keyword">int</span> l2, <span class="keyword">int</span> r1, <span class="keyword">int</span> r2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp[maxn], index = <span class="number">0</span>, i = l1, j = r1;</span><br><span class="line">    <span class="keyword">while</span>(i &lt;= l2 &amp;&amp; j &lt;= r2) &#123;</span><br><span class="line">        <span class="keyword">if</span>(ms[i] &lt;= ms[j]) temp[index++] = ms[i++];</span><br><span class="line">        <span class="keyword">else</span> temp[index++] = ms[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(i &lt;= l2) temp[index++] = ms[i++];</span><br><span class="line">    <span class="keyword">while</span>(j &lt;= r2) temp[index++] = ms[j++];</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; index; i++) &#123;</span><br><span class="line">        ms[l1 + i] = temp[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>&amp; step)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i += step) &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = i + step / <span class="number">2</span> - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// if(mid + 1 &lt; n) &#123;</span></span><br><span class="line">            merge(i, mid, mid + <span class="number">1</span>, min(i + step - <span class="number">1</span>, n - <span class="number">1</span>));</span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">    step *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    init();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nums[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;s[i]);</span><br><span class="line">    is = ms = nums;</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">int</span> f1 = <span class="number">1</span>, step = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(f1 &lt; n) insert(f1++);</span><br><span class="line">        <span class="keyword">if</span>(is == s) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Insertion Sort\n"</span>);</span><br><span class="line">            insert(f1);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, is[i], (i==n<span class="number">-1</span>) ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(step / <span class="number">2</span> &lt;= n) mergeSort(step);</span><br><span class="line">        <span class="keyword">if</span>(ms == s) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Merge Sort\n"</span>);</span><br><span class="line">            mergeSort(step);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, ms[i], (i==n<span class="number">-1</span>) ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/25/PAT甲级题解目录/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/09/25/PAT甲级题解目录/" class="post-title-link" itemprop="url">PAT甲级题解目录</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-25 18:30:52" itemprop="dateCreated datePublished" datetime="2019-09-25T18:30:52+08:00">2019-09-25</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-12-11 19:47:06" itemprop="dateModified" datetime="2019-12-11T19:47:06+08:00">2019-12-11</time>
-              </span>
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PAT甲级题解/" itemprop="url" rel="index"><span itemprop="name">PAT甲级题解</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="PAT甲级题解目录"><a href="#PAT甲级题解目录" class="headerlink" title="PAT甲级题解目录"></a><strong>PAT甲级题解目录</strong></h2><table>
-<thead>
-<tr>
-<th>编号</th>
-<th>标题</th>
-<th>分类</th>
-<th>备注</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1001</td>
-<td>A+B Format</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1002</td>
-<td>A+B for Polynomials</td>
-<td>中级模拟+散列</td>
-<td>多项式求和问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1003</td>
-<td>Emergency</td>
-<td>图</td>
-<td>最短路径问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1004</td>
-<td>Counting Leaves</td>
-<td>树</td>
-<td>树的遍历问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1005</td>
-<td>Spell It Right</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1006</td>
-<td>Sign In and Sign Out</td>
-<td>查找元素</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1007</td>
-<td>Maximum Subsequence Sum</td>
-<td>动态规划</td>
-<td>最大连续子序列和问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1008</td>
-<td>Elevator</td>
-<td>简单模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1009</td>
-<td>Product of Polynomials</td>
-<td>简单模拟</td>
-<td>多项式乘法问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1010</td>
-<td>Radix</td>
-<td>进制转换+二分查找</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1011</td>
-<td>World Cup Betting</td>
-<td>查找元素</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1012</td>
-<td>The Best Rank</td>
-<td>排序、常用stl</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1013</td>
-<td>Battle Over Cities</td>
-<td>图、并查集</td>
-<td>连通分量问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1014</td>
-<td>Waiting in Line</td>
-<td>复杂模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1015</td>
-<td>Reversible Primes</td>
-<td>素数+进制转换</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1016</td>
-<td>Phone Bills</td>
-<td>复杂模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1017</td>
-<td>Queueing at Bank</td>
-<td>复杂模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1018</td>
-<td>Public Bike Management</td>
-<td>图</td>
-<td>最短路径问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1019</td>
-<td>General Palindromic Number</td>
-<td>进制转换</td>
-<td>回文问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1020</td>
-<td>Tree Traversals</td>
-<td>树</td>
-<td>根据遍历序列重建树问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1021</td>
-<td>Deepest Root</td>
-<td>图+树、并查集</td>
-<td>连通分量问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1022</td>
-<td><a href="https://liupjia.github.io/2019/09/22/A1022/">Digital Library</a></td>
-<td>常用stl</td>
-<td>map的用法</td>
-<td></td>
-</tr>
-<tr>
-<td>1023</td>
-<td>Have Fun with Numbers</td>
-<td>大整数运算</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1024</td>
-<td>Palindromic Number</td>
-<td>大整数运算</td>
-<td>回文问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1025</td>
-<td>PAT Ranking</td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1026</td>
-<td>Table Tennis</td>
-<td>复杂模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1027</td>
-<td>Colors in Mars</td>
-<td>进制转换</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1028</td>
-<td>List Sorting</td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1029</td>
-<td>Median</td>
-<td>排序、two pointers</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1030</td>
-<td>Travel Plan</td>
-<td>图</td>
-<td>最短路径问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1031</td>
-<td>Hello World for U</td>
-<td>图形输出</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1032</td>
-<td>Sharing</td>
-<td>链表</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1033</td>
-<td>To Fill or Not to Fill</td>
-<td>贪心</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1034</td>
-<td>Head of a Gang</td>
-<td>图、并查集</td>
-<td>连通分量问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1035</td>
-<td>Password</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1036</td>
-<td>Boys vs Girls</td>
-<td>查找元素</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1037</td>
-<td>Magic Coupon</td>
-<td>贪心</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1038</td>
-<td>Recover the Smallest Number</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1039</td>
-<td>Course List for Student</td>
-<td>散列+常用stl</td>
-<td>vector+sort</td>
-<td></td>
-</tr>
-<tr>
-<td>1040</td>
-<td>Longest Symmetric String</td>
-<td>字符串处理</td>
-<td>回文子串</td>
-<td></td>
-</tr>
-<tr>
-<td>1041</td>
-<td>Be Unique</td>
-<td>散列</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1042</td>
-<td>Shuffling Machine</td>
-<td>简单模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1043</td>
-<td><a href="https://liupjia.github.io/2019/09/22/A1143/">Is It a Binary Search Tree</a></td>
-<td>树</td>
-<td>根据遍历序列重建树问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1044</td>
-<td>Shopping in Mars</td>
-<td>二分查找、two pointers</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1045</td>
-<td>Favorite Color Stripe</td>
-<td>动态规划</td>
-<td>LIS、LCS</td>
-<td></td>
-</tr>
-<tr>
-<td>1046</td>
-<td>Shortest Distance</td>
-<td>简单模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1047</td>
-<td>Student List for Course</td>
-<td>常用stl</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1048</td>
-<td>Find Coins</td>
-<td>二分查找、two pointers、散列</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1049</td>
-<td>Counting Ones</td>
-<td>数学</td>
-<td>找规律</td>
-<td></td>
-</tr>
-<tr>
-<td>1050</td>
-<td>String Subtraction</td>
-<td>散列</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1051</td>
-<td>Pop Sequence</td>
-<td>简单模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1052</td>
-<td>Linked List Sorting</td>
-<td>链表</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1053</td>
-<td>Path of Equal Weight</td>
-<td>树</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1054</td>
-<td>The Dominant Color</td>
-<td>简单模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1055</td>
-<td>The World’s Richest</td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1056</td>
-<td>Mice and Rice</td>
-<td>中级模拟+常用stl</td>
-<td>队列的应用</td>
-<td></td>
-</tr>
-<tr>
-<td>1057</td>
-<td>Stack</td>
-<td>暂无</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1058</td>
-<td><a href="https://liupjia.github.io/2019/11/06/PAT-A058/">A+B in Hogwarts</a></td>
-<td>进制转换</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1059</td>
-<td><a href="https://liupjia.github.io/2019/10/13/PAT-A1059/">Prime Factors</a></td>
-<td>素数、质因子分解</td>
-<td>埃氏筛法</td>
-<td></td>
-</tr>
-<tr>
-<td>1060</td>
-<td><a href="https://liupjia.github.io/2019/11/06/PAT-A1060/">Are They Equal</a></td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1061</td>
-<td><a href="https://liupjia.github.io/2019/11/06/PAT-A1061/">Dating</a></td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1062</td>
-<td><a href="https://liupjia.github.io/2019/12/10/PAT-A1062/">Talent and Virtue</a></td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1063</td>
-<td><a href="https://liupjia.github.io/2019/12/10/PAT-A1063/">Set Similarity</a></td>
-<td>常用stl</td>
-<td>set的用法</td>
-<td></td>
-</tr>
-<tr>
-<td>1064</td>
-<td><a href="https://liupjia.github.io/2019/10/04/PAT-A1064/">Complete Binary Search Tree</a></td>
-<td>树</td>
-<td>根据遍历序列重建树问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1065</td>
-<td><a href="https://liupjia.github.io/2019/12/10/PAT-A1065/">A+B and C (64bit)</a></td>
-<td>简单模拟，溢出问题</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1066</td>
-<td><a href="https://liupjia.github.io/2019/12/10/PAT-A1066/">Root of AVL Tree</a></td>
-<td>树</td>
-<td>AVL树</td>
-<td></td>
-</tr>
-<tr>
-<td>1067</td>
-<td><a href="https://liupjia.github.io/2019/12/11/PAT-A1067/">Sort with Swap(0,*)</a></td>
-<td>贪心</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1068</td>
-<td>Find More Coins</td>
-<td>暂无</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1069</td>
-<td><a href="https://liupjia.github.io/2019/12/11/PAT-A1069/">The Black Hole of Numbers</a></td>
-<td>数学</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1070</td>
-<td><a href="https://liupjia.github.io/2019/12/11/PAT-A1070/">Mooncake</a></td>
-<td>贪心</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1071</td>
-<td><a href="https://liupjia.github.io/2019/12/11/PAT-A1070/">Speech Patterns</a></td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1072</td>
-<td>Gas Station</td>
-<td>图</td>
-<td>最短路径问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1073</td>
-<td>Scientific Notation</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1074</td>
-<td>Reversing Linked List</td>
-<td>链表</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1075</td>
-<td>PAT Judge</td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1076</td>
-<td>Forwards on Weibo</td>
-<td>图</td>
-<td>图的遍历</td>
-<td></td>
-</tr>
-<tr>
-<td>1077</td>
-<td>Kuchiguse</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1078</td>
-<td><a href="https://liupjia.github.io/2019/09/28/PAT-A1078/">Hashing</a></td>
-<td>散列、⼆次⽅探查法</td>
-<td>埃氏筛法、二分查找</td>
-<td></td>
-</tr>
-<tr>
-<td>1079</td>
-<td>Total Sales of Supply Chain</td>
-<td>树</td>
-<td>树的遍历</td>
-<td></td>
-</tr>
-<tr>
-<td>1080</td>
-<td>Graduate Admission</td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1081</td>
-<td><a href="https://liupjia.github.io/2019/10/2/PAT-A1081">Rational Sum</a></td>
-<td>分数</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1082</td>
-<td>Read Number in Chinese</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1083</td>
-<td>List Grades</td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1084</td>
-<td><a href="https://liupjia.github.io/2019/09/26/PAT-A1084/">Broken Keyboard</a></td>
-<td>散列、双指针</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1085</td>
-<td><a href="https://liupjia.github.io/2019/09/26/PAT-A1085/">Perfect Sequence</a></td>
-<td>二分查找、two pointers</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1086</td>
-<td><a href="https://liupjia.github.io/2019/09/26/PAT-A1086/">Tree Traversals Again</a></td>
-<td>树</td>
-<td>根据遍历序列重建树问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1087</td>
-<td>All Roads Lead to Rome</td>
-<td>图</td>
-<td>最短路径问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1088</td>
-<td><a href="https://liupjia.github.io/2019/09/25/PAT-1088/">Rational Arithmetic</a></td>
-<td>分数</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1089</td>
-<td><a href="https://liupjia.github.io/2019/09/25/PAT-A1089/">Insert or Merge</a></td>
-<td>排序算法</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1090</td>
-<td><a href="https://liupjia.github.io/2019/09/25/PAT-A1090/">Highest Price in Supply Chain</a></td>
-<td>树</td>
-<td>树的遍历</td>
-<td></td>
-</tr>
-<tr>
-<td>1091</td>
-<td><a href="https://liupjia.github.io/2019/09/25/PAT-A1091/">Acute Stroke</a></td>
-<td>图</td>
-<td>连通分量问题，bfs</td>
-<td></td>
-</tr>
-<tr>
-<td>1092</td>
-<td>To Buy or Not to Buy</td>
-<td>散列</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1093</td>
-<td><a href="https://liupjia.github.io/2019/09/23/PAT-A1093/">Count PAT’s</a></td>
-<td>动态规划</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1094</td>
-<td><a href="https://liupjia.github.io/2019/09/23/PAT-A1094/">The Largest Generation</a></td>
-<td>树</td>
-<td>树的遍历</td>
-<td></td>
-</tr>
-<tr>
-<td>1095</td>
-<td><a href="https://liupjia.github.io/2019/09/25/PAT-A1095/">Cars on Campus</a></td>
-<td>复杂模拟</td>
-<td>应用了多种stl</td>
-<td></td>
-</tr>
-<tr>
-<td>1096</td>
-<td><a href="https://liupjia.github.io/2019/09/26/PAT-1096/">Consecutive Factors</a></td>
-<td>数学</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1097</td>
-<td>Deduplication on a Linked List</td>
-<td>链表</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1098</td>
-<td><a href="https://liupjia.github.io/2019/09/23/PAT-A1098/">Insertion or Heap Sort</a></td>
-<td>排序算法</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1099</td>
-<td><a href="https://liupjia.github.io/2019/09/22/A1100/">Build A Binary Search Tree</a></td>
-<td>树</td>
-<td>根据遍历序列重建树问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1100</td>
-<td><a href="https://liupjia.github.io/2019/09/22/A1100/">Mars Numbers</a></td>
-<td>进制转换+字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1101</td>
-<td><a href="https://liupjia.github.io/2019/09/22/A1101/">Quick Sort</a></td>
-<td>动态规划</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1102</td>
-<td>Invert a Binary Tree</td>
-<td>树</td>
-<td>树的遍历</td>
-<td></td>
-</tr>
-<tr>
-<td>1103</td>
-<td>Integer Factorization</td>
-<td>搜索</td>
-<td>DFS搜索</td>
-<td></td>
-</tr>
-<tr>
-<td>1104</td>
-<td>Sum of Number Segments</td>
-<td>数学</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1105</td>
-<td>Spiral Matrix</td>
-<td>中级模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1106</td>
-<td>Lowest Price in Supply Chain</td>
-<td>树</td>
-<td>树的遍历</td>
-<td></td>
-</tr>
-<tr>
-<td>1107</td>
-<td>Social Clusters</td>
-<td>并查集</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1108</td>
-<td>Finding Average</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1109</td>
-<td>Group Photo</td>
-<td>排序+中级模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1110</td>
-<td>Complete Binary Tree</td>
-<td>树</td>
-<td>判断是否是完全二叉树</td>
-<td></td>
-</tr>
-<tr>
-<td>1111</td>
-<td>Online Map</td>
-<td>图</td>
-<td>最短路径问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1112</td>
-<td>Stucked Keyboard</td>
-<td>散列</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1113</td>
-<td>Integer Set Partition</td>
-<td>数学</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1114</td>
-<td>Family Property</td>
-<td>并查集</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1115</td>
-<td>Counting Nodes in a BST</td>
-<td>树</td>
-<td>构建二叉查找树+树的遍历</td>
-<td></td>
-</tr>
-<tr>
-<td>1116</td>
-<td>Come on! Let’s C</td>
-<td>散列</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1117</td>
-<td>Eddington Number</td>
-<td>中级模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1118</td>
-<td>Birds in Forest</td>
-<td>并查集</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1119</td>
-<td><a href="https://liupjia.github.io/2019/10/13/PAT-A1119/">Pre- and Post-order Traversals</a></td>
-<td>树</td>
-<td>根据遍历序列重建树问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1120</td>
-<td>Friend Numbers</td>
-<td>常用stl</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1121</td>
-<td>Damn Single</td>
-<td>散列+常用stl</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1122</td>
-<td>Hamiltonian Cycle</td>
-<td>图</td>
-<td>哈密顿环</td>
-<td></td>
-</tr>
-<tr>
-<td>1123</td>
-<td>Is It a Complete AVL Tree</td>
-<td>树</td>
-<td>AVL树</td>
-<td></td>
-</tr>
-<tr>
-<td>1124</td>
-<td>Raffle for Weibo Followers</td>
-<td>中级模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1125</td>
-<td>Chain the Ropes</td>
-<td>贪心</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1126</td>
-<td>Eulerian Path</td>
-<td>图</td>
-<td>欧拉回路、欧拉环游</td>
-<td></td>
-</tr>
-<tr>
-<td>1127</td>
-<td>ZigZagging on a Tree</td>
-<td>树</td>
-<td>根据遍历序列重建树问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1128</td>
-<td>N Queens Puzzle</td>
-<td>简单模拟</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1129</td>
-<td>Recommendation System</td>
-<td>中级模拟</td>
-<td>set应用</td>
-<td></td>
-</tr>
-<tr>
-<td>1130</td>
-<td>Infix Expression</td>
-<td>树</td>
-<td>中缀表达式</td>
-<td></td>
-</tr>
-<tr>
-<td>1131</td>
-<td>Subway Map</td>
-<td>图</td>
-<td>最短路径问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1132</td>
-<td>Cut Integer</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1133</td>
-<td>Splitting A Linked List</td>
-<td>链表</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1134</td>
-<td>Vertex Cover</td>
-<td>散列</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1135</td>
-<td>Is It A Red-Black Tree</td>
-<td>树</td>
-<td>红黑树</td>
-<td></td>
-</tr>
-<tr>
-<td>1136</td>
-<td>A Delayed Palindrome</td>
-<td>大整数运算</td>
-<td>回文问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1137</td>
-<td>Final Grading</td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1138</td>
-<td>Postorder Traversal</td>
-<td>树</td>
-<td>树的遍历问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1139</td>
-<td>First Contact</td>
-<td>图</td>
-<td>图的遍历</td>
-<td></td>
-</tr>
-<tr>
-<td>1140</td>
-<td>Look-and-say Sequence</td>
-<td>字符串处理</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1141</td>
-<td>PAT Ranking of Institutions</td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1142</td>
-<td>Maximal Clique</td>
-<td>图</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1143</td>
-<td><a href="https://liupjia.github.io/2019/12/04/PAT-A1143/">Lowest Common Ancestor</a></td>
-<td>树</td>
-<td>最近公共祖先（LCA）问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1144</td>
-<td><a href="https://liupjia.github.io/2019/09/22/A1144/">The Missing Number</a></td>
-<td>常用stl</td>
-<td>unordered_set</td>
-<td></td>
-</tr>
-<tr>
-<td>1145</td>
-<td><a href="https://liupjia.github.io/2019/10/02/PAT-A1145/">Hashing - Average Search Time</a></td>
-<td>散列</td>
-<td>和A1078对照</td>
-<td></td>
-</tr>
-<tr>
-<td>1146</td>
-<td><a href="https://liupjia.github.io/2019/09/22/A1146/">Topological Order</a></td>
-<td>图</td>
-<td>拓扑排序</td>
-<td></td>
-</tr>
-<tr>
-<td>1147</td>
-<td><a href="https://liupjia.github.io/2019/10/2/PAT-A1147">Heaps</a></td>
-<td>树</td>
-<td>堆,dfs</td>
-<td></td>
-</tr>
-<tr>
-<td>1148</td>
-<td>Werewolf - Simple Version</td>
-<td>简单模拟</td>
-<td>暴力枚举</td>
-<td></td>
-</tr>
-<tr>
-<td>1149</td>
-<td><a href="https://liupjia.github.io/2019/10/13/PAT-1149/">Dangerous Goods Packaging</a></td>
-<td>常用stl</td>
-<td>类似于图的处理办法</td>
-<td></td>
-</tr>
-<tr>
-<td>1150</td>
-<td>Travelling Salesman Problem</td>
-<td>图</td>
-<td>巡回售货商问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1151</td>
-<td><img src="https://liupjia.github.io/2019/12/05/PAT-A1151/" alt="LCA in a Binary Tree"></td>
-<td>树</td>
-<td>最近公共祖先（LCA）问题</td>
-<td></td>
-</tr>
-<tr>
-<td>1152</td>
-<td><a href="https://liupjia.github.io/2019/10/13/PAT-A1152/">Google Recruitment</a></td>
-<td>素数</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1153</td>
-<td><a href="https://liupjia.github.io/2019/10/13/PAT-A1153/">Decode Registration Card of PAT</a></td>
-<td>排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1154</td>
-<td>Vertex Coloring</td>
-<td>复杂排序</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1155</td>
-<td>Heap Paths</td>
-<td>树、二叉堆</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3070,7 +1945,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-count">76</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3107,7 +1982,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

@@ -312,6 +312,1453 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/25/PAT-A1089/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/09/25/PAT-A1089/" class="post-title-link" itemprop="url">PAT 甲级 1089 Insert or Merge</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-25 19:14:00 / 修改时间：19:35:51" itemprop="dateCreated datePublished" datetime="2019-09-25T19:14:00+08:00">2019-09-25</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>According to Wikipedia:</p>
+<p><strong>Insertion sort</strong> iterates, consuming one input element each repetition, and growing a sorted output list. Each iteration, insertion sort removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there. It repeats until no input elements remain.</p>
+<p><strong>Merge sort</strong> works as follows: Divide the unsorted list into N sublists, each containing 1 element (a list of 1 element is considered sorted). Then repeatedly merge two adjacent sublists to produce new sorted sublists until there is only 1 sublist remaining.</p>
+<p>Now given the initial sequence of integers, together with a sequence which is a result of several iterations of some sorting method, can you tell which sorting method we are using?</p>
+<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line gives a positive integer N (≤100). Then in the next line, N integers are given as the initial sequence. The last line contains the partially sorted sequence of the N numbers. It is assumed that the target sequence is always ascending. All the numbers in a line are separated by a space.</p>
+<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each test case, print in the first line either “Insertion Sort” or “Merge Sort” to indicate the method used to obtain the partial result. Then run this method for one more iteration and output in the second line the resuling sequence. It is guaranteed that the answer is unique for each test case. All the numbers in a line must be separated by a space, and there must be no extra space at the end of the line.</p>
+<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a><strong>Sample Input 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">3 1 2 8 7 5 9 4 6 0</span><br><span class="line">1 2 3 7 8 5 9 4 6 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a><strong>Sample Output 1:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Insertion Sort</span><br><span class="line">1 2 3 5 7 8 9 4 6 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a><strong>Sample Input 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">3 1 2 8 7 5 9 4 0 6</span><br><span class="line">1 3 2 8 5 7 4 9 0 6</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a><strong>Sample Output 2:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Merge Sort</span><br><span class="line">1 2 3 8 4 5 7 9 0 6</span><br></pre></td></tr></table></figure>
+
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>这题时对插入排序和归并排序的实现，通过这题也复习了归并排序的算法。<br>下面介绍归并排序:</p>
+<ul>
+<li>归并排序的核心点就是合并两个有序的序列，这里使用了merge作为合并函数，传递的参数是两个序列的的范围参数，使用二分法的思想，首先设立一个数组temp用来存储有序序列，最后再将temp里的值传入数组。</li>
+<li>然后是mergeSort()，将序列进行分割，这题用的是非递归算法，首先确定步长step = 2,这个步长指的是左右子序列的长度和，做个这题后，我终于理解了为什么设定的是step / 2 &lt;= n：假如n = 45，step作为步长一定是2的幂，如果是step &lt;= n那么实际排序只有前面32个，后面无法进行排序。然后从起始点0开始遍历所有分组，分组是n/step，所以i += step，接下来要做的就是确定左右子序列的下标了，首先确定分组的中点,mid = i + step - 1,在这里可以判断mid + 1的大小如果小于n才进行合并，可以省点时间。merge(i, mid, mid + 1, min(n - 1, i + step - 1))。</li>
+</ul>
+<p><strong>插入排序</strong>要从下标1开始</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">110</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; is, ms, nums, s;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    is.resize(n);</span><br><span class="line">    ms.resize(n);</span><br><span class="line">    nums.resize(n);</span><br><span class="line">    s.resize(n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k = x;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = x - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span>(is[k] &lt; is[i]) &#123;</span><br><span class="line">            swap(is[k], is[i]);</span><br><span class="line">            k = i;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> l1, <span class="keyword">int</span> l2, <span class="keyword">int</span> r1, <span class="keyword">int</span> r2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp[maxn], index = <span class="number">0</span>, i = l1, j = r1;</span><br><span class="line">    <span class="keyword">while</span>(i &lt;= l2 &amp;&amp; j &lt;= r2) &#123;</span><br><span class="line">        <span class="keyword">if</span>(ms[i] &lt;= ms[j]) temp[index++] = ms[i++];</span><br><span class="line">        <span class="keyword">else</span> temp[index++] = ms[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(i &lt;= l2) temp[index++] = ms[i++];</span><br><span class="line">    <span class="keyword">while</span>(j &lt;= r2) temp[index++] = ms[j++];</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; index; i++) &#123;</span><br><span class="line">        ms[l1 + i] = temp[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>&amp; step)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i += step) &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = i + step / <span class="number">2</span> - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// if(mid + 1 &lt; n) &#123;</span></span><br><span class="line">            merge(i, mid, mid + <span class="number">1</span>, min(i + step - <span class="number">1</span>, n - <span class="number">1</span>));</span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">    step *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    init();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nums[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;s[i]);</span><br><span class="line">    is = ms = nums;</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">int</span> f1 = <span class="number">1</span>, step = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(f1 &lt; n) insert(f1++);</span><br><span class="line">        <span class="keyword">if</span>(is == s) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Insertion Sort\n"</span>);</span><br><span class="line">            insert(f1);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, is[i], (i==n<span class="number">-1</span>) ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(step / <span class="number">2</span> &lt;= n) mergeSort(step);</span><br><span class="line">        <span class="keyword">if</span>(ms == s) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Merge Sort\n"</span>);</span><br><span class="line">            mergeSort(step);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">printf</span>(<span class="string">"%d%c"</span>, ms[i], (i==n<span class="number">-1</span>) ? <span class="string">'\n'</span> : <span class="string">' '</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/25/PAT甲级题解目录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/09/25/PAT甲级题解目录/" class="post-title-link" itemprop="url">PAT甲级题解目录</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-25 18:30:52" itemprop="dateCreated datePublished" datetime="2019-09-25T18:30:52+08:00">2019-09-25</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-11 19:47:06" itemprop="dateModified" datetime="2019-12-11T19:47:06+08:00">2019-12-11</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PAT甲级题解/" itemprop="url" rel="index"><span itemprop="name">PAT甲级题解</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="PAT甲级题解目录"><a href="#PAT甲级题解目录" class="headerlink" title="PAT甲级题解目录"></a><strong>PAT甲级题解目录</strong></h2><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>标题</th>
+<th>分类</th>
+<th>备注</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1001</td>
+<td>A+B Format</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1002</td>
+<td>A+B for Polynomials</td>
+<td>中级模拟+散列</td>
+<td>多项式求和问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1003</td>
+<td>Emergency</td>
+<td>图</td>
+<td>最短路径问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1004</td>
+<td>Counting Leaves</td>
+<td>树</td>
+<td>树的遍历问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1005</td>
+<td>Spell It Right</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1006</td>
+<td>Sign In and Sign Out</td>
+<td>查找元素</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1007</td>
+<td>Maximum Subsequence Sum</td>
+<td>动态规划</td>
+<td>最大连续子序列和问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1008</td>
+<td>Elevator</td>
+<td>简单模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1009</td>
+<td>Product of Polynomials</td>
+<td>简单模拟</td>
+<td>多项式乘法问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1010</td>
+<td>Radix</td>
+<td>进制转换+二分查找</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1011</td>
+<td>World Cup Betting</td>
+<td>查找元素</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1012</td>
+<td>The Best Rank</td>
+<td>排序、常用stl</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1013</td>
+<td>Battle Over Cities</td>
+<td>图、并查集</td>
+<td>连通分量问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1014</td>
+<td>Waiting in Line</td>
+<td>复杂模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1015</td>
+<td>Reversible Primes</td>
+<td>素数+进制转换</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1016</td>
+<td>Phone Bills</td>
+<td>复杂模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1017</td>
+<td>Queueing at Bank</td>
+<td>复杂模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1018</td>
+<td>Public Bike Management</td>
+<td>图</td>
+<td>最短路径问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1019</td>
+<td>General Palindromic Number</td>
+<td>进制转换</td>
+<td>回文问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1020</td>
+<td>Tree Traversals</td>
+<td>树</td>
+<td>根据遍历序列重建树问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1021</td>
+<td>Deepest Root</td>
+<td>图+树、并查集</td>
+<td>连通分量问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1022</td>
+<td><a href="https://liupjia.github.io/2019/09/22/A1022/">Digital Library</a></td>
+<td>常用stl</td>
+<td>map的用法</td>
+<td></td>
+</tr>
+<tr>
+<td>1023</td>
+<td>Have Fun with Numbers</td>
+<td>大整数运算</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1024</td>
+<td>Palindromic Number</td>
+<td>大整数运算</td>
+<td>回文问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1025</td>
+<td>PAT Ranking</td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1026</td>
+<td>Table Tennis</td>
+<td>复杂模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1027</td>
+<td>Colors in Mars</td>
+<td>进制转换</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1028</td>
+<td>List Sorting</td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1029</td>
+<td>Median</td>
+<td>排序、two pointers</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1030</td>
+<td>Travel Plan</td>
+<td>图</td>
+<td>最短路径问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1031</td>
+<td>Hello World for U</td>
+<td>图形输出</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1032</td>
+<td>Sharing</td>
+<td>链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1033</td>
+<td>To Fill or Not to Fill</td>
+<td>贪心</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1034</td>
+<td>Head of a Gang</td>
+<td>图、并查集</td>
+<td>连通分量问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1035</td>
+<td>Password</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1036</td>
+<td>Boys vs Girls</td>
+<td>查找元素</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1037</td>
+<td>Magic Coupon</td>
+<td>贪心</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1038</td>
+<td>Recover the Smallest Number</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1039</td>
+<td>Course List for Student</td>
+<td>散列+常用stl</td>
+<td>vector+sort</td>
+<td></td>
+</tr>
+<tr>
+<td>1040</td>
+<td>Longest Symmetric String</td>
+<td>字符串处理</td>
+<td>回文子串</td>
+<td></td>
+</tr>
+<tr>
+<td>1041</td>
+<td>Be Unique</td>
+<td>散列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1042</td>
+<td>Shuffling Machine</td>
+<td>简单模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1043</td>
+<td><a href="https://liupjia.github.io/2019/09/22/A1143/">Is It a Binary Search Tree</a></td>
+<td>树</td>
+<td>根据遍历序列重建树问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1044</td>
+<td>Shopping in Mars</td>
+<td>二分查找、two pointers</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1045</td>
+<td>Favorite Color Stripe</td>
+<td>动态规划</td>
+<td>LIS、LCS</td>
+<td></td>
+</tr>
+<tr>
+<td>1046</td>
+<td>Shortest Distance</td>
+<td>简单模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1047</td>
+<td>Student List for Course</td>
+<td>常用stl</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1048</td>
+<td>Find Coins</td>
+<td>二分查找、two pointers、散列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1049</td>
+<td>Counting Ones</td>
+<td>数学</td>
+<td>找规律</td>
+<td></td>
+</tr>
+<tr>
+<td>1050</td>
+<td>String Subtraction</td>
+<td>散列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1051</td>
+<td>Pop Sequence</td>
+<td>简单模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1052</td>
+<td>Linked List Sorting</td>
+<td>链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1053</td>
+<td>Path of Equal Weight</td>
+<td>树</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1054</td>
+<td>The Dominant Color</td>
+<td>简单模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1055</td>
+<td>The World’s Richest</td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1056</td>
+<td>Mice and Rice</td>
+<td>中级模拟+常用stl</td>
+<td>队列的应用</td>
+<td></td>
+</tr>
+<tr>
+<td>1057</td>
+<td>Stack</td>
+<td>暂无</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1058</td>
+<td><a href="https://liupjia.github.io/2019/11/06/PAT-A058/">A+B in Hogwarts</a></td>
+<td>进制转换</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1059</td>
+<td><a href="https://liupjia.github.io/2019/10/13/PAT-A1059/">Prime Factors</a></td>
+<td>素数、质因子分解</td>
+<td>埃氏筛法</td>
+<td></td>
+</tr>
+<tr>
+<td>1060</td>
+<td><a href="https://liupjia.github.io/2019/11/06/PAT-A1060/">Are They Equal</a></td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1061</td>
+<td><a href="https://liupjia.github.io/2019/11/06/PAT-A1061/">Dating</a></td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1062</td>
+<td><a href="https://liupjia.github.io/2019/12/10/PAT-A1062/">Talent and Virtue</a></td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1063</td>
+<td><a href="https://liupjia.github.io/2019/12/10/PAT-A1063/">Set Similarity</a></td>
+<td>常用stl</td>
+<td>set的用法</td>
+<td></td>
+</tr>
+<tr>
+<td>1064</td>
+<td><a href="https://liupjia.github.io/2019/10/04/PAT-A1064/">Complete Binary Search Tree</a></td>
+<td>树</td>
+<td>根据遍历序列重建树问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1065</td>
+<td><a href="https://liupjia.github.io/2019/12/10/PAT-A1065/">A+B and C (64bit)</a></td>
+<td>简单模拟，溢出问题</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1066</td>
+<td><a href="https://liupjia.github.io/2019/12/10/PAT-A1066/">Root of AVL Tree</a></td>
+<td>树</td>
+<td>AVL树</td>
+<td></td>
+</tr>
+<tr>
+<td>1067</td>
+<td><a href="https://liupjia.github.io/2019/12/11/PAT-A1067/">Sort with Swap(0,*)</a></td>
+<td>贪心</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1068</td>
+<td>Find More Coins</td>
+<td>暂无</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1069</td>
+<td><a href="https://liupjia.github.io/2019/12/11/PAT-A1069/">The Black Hole of Numbers</a></td>
+<td>数学</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1070</td>
+<td><a href="https://liupjia.github.io/2019/12/11/PAT-A1070/">Mooncake</a></td>
+<td>贪心</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1071</td>
+<td><a href="https://liupjia.github.io/2019/12/11/PAT-A1070/">Speech Patterns</a></td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1072</td>
+<td>Gas Station</td>
+<td>图</td>
+<td>最短路径问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1073</td>
+<td>Scientific Notation</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1074</td>
+<td>Reversing Linked List</td>
+<td>链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1075</td>
+<td>PAT Judge</td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1076</td>
+<td>Forwards on Weibo</td>
+<td>图</td>
+<td>图的遍历</td>
+<td></td>
+</tr>
+<tr>
+<td>1077</td>
+<td>Kuchiguse</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1078</td>
+<td><a href="https://liupjia.github.io/2019/09/28/PAT-A1078/">Hashing</a></td>
+<td>散列、⼆次⽅探查法</td>
+<td>埃氏筛法、二分查找</td>
+<td></td>
+</tr>
+<tr>
+<td>1079</td>
+<td>Total Sales of Supply Chain</td>
+<td>树</td>
+<td>树的遍历</td>
+<td></td>
+</tr>
+<tr>
+<td>1080</td>
+<td>Graduate Admission</td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1081</td>
+<td><a href="https://liupjia.github.io/2019/10/2/PAT-A1081">Rational Sum</a></td>
+<td>分数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1082</td>
+<td>Read Number in Chinese</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1083</td>
+<td>List Grades</td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1084</td>
+<td><a href="https://liupjia.github.io/2019/09/26/PAT-A1084/">Broken Keyboard</a></td>
+<td>散列、双指针</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1085</td>
+<td><a href="https://liupjia.github.io/2019/09/26/PAT-A1085/">Perfect Sequence</a></td>
+<td>二分查找、two pointers</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1086</td>
+<td><a href="https://liupjia.github.io/2019/09/26/PAT-A1086/">Tree Traversals Again</a></td>
+<td>树</td>
+<td>根据遍历序列重建树问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1087</td>
+<td>All Roads Lead to Rome</td>
+<td>图</td>
+<td>最短路径问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1088</td>
+<td><a href="https://liupjia.github.io/2019/09/25/PAT-1088/">Rational Arithmetic</a></td>
+<td>分数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1089</td>
+<td><a href="https://liupjia.github.io/2019/09/25/PAT-A1089/">Insert or Merge</a></td>
+<td>排序算法</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1090</td>
+<td><a href="https://liupjia.github.io/2019/09/25/PAT-A1090/">Highest Price in Supply Chain</a></td>
+<td>树</td>
+<td>树的遍历</td>
+<td></td>
+</tr>
+<tr>
+<td>1091</td>
+<td><a href="https://liupjia.github.io/2019/09/25/PAT-A1091/">Acute Stroke</a></td>
+<td>图</td>
+<td>连通分量问题，bfs</td>
+<td></td>
+</tr>
+<tr>
+<td>1092</td>
+<td>To Buy or Not to Buy</td>
+<td>散列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1093</td>
+<td><a href="https://liupjia.github.io/2019/09/23/PAT-A1093/">Count PAT’s</a></td>
+<td>动态规划</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1094</td>
+<td><a href="https://liupjia.github.io/2019/09/23/PAT-A1094/">The Largest Generation</a></td>
+<td>树</td>
+<td>树的遍历</td>
+<td></td>
+</tr>
+<tr>
+<td>1095</td>
+<td><a href="https://liupjia.github.io/2019/09/25/PAT-A1095/">Cars on Campus</a></td>
+<td>复杂模拟</td>
+<td>应用了多种stl</td>
+<td></td>
+</tr>
+<tr>
+<td>1096</td>
+<td><a href="https://liupjia.github.io/2019/09/26/PAT-1096/">Consecutive Factors</a></td>
+<td>数学</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1097</td>
+<td>Deduplication on a Linked List</td>
+<td>链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1098</td>
+<td><a href="https://liupjia.github.io/2019/09/23/PAT-A1098/">Insertion or Heap Sort</a></td>
+<td>排序算法</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1099</td>
+<td><a href="https://liupjia.github.io/2019/09/22/A1100/">Build A Binary Search Tree</a></td>
+<td>树</td>
+<td>根据遍历序列重建树问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1100</td>
+<td><a href="https://liupjia.github.io/2019/09/22/A1100/">Mars Numbers</a></td>
+<td>进制转换+字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1101</td>
+<td><a href="https://liupjia.github.io/2019/09/22/A1101/">Quick Sort</a></td>
+<td>动态规划</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1102</td>
+<td>Invert a Binary Tree</td>
+<td>树</td>
+<td>树的遍历</td>
+<td></td>
+</tr>
+<tr>
+<td>1103</td>
+<td>Integer Factorization</td>
+<td>搜索</td>
+<td>DFS搜索</td>
+<td></td>
+</tr>
+<tr>
+<td>1104</td>
+<td>Sum of Number Segments</td>
+<td>数学</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1105</td>
+<td>Spiral Matrix</td>
+<td>中级模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1106</td>
+<td>Lowest Price in Supply Chain</td>
+<td>树</td>
+<td>树的遍历</td>
+<td></td>
+</tr>
+<tr>
+<td>1107</td>
+<td>Social Clusters</td>
+<td>并查集</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1108</td>
+<td>Finding Average</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1109</td>
+<td>Group Photo</td>
+<td>排序+中级模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1110</td>
+<td>Complete Binary Tree</td>
+<td>树</td>
+<td>判断是否是完全二叉树</td>
+<td></td>
+</tr>
+<tr>
+<td>1111</td>
+<td>Online Map</td>
+<td>图</td>
+<td>最短路径问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1112</td>
+<td>Stucked Keyboard</td>
+<td>散列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1113</td>
+<td>Integer Set Partition</td>
+<td>数学</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1114</td>
+<td>Family Property</td>
+<td>并查集</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1115</td>
+<td>Counting Nodes in a BST</td>
+<td>树</td>
+<td>构建二叉查找树+树的遍历</td>
+<td></td>
+</tr>
+<tr>
+<td>1116</td>
+<td>Come on! Let’s C</td>
+<td>散列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1117</td>
+<td>Eddington Number</td>
+<td>中级模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1118</td>
+<td>Birds in Forest</td>
+<td>并查集</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1119</td>
+<td><a href="https://liupjia.github.io/2019/10/13/PAT-A1119/">Pre- and Post-order Traversals</a></td>
+<td>树</td>
+<td>根据遍历序列重建树问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1120</td>
+<td>Friend Numbers</td>
+<td>常用stl</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1121</td>
+<td>Damn Single</td>
+<td>散列+常用stl</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1122</td>
+<td>Hamiltonian Cycle</td>
+<td>图</td>
+<td>哈密顿环</td>
+<td></td>
+</tr>
+<tr>
+<td>1123</td>
+<td>Is It a Complete AVL Tree</td>
+<td>树</td>
+<td>AVL树</td>
+<td></td>
+</tr>
+<tr>
+<td>1124</td>
+<td>Raffle for Weibo Followers</td>
+<td>中级模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1125</td>
+<td>Chain the Ropes</td>
+<td>贪心</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1126</td>
+<td>Eulerian Path</td>
+<td>图</td>
+<td>欧拉回路、欧拉环游</td>
+<td></td>
+</tr>
+<tr>
+<td>1127</td>
+<td>ZigZagging on a Tree</td>
+<td>树</td>
+<td>根据遍历序列重建树问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1128</td>
+<td>N Queens Puzzle</td>
+<td>简单模拟</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1129</td>
+<td>Recommendation System</td>
+<td>中级模拟</td>
+<td>set应用</td>
+<td></td>
+</tr>
+<tr>
+<td>1130</td>
+<td>Infix Expression</td>
+<td>树</td>
+<td>中缀表达式</td>
+<td></td>
+</tr>
+<tr>
+<td>1131</td>
+<td>Subway Map</td>
+<td>图</td>
+<td>最短路径问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1132</td>
+<td>Cut Integer</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1133</td>
+<td>Splitting A Linked List</td>
+<td>链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1134</td>
+<td>Vertex Cover</td>
+<td>散列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1135</td>
+<td>Is It A Red-Black Tree</td>
+<td>树</td>
+<td>红黑树</td>
+<td></td>
+</tr>
+<tr>
+<td>1136</td>
+<td>A Delayed Palindrome</td>
+<td>大整数运算</td>
+<td>回文问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1137</td>
+<td>Final Grading</td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1138</td>
+<td>Postorder Traversal</td>
+<td>树</td>
+<td>树的遍历问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1139</td>
+<td>First Contact</td>
+<td>图</td>
+<td>图的遍历</td>
+<td></td>
+</tr>
+<tr>
+<td>1140</td>
+<td>Look-and-say Sequence</td>
+<td>字符串处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1141</td>
+<td>PAT Ranking of Institutions</td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1142</td>
+<td>Maximal Clique</td>
+<td>图</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1143</td>
+<td><a href="https://liupjia.github.io/2019/12/04/PAT-A1143/">Lowest Common Ancestor</a></td>
+<td>树</td>
+<td>最近公共祖先（LCA）问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1144</td>
+<td><a href="https://liupjia.github.io/2019/09/22/A1144/">The Missing Number</a></td>
+<td>常用stl</td>
+<td>unordered_set</td>
+<td></td>
+</tr>
+<tr>
+<td>1145</td>
+<td><a href="https://liupjia.github.io/2019/10/02/PAT-A1145/">Hashing - Average Search Time</a></td>
+<td>散列</td>
+<td>和A1078对照</td>
+<td></td>
+</tr>
+<tr>
+<td>1146</td>
+<td><a href="https://liupjia.github.io/2019/09/22/A1146/">Topological Order</a></td>
+<td>图</td>
+<td>拓扑排序</td>
+<td></td>
+</tr>
+<tr>
+<td>1147</td>
+<td><a href="https://liupjia.github.io/2019/10/2/PAT-A1147">Heaps</a></td>
+<td>树</td>
+<td>堆,dfs</td>
+<td></td>
+</tr>
+<tr>
+<td>1148</td>
+<td>Werewolf - Simple Version</td>
+<td>简单模拟</td>
+<td>暴力枚举</td>
+<td></td>
+</tr>
+<tr>
+<td>1149</td>
+<td><a href="https://liupjia.github.io/2019/10/13/PAT-1149/">Dangerous Goods Packaging</a></td>
+<td>常用stl</td>
+<td>类似于图的处理办法</td>
+<td></td>
+</tr>
+<tr>
+<td>1150</td>
+<td>Travelling Salesman Problem</td>
+<td>图</td>
+<td>巡回售货商问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1151</td>
+<td><img src="https://liupjia.github.io/2019/12/05/PAT-A1151/" alt="LCA in a Binary Tree"></td>
+<td>树</td>
+<td>最近公共祖先（LCA）问题</td>
+<td></td>
+</tr>
+<tr>
+<td>1152</td>
+<td><a href="https://liupjia.github.io/2019/10/13/PAT-A1152/">Google Recruitment</a></td>
+<td>素数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1153</td>
+<td><a href="https://liupjia.github.io/2019/10/13/PAT-A1153/">Decode Registration Card of PAT</a></td>
+<td>排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1154</td>
+<td>Vertex Coloring</td>
+<td>复杂排序</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1155</td>
+<td>Heap Paths</td>
+<td>树、二叉堆</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/23/PAT-A1098/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -994,189 +2441,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/22/A1022/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/09/22/A1022/" class="post-title-link" itemprop="url">PAT 甲级 1022 Digital Library</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-22 20:05:59" itemprop="dateCreated datePublished" datetime="2019-09-22T20:05:59+08:00">2019-09-22</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-09-26 09:56:20" itemprop="dateModified" datetime="2019-09-26T09:56:20+08:00">2019-09-26</time>
-              </span>
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>A Digital Library contains millions of books, stored according to their titles, authors, key words of their abstracts, publishers, and published years. Each book is assigned an unique 7-digit number as its ID. Given any query from a reader, you are supposed to output the resulting books, sorted in increasing order of their ID’s.</p>
-<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line contains a positive integer N (≤10<br>​4<br>​​ ) which is the total number of books. Then N blocks follow, each contains the information of a book in 6 lines:</p>
-<ul>
-<li>Line #1: the 7-digit ID number;</li>
-<li>Line #2: the book title – a string of no more than 80 characters;</li>
-<li>Line #3: the author – a string of no more than 80 characters;</li>
-<li>Line #4: the key words – each word is a string of no more than 10 characters without any white space, and the keywords are separated by exactly one space;</li>
-<li>Line #5: the publisher – a string of no more than 80 characters;</li>
-<li>Line #6: the published year – a 4-digit number which is in the range [1000, 3000].<br>It is assumed that each book belongs to one author only, and contains no more than 5 key words; there are no more than 1000 distinct key words in total; and there are no more than 1000 distinct publishers.</li>
-</ul>
-<p>After the book information, there is a line containing a positive integer M (≤1000) which is the number of user’s search queries. Then M lines follow, each in one of the formats shown below:</p>
-<ul>
-<li>1: a book title</li>
-<li>2: name of an author</li>
-<li>3: a key word</li>
-<li>4: name of a publisher</li>
-<li>5: a 4-digit number representing the year<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2>For each query, first print the original query in a line, then output the resulting book ID’s in increasing order, each occupying a line. If no book is found, print Not Found instead.</li>
-</ul>
-<h2 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a><strong>Sample Input:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">1111111</span><br><span class="line">The Testing Book</span><br><span class="line">Yue Chen</span><br><span class="line">test code debug sort keywords</span><br><span class="line">ZUCS Print</span><br><span class="line">2011</span><br><span class="line">3333333</span><br><span class="line">Another Testing Book</span><br><span class="line">Yue Chen</span><br><span class="line">test code sort keywords</span><br><span class="line">ZUCS Print2</span><br><span class="line">2012</span><br><span class="line">2222222</span><br><span class="line">The Testing Book</span><br><span class="line">CYLL</span><br><span class="line">keywords debug book</span><br><span class="line">ZUCS Print2</span><br><span class="line">2011</span><br><span class="line">6</span><br><span class="line">1: The Testing Book</span><br><span class="line">2: Yue Chen</span><br><span class="line">3: keywords</span><br><span class="line">4: ZUCS Print</span><br><span class="line">5: 2011</span><br><span class="line">3: blablabla</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a><strong>Sample Output:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1: The Testing Book</span><br><span class="line">1111111</span><br><span class="line">2222222</span><br><span class="line">2: Yue Chen</span><br><span class="line">1111111</span><br><span class="line">3333333</span><br><span class="line">3: keywords</span><br><span class="line">1111111</span><br><span class="line">2222222</span><br><span class="line">3333333</span><br><span class="line">4: ZUCS Print</span><br><span class="line">1111111</span><br><span class="line">5: 2011</span><br><span class="line">1111111</span><br><span class="line">2222222</span><br><span class="line">3: blablabla</span><br><span class="line">Not Found</span><br></pre></td></tr></table></figure>
-
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>这题对于我来说最难的是字符串的输入问题。</p>
-<ol>
-<li>带有空格，这就意味着最好使用getline(cin, string),对于getline()的使用还不是很熟悉，所以有一个值得注意的地方：<strong>getline(),以换行符进行分割结束</strong>， 当我是用<strong>scanf(“%d”, &amp;n)</strong>时，并没有接收换行符，所以这就导致我后面接收number实际是空的，所以<strong>scanf(“%d\n”, &amp;n),</strong>就可以避免这个问题。</li>
-<li>在读入关键字的时候无法确认关键字的个数这就可以使用<strong>while(cin &gt;&gt;string)</strong>解决。然后c = getchar(),判断c==’\n’。</li>
-</ol>
-<p>解决了这两个问题，这题就很简单了使用map&lt;string, set(string)&gt;进行存储，分别设置作者…读入输出，就可以了。 </p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; &gt; mpT, mpA, mpK, mpP, mpY;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d\n"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">while</span>(n--) &#123;</span><br><span class="line">        <span class="built_in">string</span> number, title, author, keys, publisher, year;</span><br><span class="line">        getline(<span class="built_in">cin</span>, number);</span><br><span class="line">        getline(<span class="built_in">cin</span>, title);</span><br><span class="line">        mpT[title].insert(number);</span><br><span class="line">        getline(<span class="built_in">cin</span>, author);</span><br><span class="line">        mpA[author].insert(number);</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; keys) &#123;</span><br><span class="line">            mpK[keys].insert(number);</span><br><span class="line">            <span class="keyword">char</span> c = getchar();</span><br><span class="line">            <span class="keyword">if</span>(c == <span class="string">'\n'</span>) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        getline(<span class="built_in">cin</span>, publisher);</span><br><span class="line">        mpP[publisher].insert(number);</span><br><span class="line">        getline(<span class="built_in">cin</span>, year);</span><br><span class="line">        mpY[year].insert(number);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num);</span><br><span class="line">    <span class="keyword">while</span>(num--) &#123;</span><br><span class="line">        <span class="keyword">int</span> type;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d: "</span>, &amp;type);</span><br><span class="line">        <span class="built_in">string</span> q;</span><br><span class="line">        getline(<span class="built_in">cin</span>, q);</span><br><span class="line">        <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; s;</span><br><span class="line">        <span class="keyword">if</span>(type == <span class="number">1</span>) s = mpT[q];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="number">2</span>) s = mpA[q];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="number">3</span>) s = mpK[q];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="number">4</span>) s = mpP[q];</span><br><span class="line">        <span class="keyword">else</span> s = mpY[q];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; type&lt;&lt;<span class="string">": "</span>&lt;&lt;q&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">if</span>(s.size() == <span class="number">0</span>) <span class="built_in">cout</span>&lt;&lt;<span class="string">"Not Found\n"</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; ::iterator it = s.begin(); it != s.end(); it++) <span class="built_in">cout</span>&lt;&lt;*it&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/22/A1100/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1666,7 +2930,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/22/A1143/">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/09/22/A1022/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="佳">
@@ -1686,7 +2950,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/09/22/A1143/" class="post-title-link" itemprop="url">PAT 甲级 1143  Lowest Common Ancestor</a>
+                <a href="/2019/09/22/A1022/" class="post-title-link" itemprop="url">PAT 甲级 1022 Digital Library</a>
               
             
           </h1>
@@ -1711,7 +2975,7 @@
                 
               
 
-              <time title="创建时间：2019-09-22 19:31:35" itemprop="dateCreated datePublished" datetime="2019-09-22T19:31:35+08:00">2019-09-22</time>
+              <time title="创建时间：2019-09-22 20:05:59" itemprop="dateCreated datePublished" datetime="2019-09-22T20:05:59+08:00">2019-09-22</time>
             </span>
           
 
@@ -1726,7 +2990,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-26 09:56:25" itemprop="dateModified" datetime="2019-09-26T09:56:25+08:00">2019-09-26</time>
+                <time title="修改时间：2019-09-26 09:56:20" itemprop="dateModified" datetime="2019-09-26T09:56:20+08:00">2019-09-26</time>
               </span>
             
           
@@ -1765,199 +3029,35 @@
       
         
           
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>1143 Lowest Common Ancestor （30 point(s)）</p>
-<p>The lowest common ancestor (LCA) of two nodes U and V in a tree is the deepest node that has both U and V as descendants.</p>
-<p>A binary search tree (BST) is recursively defined as a binary tree which has the following properties:</p>
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p>A Digital Library contains millions of books, stored according to their titles, authors, key words of their abstracts, publishers, and published years. Each book is assigned an unique 7-digit number as its ID. Given any query from a reader, you are supposed to output the resulting books, sorted in increasing order of their ID’s.</p>
+<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line contains a positive integer N (≤10<br>​4<br>​​ ) which is the total number of books. Then N blocks follow, each contains the information of a book in 6 lines:</p>
 <ul>
-<li>The left subtree of a node contains only nodes with keys less than the node’s key.</li>
-<li>The right subtree of a node contains only nodes with keys greater than or equal to the node’s key.</li>
-<li>Both the left and right subtrees must also be binary search trees.<br>Given any two nodes in a BST, you are supposed to find their LCA.</li>
+<li>Line #1: the 7-digit ID number;</li>
+<li>Line #2: the book title – a string of no more than 80 characters;</li>
+<li>Line #3: the author – a string of no more than 80 characters;</li>
+<li>Line #4: the key words – each word is a string of no more than 10 characters without any white space, and the keywords are separated by exactly one space;</li>
+<li>Line #5: the publisher – a string of no more than 80 characters;</li>
+<li>Line #6: the published year – a 4-digit number which is in the range [1000, 3000].<br>It is assumed that each book belongs to one author only, and contains no more than 5 key words; there are no more than 1000 distinct key words in total; and there are no more than 1000 distinct publishers.</li>
 </ul>
-<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a><strong>Input Specification:</strong></h2><p>Each input file contains one test case. For each case, the first line gives two positive integers: M (≤ 1,000), the number of pairs of nodes to be tested; and N (≤ 10,000), the number of keys in the BST, respectively. In the second line, N distinct integers are given as the preorder traversal sequence of the BST. Then M lines follow, each contains a pair of integer keys U and V. All the keys are in the range of int.</p>
-<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2><p>For each given pair of U and V, print in a line LCA of U and V is A. if the LCA is found and A is the key. But if A is one of U and V, print X is an ancestor of Y. where X is A and Y is the other node. If U or V is not found in the BST, print in a line ERROR: U is not found. or ERROR: V is not found. or ERROR: U and V are not found..</p>
-<h2 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a><strong>Sample Input:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">6 8</span><br><span class="line">6 3 1 2 5 4 8 7</span><br><span class="line">2 5</span><br><span class="line">8 7</span><br><span class="line">1 9</span><br><span class="line">12 -3</span><br><span class="line">0 8</span><br><span class="line">99 99</span><br></pre></td></tr></table></figure>
+<p>After the book information, there is a line containing a positive integer M (≤1000) which is the number of user’s search queries. Then M lines follow, each in one of the formats shown below:</p>
+<ul>
+<li>1: a book title</li>
+<li>2: name of an author</li>
+<li>3: a key word</li>
+<li>4: name of a publisher</li>
+<li>5: a 4-digit number representing the year<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a><strong>Output Specification:</strong></h2>For each query, first print the original query in a line, then output the resulting book ID’s in increasing order, each occupying a line. If no book is found, print Not Found instead.</li>
+</ul>
+<h2 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a><strong>Sample Input:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">1111111</span><br><span class="line">The Testing Book</span><br><span class="line">Yue Chen</span><br><span class="line">test code debug sort keywords</span><br><span class="line">ZUCS Print</span><br><span class="line">2011</span><br><span class="line">3333333</span><br><span class="line">Another Testing Book</span><br><span class="line">Yue Chen</span><br><span class="line">test code sort keywords</span><br><span class="line">ZUCS Print2</span><br><span class="line">2012</span><br><span class="line">2222222</span><br><span class="line">The Testing Book</span><br><span class="line">CYLL</span><br><span class="line">keywords debug book</span><br><span class="line">ZUCS Print2</span><br><span class="line">2011</span><br><span class="line">6</span><br><span class="line">1: The Testing Book</span><br><span class="line">2: Yue Chen</span><br><span class="line">3: keywords</span><br><span class="line">4: ZUCS Print</span><br><span class="line">5: 2011</span><br><span class="line">3: blablabla</span><br></pre></td></tr></table></figure>
 
-<h2 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a><strong>Sample Output:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">LCA of 2 and 5 is 3.</span><br><span class="line">8 is an ancestor of 7.</span><br><span class="line">ERROR: 9 is not found.</span><br><span class="line">ERROR: 12 and -3 are not found.</span><br><span class="line">ERROR: 0 is not found.</span><br><span class="line">ERROR: 99 and 99 are not found.</span><br><span class="line">``` </span><br><span class="line">## **题目分析**</span><br><span class="line">这道题是求出两个结点的最近公共祖先，我的思路是先建树，然后建树的过程中存放先驱结点，类似于并查集。还有一个问题是要确定结点的编号，因为结点可能很大所以并不适合直接当下标，所以我才用了map，类似于string-&gt;int的转化，因为每个值都不一样，所以可以用这种方法进行编号。还有一点值得注意的是如果出现a, a这种情况，那么应该输出的是a is an ancestor of a, 而不是LCA of a and a of a.。还是比较麻烦的，但是比较通用吧。</span><br><span class="line"></span><br><span class="line">## **代码**</span><br><span class="line">``` cpp</span><br><span class="line">//注意的是如果出现a, a这种情况，那么应该输出的是a is an ancestor of a, 而不是LCA of a and a of a.</span><br><span class="line">/**</span><br><span class="line"> * 建树的时候，同时记录结点的先驱元素，用map对出现的结点进行编号</span><br><span class="line">*/</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn = 10010;</span><br><span class="line">int pre[maxn], in[maxn];</span><br><span class="line">struct node &#123;</span><br><span class="line">    int data;</span><br><span class="line">    node* lchild, *rchild;</span><br><span class="line">&#125;;</span><br><span class="line">map&lt;int, int&gt; mp;</span><br><span class="line">int num = 0;</span><br><span class="line">vector&lt;int&gt; prePath;</span><br><span class="line">node* create(int preL, int preR, int inL, int inR) &#123;</span><br><span class="line">    if(preL &gt; preR) return NULL;</span><br><span class="line">    node* root = new node;</span><br><span class="line">    root-&gt;data = pre[preL];</span><br><span class="line">    int k;</span><br><span class="line">    for(k = inL; k &lt;= inR; k++) </span><br><span class="line">        if(in[k] == pre[preL]) break;</span><br><span class="line">    int numLeft = k - inL;</span><br><span class="line">    node* left = create(preL + 1, preL + numLeft, inL, inL + numLeft - 1);</span><br><span class="line">    node* right = create(preL + numLeft + 1, preR, k + 1, inR);</span><br><span class="line">    if(left != NULL) prePath[mp[left-&gt;data]] = mp[root-&gt;data];</span><br><span class="line">    if(right != NULL) prePath[mp[right-&gt;data]] = mp[root-&gt;data];</span><br><span class="line">    root-&gt;lchild = left;</span><br><span class="line">    root-&gt;rchild = right;</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int n, m;</span><br><span class="line">    scanf(&quot;%d %d&quot;, &amp;n, &amp;m);</span><br><span class="line">    prePath.resize(m);</span><br><span class="line">    for(int i = 0; i &lt; m; i++) &#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;pre[i]);</span><br><span class="line">        in[i] = pre[i];</span><br><span class="line">        mp[pre[i]] = i;</span><br><span class="line">        prePath[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(in, in + m);</span><br><span class="line">    node* root = create(0, m - 1, 0, m - 1);</span><br><span class="line">    while(n--) &#123;</span><br><span class="line">        int a, b;</span><br><span class="line">        bool vis[maxn] = &#123;false&#125;;</span><br><span class="line">        scanf(&quot;%d %d&quot;, &amp;a, &amp;b);</span><br><span class="line">        if(mp.find(a) == mp.end() &amp;&amp; mp.find(b) == mp.end()) printf(&quot;ERROR: %d and %d are not found.\n&quot;, a, b);</span><br><span class="line">        else if(mp.find(a) == mp.end()) printf(&quot;ERROR: %d is not found.\n&quot;, a);</span><br><span class="line">        else if(mp.find(b) == mp.end()) printf(&quot;ERROR: %d is not found.\n&quot;, b);</span><br><span class="line">        else if(mp[a] == mp[b]) printf(&quot;%d is an ancestor of %d.\n&quot;, a, b);</span><br><span class="line">        else  &#123;</span><br><span class="line">            int indexA = mp[a], indexB = mp[b];</span><br><span class="line">            int tempA = indexA, tempB = indexB;</span><br><span class="line">            bool f1 = true, f2 = true;</span><br><span class="line">            while(indexA != prePath[indexA]) &#123;</span><br><span class="line">                vis[indexA] = true;</span><br><span class="line">                indexA = prePath[indexA];</span><br><span class="line">                if(indexA == indexB) &#123;</span><br><span class="line">                    printf(&quot;%d is an ancestor of %d.\n&quot;, b, a);</span><br><span class="line">                    f1 = false;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            vis[indexA] =true;</span><br><span class="line">            if(f1 == false) continue;</span><br><span class="line">            while(indexB != prePath[indexB]) &#123;</span><br><span class="line">                if(vis[indexB] == true) &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125; else vis[indexB] = true;</span><br><span class="line">                indexB = prePath[indexB];</span><br><span class="line">                if(indexB == tempA) &#123;</span><br><span class="line">                    printf(&quot;%d is an ancestor of %d.\n&quot;, a, b);</span><br><span class="line">                    f2 = false;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if(f2 == true) printf(&quot;LCA of %d and %d is %d.\n&quot;, a, b, pre[indexB]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a><strong>Sample Output:</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1: The Testing Book</span><br><span class="line">1111111</span><br><span class="line">2222222</span><br><span class="line">2: Yue Chen</span><br><span class="line">1111111</span><br><span class="line">3333333</span><br><span class="line">3: keywords</span><br><span class="line">1111111</span><br><span class="line">2222222</span><br><span class="line">3333333</span><br><span class="line">4: ZUCS Print</span><br><span class="line">1111111</span><br><span class="line">5: 2011</span><br><span class="line">1111111</span><br><span class="line">2222222</span><br><span class="line">3: blablabla</span><br><span class="line">Not Found</span><br></pre></td></tr></table></figure>
 
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/08/08/图的遍历/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/08/08/图的遍历/" class="post-title-link" itemprop="url">图的遍历</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-08 16:47:08 / 修改时间：17:10:10" itemprop="dateCreated datePublished" datetime="2019-08-08T16:47:08+08:00">2019-08-08</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/图算法/" itemprop="url" rel="index"><span itemprop="name">图算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h1><p>图的遍历是对图的所有顶点按一定顺序进行访问，遍历方法一共有两种：DFS与BFS，基本思想都是，枚举所有顶点，然后遍历u所有的连通块。DFS和BFS的核心代码都是遍历一个连通块。</p>
-<h2 id="用DFS遍历图"><a href="#用DFS遍历图" class="headerlink" title="用DFS遍历图"></a>用DFS遍历图</h2><p>对一个连通块进行遍历</p>
-<h3 id="伪代码描述模板"><a href="#伪代码描述模板" class="headerlink" title="伪代码描述模板"></a>伪代码描述模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dfs(u) &#123; <span class="comment">//访问u</span></span><br><span class="line">    vis[u] = <span class="literal">true</span>;  <span class="comment">//设置已访问</span></span><br><span class="line">    <span class="keyword">for</span>(u能到达的所有顶点i) &#123;  <span class="comment">//遍历u能到达的所有结点i</span></span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span>) <span class="comment">//没被访问</span></span><br><span class="line">            dfs(i);       <span class="comment">//访问它</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dfsTrave(G) &#123;</span><br><span class="line">    <span class="keyword">for</span>(G的所有顶点u) &#123;  <span class="comment">//对G的所有顶点u</span></span><br><span class="line">        <span class="keyword">if</span>(vis[u] == <span class="literal">false</span>) &#123; <span class="comment">//没被访问</span></span><br><span class="line">            dfs(u);   <span class="comment">//访问u</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="邻接矩阵模板"><a href="#邻接矩阵模板" class="headerlink" title="邻接矩阵模板"></a>邻接矩阵模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxv = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> inf = <span class="number">1e9</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//邻接矩阵版</span></span><br><span class="line"><span class="keyword">int</span> n, G[maxv][maxv];</span><br><span class="line"><span class="keyword">bool</span> vis[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> deepth)</span> </span>&#123;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//如果要对u进行一些操作，在这里进行。</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span> &amp;&amp; G[u][i] != inf) &#123;</span><br><span class="line">            dfs(i, deepth + <span class="number">1</span>);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(u, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="邻接表模板"><a href="#邻接表模板" class="headerlink" title="邻接表模板"></a>邻接表模板</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">bool</span> vis[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> deepth)</span> </span>&#123;</span><br><span class="line">    vis[u] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[u].size(); i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> v = adj[u][i];</span><br><span class="line">        <span class="keyword">if</span>(vis[v] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(v, deepth + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[i] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(i, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用BFS进行遍历"><a href="#使用BFS进行遍历" class="headerlink" title="使用BFS进行遍历"></a>使用BFS进行遍历</h2><h3 id="伪代码描述"><a href="#伪代码描述" class="headerlink" title="伪代码描述"></a>伪代码描述</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">bfs(u) &#123; <span class="comment">//遍历u所在的连通块</span></span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    inq[u] = <span class="literal">true</span>; <span class="comment">//以访问</span></span><br><span class="line">    q.push(u);</span><br><span class="line">    <span class="keyword">while</span>(q非空) &#123;</span><br><span class="line">        取出q的队首元素进行访问</span><br><span class="line">        <span class="keyword">for</span>(从u出发能够访问的结点v) &#123;</span><br><span class="line">            <span class="keyword">if</span>(v没有被访问) &#123;</span><br><span class="line">                inq[v] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bfsTrave(G) &#123;<span class="comment">//图G</span></span><br><span class="line">    <span class="keyword">for</span>(G的所有顶点u) &#123;</span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            bfs(u);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="邻接矩阵版"><a href="#邻接矩阵版" class="headerlink" title="邻接矩阵版"></a>邻接矩阵版</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n, G[maxv][maxv];</span><br><span class="line"><span class="keyword">bool</span> inq[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    q.push(u);</span><br><span class="line">    inq[u] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        <span class="keyword">int</span> u = q.front();<span class="comment">//取出队首元素</span></span><br><span class="line">        <span class="comment">//在这里进行访问</span></span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> v = <span class="number">0</span>; v &lt; n; v++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[v] == <span class="literal">false</span> &amp;&amp; G[u][v] != INF) &#123;</span><br><span class="line">                q.push(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfsTrave</span><span class="params">()</span> </span>&#123; <span class="comment">//遍历图G</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;<span class="comment">//遍历每个结点</span></span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            q.push(u);</span><br><span class="line">            inq[u] = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="邻接表版"><a href="#邻接表版" class="headerlink" title="邻接表版"></a>邻接表版</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">bool</span> inq[maxv] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    inq[u] = <span class="literal">true</span>;</span><br><span class="line">    q.push(u);</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        <span class="keyword">int</span> top = q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[top].size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[i] == <span class="literal">false</span>) &#123;</span><br><span class="line">                q.push(i);</span><br><span class="line">                inq[i] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfsTrave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> u = <span class="number">0</span>; u &lt; n; u++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(inq[u] == <span class="literal">false</span>) &#123;</span><br><span class="line">            bfs(u);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>但是一般题目中有可能需要层号，这个时候就可以新建一个结构体，采用邻接表的方式</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//加入层号之后</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> v;</span><br><span class="line">    <span class="keyword">int</span> layer;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; adj[maxv];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node&gt; q;</span><br><span class="line">    node s;</span><br><span class="line">    s.layer = <span class="number">0</span>;</span><br><span class="line">    s.v = v;</span><br><span class="line">    q.push(s);</span><br><span class="line">    inq[v] = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">        node top = q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adj[top.v].size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(inq[adj[top.v]] == <span class="literal">false</span>) &#123;</span><br><span class="line">            node next;</span><br><span class="line">            next.layer = top.layer + <span class="number">1</span>;</span><br><span class="line">            next.v = adj[top.v][i];</span><br><span class="line">            q.push(next);</span><br><span class="line">            inq[next.v] = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>遍历图的思想是是对所有的连通块进行遍历。基本思路就是将经过的顶点设置为已访问，然后采用DFS或者BFS遍历其所在的连通块。</p>
-
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h2><p>这题对于我来说最难的是字符串的输入问题。</p>
+<ol>
+<li>带有空格，这就意味着最好使用getline(cin, string),对于getline()的使用还不是很熟悉，所以有一个值得注意的地方：<strong>getline(),以换行符进行分割结束</strong>， 当我是用<strong>scanf(“%d”, &amp;n)</strong>时，并没有接收换行符，所以这就导致我后面接收number实际是空的，所以<strong>scanf(“%d\n”, &amp;n),</strong>就可以避免这个问题。</li>
+<li>在读入关键字的时候无法确认关键字的个数这就可以使用<strong>while(cin &gt;&gt;string)</strong>解决。然后c = getchar(),判断c==’\n’。</li>
+</ol>
+<p>解决了这两个问题，这题就很简单了使用map&lt;string, set(string)&gt;进行存储，分别设置作者…读入输出，就可以了。 </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; &gt; mpT, mpA, mpK, mpP, mpY;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d\n"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">while</span>(n--) &#123;</span><br><span class="line">        <span class="built_in">string</span> number, title, author, keys, publisher, year;</span><br><span class="line">        getline(<span class="built_in">cin</span>, number);</span><br><span class="line">        getline(<span class="built_in">cin</span>, title);</span><br><span class="line">        mpT[title].insert(number);</span><br><span class="line">        getline(<span class="built_in">cin</span>, author);</span><br><span class="line">        mpA[author].insert(number);</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; keys) &#123;</span><br><span class="line">            mpK[keys].insert(number);</span><br><span class="line">            <span class="keyword">char</span> c = getchar();</span><br><span class="line">            <span class="keyword">if</span>(c == <span class="string">'\n'</span>) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        getline(<span class="built_in">cin</span>, publisher);</span><br><span class="line">        mpP[publisher].insert(number);</span><br><span class="line">        getline(<span class="built_in">cin</span>, year);</span><br><span class="line">        mpY[year].insert(number);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num);</span><br><span class="line">    <span class="keyword">while</span>(num--) &#123;</span><br><span class="line">        <span class="keyword">int</span> type;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d: "</span>, &amp;type);</span><br><span class="line">        <span class="built_in">string</span> q;</span><br><span class="line">        getline(<span class="built_in">cin</span>, q);</span><br><span class="line">        <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; s;</span><br><span class="line">        <span class="keyword">if</span>(type == <span class="number">1</span>) s = mpT[q];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="number">2</span>) s = mpA[q];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="number">3</span>) s = mpK[q];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="number">4</span>) s = mpP[q];</span><br><span class="line">        <span class="keyword">else</span> s = mpY[q];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; type&lt;&lt;<span class="string">": "</span>&lt;&lt;q&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">if</span>(s.size() == <span class="number">0</span>) <span class="built_in">cout</span>&lt;&lt;<span class="string">"Not Found\n"</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; ::iterator it = s.begin(); it != s.end(); it++) <span class="built_in">cout</span>&lt;&lt;*it&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -2044,7 +3144,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-count">76</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2081,7 +3181,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

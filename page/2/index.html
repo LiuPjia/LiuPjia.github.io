@@ -312,6 +312,313 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/18/scrapy框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/18/scrapy框架/" class="post-title-link" itemprop="url">scrapy框架</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-18 20:00:07" itemprop="dateCreated datePublished" datetime="2019-12-18T20:00:07+08:00">2019-12-18</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/17/新闻爬虫实战/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="佳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佳的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/17/新闻爬虫实战/" class="post-title-link" itemprop="url">新闻爬虫实战</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-17 11:38:30 / 修改时间：16:14:44" itemprop="dateCreated datePublished" datetime="2019-12-17T11:38:30+08:00">2019-12-17</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="爬取新浪新闻首页的所有新闻链接并保存在文件中"><a href="#爬取新浪新闻首页的所有新闻链接并保存在文件中" class="headerlink" title="爬取新浪新闻首页的所有新闻链接并保存在文件中"></a><strong>爬取新浪新闻首页的所有新闻链接并保存在文件中</strong></h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> urllib.error</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">data = urllib.request.urlopen(<span class="string">"https://news.sina.com.cn/"</span>).read()</span><br><span class="line">data = data.decode(<span class="string">"utf-8"</span>, <span class="string">"ignore"</span>) <span class="comment">#转化为utf-8出现问题时，忽略</span></span><br><span class="line">pat = <span class="string">'href="(https://news.sina.com.cn/.*?[html | shtml])"'</span> <span class="comment"># 通过分析网页源码，确认正则表达式</span></span><br><span class="line">allurl = re.compile(pat).findall(data) <span class="comment"># 找到所有url</span></span><br><span class="line">print(len(allurl))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(allurl)): <span class="comment"># 对url列表进行遍历</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        thisurl = allurl[i]</span><br><span class="line">        file = <span class="string">"G:\\python学习\\爬虫\\sinanews\\"</span> + str(i) + <span class="string">".html"</span> <span class="comment"># 创建文件</span></span><br><span class="line">        urllib.request.urlretrieve(thisurl, file) <span class="comment"># 通过urlretrive方法直接将内容保存在文件中</span></span><br><span class="line">        print(<span class="string">"第"</span> + str(i) + <span class="string">"次爬取"</span>)</span><br><span class="line">    <span class="keyword">except</span> urllib.error.URLError <span class="keyword">as</span> e: <span class="comment"># 捕获异常</span></span><br><span class="line">        <span class="keyword">if</span> hasattr(e, <span class="string">"code"</span>):</span><br><span class="line">            print(e.code)</span><br><span class="line">        <span class="keyword">if</span> hasattr(e, <span class="string">"reason"</span>):</span><br><span class="line">            print(e.reason)</span><br></pre></td></tr></table></figure>
+
+<h1 id="爬取csdn首页"><a href="#爬取csdn首页" class="headerlink" title="爬取csdn首页"></a><strong>爬取csdn首页</strong></h1><p>因为会受到拦截必须模仿浏览器，即加上报文头</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> urllib.error</span><br><span class="line"></span><br><span class="line">url = <span class="string">"https://www.csdn.net/"</span></span><br><span class="line">headers = &#123; <span class="comment"># 报文头</span></span><br><span class="line">    <span class="string">"Accept"</span>: <span class="string">"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"</span>,</span><br><span class="line">    <span class="string">"Accept-Language"</span>: <span class="string">"zh-CN,zh;q=0.9"</span>,</span><br><span class="line">    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"</span>,</span><br><span class="line">    <span class="string">"Connection"</span>:<span class="string">"keep-alive"</span>,</span><br><span class="line">    <span class="string">"referer"</span>: <span class="string">"https://adaccount.csdn.net/"</span></span><br><span class="line">&#125;</span><br><span class="line">headall = [] <span class="comment"># 建立空列表，为了以制定格式存储头信息</span></span><br><span class="line"><span class="keyword">for</span> key, value, <span class="keyword">in</span> headers.items(): <span class="comment"># 将头信息进行储存</span></span><br><span class="line">    item = (key, value)</span><br><span class="line">    headall.append(item)</span><br><span class="line">opener = urllib.request.build_opener()</span><br><span class="line">opener.add_handler = headall</span><br><span class="line">urllib.request.install_opener(opener) <span class="comment"># 设置全局有效</span></span><br><span class="line">data = urllib.request.urlopen(url).read().decode(<span class="string">"utf-8"</span>, <span class="string">"ignore"</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用代理ip"><a href="#使用代理ip" class="headerlink" title="使用代理ip"></a><strong>使用代理ip</strong></h1><p>因为爬取太多，又可能会被服务器将ip封掉，使用代理ip进行爬取</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> urllib.error</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">user_proxy</span><span class="params">(url, proxy_addr)</span>:</span></span><br><span class="line">    proxy = urllib.request.ProxyHandler(&#123;<span class="string">"http"</span>: proxy_addr&#125;) <span class="comment"># 设置代理</span></span><br><span class="line">    opener = urllib.request.build_opener(proxy, urllib.request.HTTPHandler) <span class="comment"># 建立新的opener</span></span><br><span class="line">    urllib.request.install_opener(opener) <span class="comment"># 设置全局</span></span><br><span class="line">    data = urllib.request.urlopen(url).read().decode(<span class="string">"utf-8"</span>, <span class="string">"ignore"</span>) <span class="comment"># 进行爬取</span></span><br><span class="line">    <span class="keyword">return</span> data <span class="comment"># 返回数据</span></span><br><span class="line">    </span><br><span class="line">url = <span class="string">"https://www.csdn.net/"</span></span><br><span class="line">proxy_addr = <span class="string">"115.211.225.238:9999"</span></span><br><span class="line">data = user_proxy(url, proxy_addr)</span><br><span class="line">print(len(data))</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/16/Urlib库/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1654,307 +1961,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/10/PAT-A1063/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/10/PAT-A1063/" class="post-title-link" itemprop="url">PAT 甲级 1063 Set Similarity</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-10 19:21:05 / 修改时间：20:28:24" itemprop="dateCreated datePublished" datetime="2019-12-10T19:21:05+08:00">2019-12-10</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226115554116.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
-<h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a><strong>算法分析</strong></h1><ol>
-<li><p>用unordered_set<int>[] 存放每一个集合，对于要查询的两个集合A，B，定义一个常量same = 0, 遍历集合A中的每一个数，如果这个数，在B中same++, 结果就是same/A.size() + B.size() - same;</int></p>
-</li>
-<li><p>c++标准库里面有set_intersection（取两个集合交集）、set_union（取两个集合并集）、set_difference（取两个集合差集）的函数。其中，函数参数形式均为X(A.begin(),A.end(),B.begin(),B.end(),inserter( C1 , C1.begin() ) )的形式，其中X可以替换为上述三个函数声明。前四个参数依次是表示第一个集合的首尾区间的迭代器、表示第二个集合的首尾区间的迭代器，第五个参数的意思是将集合A、B取交并差集后的结果存入集合C中。</p>
-</li>
-</ol>
-<h1 id="代码一"><a href="#代码一" class="headerlink" title="代码一"></a><strong>代码一</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, k, num, a, b,index = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; s[<span class="number">60</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a);</span><br><span class="line">            s[j].insert(a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;k);</span><br><span class="line">    <span class="keyword">while</span>(k--) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">double</span> sum = s[a].size() + s[b].size(), same = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; :: iterator it = s[a].begin(); it != s[a].end(); it++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(s[b].count(*it) != <span class="number">0</span>) same++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.1f%c\n"</span>, <span class="number">100</span>*same/(sum - same), <span class="string">'%'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="代码二"><a href="#代码二" class="headerlink" title="代码二"></a><strong>代码二</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> N,M,K;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</span><br><span class="line">    <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;sets[N+<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;v1,v2;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=N;++i)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M);</span><br><span class="line">        <span class="keyword">while</span>(M--)&#123;</span><br><span class="line">            <span class="keyword">int</span> a;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a);</span><br><span class="line">            sets[i].insert(a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K);</span><br><span class="line">    <span class="keyword">while</span>(K--)&#123;</span><br><span class="line">        v1.clear();</span><br><span class="line">        v2.clear();</span><br><span class="line">        <span class="keyword">int</span> a,b;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;a,&amp;b);</span><br><span class="line">        set_union(sets[a].cbegin(),sets[a].cend(),sets[b].cbegin(),sets[b].cend(),inserter(v1,v1.begin()));<span class="comment">//求并集</span></span><br><span class="line">        set_intersection(sets[a].cbegin(),sets[a].cend(),sets[b].cbegin(),sets[b].cend(),inserter(v2,v2.begin()));<span class="comment">//求交集</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.1f%%\n"</span>,(<span class="keyword">double</span>)v2.size()/v1.size()*<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://LiuPjia.github.io/2019/12/10/PAT-A1062/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="佳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="佳的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/10/PAT-A1062/" class="post-title-link" itemprop="url">PAT 甲级 1062 Talent and Virtue</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-10 19:11:26 / 修改时间：19:19:44" itemprop="dateCreated datePublished" datetime="2019-12-10T19:11:26+08:00">2019-12-10</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h1><p><img src="https://img-blog.csdnimg.cn/20181226115707917.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JpY2hlbnl1bnFp,size_16,color_FFFFFF,t_70" alt></p>
-<h1 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a><strong>题目分析</strong></h1><p>这题是一道排序题，将人分为四类：圣人、君子、愚人、小人，然后根据他们的分数对他们进行分类，然后排序输出即可。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span><span class="comment">//存放一个人的id, 等级、总分，道德分、智慧分</span></span><br><span class="line">    <span class="keyword">int</span> level, id, v, t, sum;</span><br><span class="line">    node()&#123;&#125;;</span><br><span class="line">    node(<span class="keyword">int</span> id, <span class="keyword">int</span> v, <span class="keyword">int</span> t, <span class="keyword">int</span> sum) : id(id), v(v), t(t), sum(sum)&#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">const</span> node&amp; a, <span class="keyword">const</span> node&amp; b)</span> </span>&#123; <span class="comment">//比较次序是等级 &gt; 总分 &gt; 道德分 &gt; id</span></span><br><span class="line">    <span class="keyword">if</span>(a.level != b.level) <span class="keyword">return</span> a.level &lt; b.level;</span><br><span class="line">    <span class="keyword">if</span>(a.sum != b.sum) <span class="keyword">return</span> a.sum &gt; b.sum;</span><br><span class="line">    <span class="keyword">if</span>(a.v != b.v) <span class="keyword">return</span> a.v &gt; b.v;</span><br><span class="line">    <span class="keyword">return</span> a.id &lt; b.id;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, l, h;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;n, &amp;l, &amp;h);</span><br><span class="line">    <span class="built_in">vector</span>&lt;node&gt; nv;</span><br><span class="line">    <span class="keyword">while</span>(n--) &#123;</span><br><span class="line">        <span class="keyword">int</span> id, v, t;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;id, &amp;v, &amp;t);</span><br><span class="line">        <span class="keyword">if</span>(v &gt;= l &amp;&amp; t &gt;= l) &#123; <span class="comment">//符合条件的结点</span></span><br><span class="line">            node temp = node(id, v, t, v + t);</span><br><span class="line">            <span class="keyword">if</span>(v &gt;= h &amp;&amp; t &gt;= h) temp.level = <span class="number">1</span>; <span class="comment">//圣人，第一等</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>((v &gt;= h || t &gt;= h) &amp;&amp; v &gt;= t) temp.level = <span class="number">2</span>; <span class="comment">//君子，第二等</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(v &lt;= h &amp;&amp; t &lt;= h &amp;&amp; v &gt;= t) temp.level = <span class="number">3</span>; <span class="comment">//愚人，第三等</span></span><br><span class="line">            <span class="keyword">else</span> temp.level = <span class="number">4</span>; <span class="comment">//小人，第四等</span></span><br><span class="line">            nv.push_back(temp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, nv.size());</span><br><span class="line">    sort(nv.begin(), nv.end(), cmp);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nv.size(); i++) <span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>, nv[i].id, nv[i].v, nv[i].t);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2001,7 +2007,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-count">76</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2038,7 +2044,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
